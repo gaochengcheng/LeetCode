@@ -16,7 +16,7 @@ import java.util.List;
  * @author chengcheng
  *
  */
-public class InorderTraversal {
+public class S94_InorderTraversal {
 	public static void main(String[] args) {
 		TreeNode root = new TreeNode(1);
 		root.left = new TreeNode(2);

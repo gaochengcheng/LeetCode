@@ -6,7 +6,7 @@ package question1_20;
  * @author chengcheng
  *
  */
-public class AddTwoNumbers_2 {
+public class S2_AddTwoNumbers {
 
 	public static void main(String[] args) {
 		ListNode l1 = new ListNode(9);

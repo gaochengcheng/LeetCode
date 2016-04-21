@@ -18,7 +18,7 @@ import java.util.List;
  * @author chengcheng
  *
  */
-public class ZigzagLevel_103 {
+public class S103_ZigzagLevel {
 	public static void main(String[] args) {
 		TreeNode root = new TreeNode(3);
 		root.left = new TreeNode(9);

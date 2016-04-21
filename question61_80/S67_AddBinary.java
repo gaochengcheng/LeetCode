@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @author chengcheng
  *
  */
-public class AddBinary_67 {
+public class S67_AddBinary {
 	public static void main(String[] args) {
 		String a = "0";
 		String b = "1";

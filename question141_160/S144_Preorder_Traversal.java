@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 
-public class Preorder_Traversal {
+public class S144_Preorder_Traversal {
 	public static void main(String[] args) {
 		TreeNode root = new TreeNode(1);
 		root.left = new TreeNode(2);

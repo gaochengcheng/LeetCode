@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 
-public class LevelOrder {
+public class S102_LevelOrder {
 	public static void main(String[] args) {
 		TreeNode root = new TreeNode(3);
 		root.left = new TreeNode(9);
