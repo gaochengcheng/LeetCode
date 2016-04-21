@@ -41,6 +41,7 @@ public class S99_RecoverBinarySearchTree {
      *       1   5
      *        \
      *         2
+     *  The main point is to find out what are the mistake values, and record their value, finally change their values.
      */
     @Test
     public void test1(){ 
