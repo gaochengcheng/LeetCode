@@ -10,13 +10,33 @@ package question21_40;
  */
 public class S33_SearchinRotatedSortedArray {
 	public static void main(String[] args) {
-		int[] arr = new int[]{1,2,3,4,5,6,7,8};
-		int result = binarySearch(arr,2);
+		int[] arr = new int[]{4,5,6,7,0,1,2};
+		int result = search(arr,2);
 		System.out.println(result);
 	}
 
 	public static int search(int[] nums, int target) {
-		return 0;
+		int left = 0, right = nums.length-1;
+		while(left <= right){
+			int mid = (left + right)/2;
+			if(nums[mid] == target)
+				return mid;
+			else if(nums[mid] < nums[right]){ //右半段有序
+				if(nums[mid] < target && target <= nums[right]) //前面判断过mid和target的关系为不等，所以，这里只需要判断target和last是否相等
+					left = mid + 1;
+				else
+					right = mid-1;
+					
+			}
+			else{//左半段有序
+				if(nums[left] <= target && target < nums[mid])
+					right = mid - 1;
+				else 
+					left = mid + 1;
+			}
+		}
+		return -1;
+		
 	}
 	public static int binarySearch(int[] nums, int target){
 		//nums是已经从小到大排好序的数组
