@@ -1,7 +1,8 @@
 package question81_100;
 
 /**
- * Question: Search in Rotated Sorted Array II
+ * Question: 
+ * Search in Rotated Sorted Array II
  * 
  * @author chengcheng
  * @time 2016年6月23日 下午9:14:52
@@ -9,7 +10,8 @@ package question81_100;
  */
 public class S81_SearchinRotatedSortedArrayII {
 	public static void main(String[] args) {
-		int[] arr = new int[]{1,3,1,1,1};
+		int[] arr = new int[]{6,6,6,6,6,2,3,4,5};
+//		int[] arr = new int[]{1,1,1,1,1,2,3,4,5};
 		boolean result = search(arr,1);
 		System.out.println(result);
 	}
