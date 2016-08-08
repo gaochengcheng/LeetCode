@@ -14,6 +14,7 @@ public class S66_PlusOne {
 	public int[] plusOne(int[] digits) {
         
 		int length = digits.length;
+		//执行+1的操作
 		for(int i = length-1; i >= 0; i--){ 
 			if(digits[i]<9){
 				digits[i]++;
@@ -22,14 +23,15 @@ public class S66_PlusOne {
 				digits[i]=0;
 			}
 		}
+		
 		int[] result;
-		if(digits[0]==0){
+		if(digits[0]==0){      //需要判断第一位是否是0.
 			result = new int[length+1];
 			result[0] = 1;
 			for(int i = 1; i < length+1; i++){
 				result[i] = digits[i-1];
 			}
-		}else{
+		}else{                //原封不动复制数组
 			result = new int[length];
 			for(int i = 0; i<length; i++){
 				result[i] = digits[i];

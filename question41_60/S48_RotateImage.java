@@ -16,27 +16,22 @@ public class S48_RotateImage {
         	}
         }
         
+        
+        
+        int mid = n/2 ;
+        for(int i=0; i<mid; i++){
+        	for(int j=0; j<n; j++){
+        		int temp = matrix[i][j];
+        		matrix[i][j] = matrix[sum-i][j];
+        		matrix[sum-i][j] = temp;
+        	}
+        }
         for(int i=0; i<n; i++){
         	for(int j=0; j<n; j++){
         		System.out.println(matrix[i][j]);
         	}
         }
-        
-        int mid = n/2 ,gap;
-        if(n%2 == 0){
-        	gap = n/2;
-        }else{
-        	gap = n/2+1;
-        }
-        for(int i=0; i<mid; i++){
-        	for(int j=0; j<n; j++){
-        		int temp = matrix[i][j];
-        		matrix[i][j] = matrix[i+gap][j];
-        		matrix[i+gap][j] = temp;
-        	}
-        }
-        
-        
+         
     }
 	@Test
 	public void test(){
