@@ -502,7 +502,58 @@ public int climbStairs(int n) {
     }
 ```
 
+## S.73_Set Matrix Zeroes
 
+原题地址：https://leetcode.com/problems/set-matrix-zeroes/
+
+思路：
+
+​	方法1：空间复杂度O(m+n).
+
+​	建立一个长度为m的数组，记录m行中哪一行有0。建立一个长度为n的数组，记录n列中哪一列存在0.然后访问这两个数组，并且对原来的matrix做更新。
+
+代码：
+
+​	空间复杂度：O(m+n). 时间复杂度O(m*n).
+
+```java
+public void setZeroes(int[][] matrix) {
+       
+		int m = matrix.length; //返回二维数组行数
+		int n = matrix[0].length; //返回二维数组列数
+		int[] rows = new int[m];
+		int[] columns = new int[n];
+		
+		for(int i = 0; i < m; i++){
+			for(int j = 0; j < n; j++){
+				if(matrix[i][j] == 0){
+					rows[i] = -1;  //记录哪一行有0.并用-1进行标记。
+					columns[j] = -1;  //记录哪一列有0.并用-1进行标记。
+				}
+			}
+		}
+		
+		for(int i = 0; i < m; i++){
+			if(rows[i] == -1){
+				for(int j = 0; j < n; j++){
+					matrix[i][j] = 0;   //把对应行的元素全部置为0.
+				}
+			}
+		}
+		
+		for(int i = 0; i < n; i++){
+			if(columns[i] == -1){
+				for(int j = 0; j < m; j++){
+					matrix[j][i] = 0;  //把对应列的元素全部置为0.
+				}
+			}
+		}
+    }
+```
+
+
+
+​	
 
 
 

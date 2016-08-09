@@ -1,7 +1,12 @@
 package question61_80;
 
 import org.junit.Test;
-
+/**
+ * 
+ * @author chengcheng
+ * @time 2016年8月8日 下午2:20:50
+ *
+ */
 public class S70_ClimbingStairs {
 	public int climbStairs(int n) {
 		if(n == 0 || n == 1 || n == 2)
