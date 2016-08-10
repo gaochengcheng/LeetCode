@@ -551,6 +551,76 @@ public void setZeroes(int[][] matrix) {
     }
 ```
 
+## 134_Gas Station
+
+原题地址：https://leetcode.com/problems/gas-station/
+
+思路1：
+
+​	gas和cost是两个数组，并且gas中不同位置代表了不同的station所拥有的不同油量。理解上，gas要作为一个循环数组，从任何一个位置出发都可以再回到这个位置。
+
+​	初始状态：gas[i] - cost[i] > 0.就可以从i位置达到i+1的位置。
+
+​	随后状态：上次剩余油量  + gas[i+1]  - cost[i+1] > 0就可以到达i+2的位置。
+
+代码：时间复杂度O(n^2).
+
+```java
+public int canCompleteCircuit(int[] gas, int[] cost) {
+		int length = gas.length;
+		int remain = 0;
+		for(int startIndex = 0; startIndex < length; startIndex++){   //把每个点作为开始点进行判断
+			int positions = 1;
+			int index = startIndex;
+			while(remain+gas[index]-cost[index] >= 0){   //
+				if(positions == length)
+					return startIndex;
+				positions++;
+				remain = remain + gas[index] - cost[index];
+				index = (index+1) % length;
+			}
+		}
+		return -1;
+	}
+```
+
+思路2：
+
+​	本题如果有解，那么题目中gas[0]+...+gas[n]的和一定大于cost[0]+...+cost[n]的和。并且起始位置是第一次出现gas[0]+...+gas[i]>cost[0]+...+cost[i]的位置。前i-1个位置，gas的和是小于cost的和，知道出现第i个位置，gas的和大于cost的和。
+
+​	本题如果无解，那么题目中gas[0]+...+gas[n]的和一定小于cost[0]+...+cost[n]的和。
+
+​	于是：
+
+​	如果total<0则一定没有解，因为不管从哪个位置开始，一定无法通过最后一个加油站。
+
+​	如果total>=0一定有解，而且这个解一定是最后一个sum<0的下一个位置（j=i+1）。
+
+代码：时间复杂度O(n)
+
+```java
+public int canCompleteCircuit(int[] gas, int[] cost) {
+		int length = gas.length;
+		int total = 0;
+		int sum = 0;
+		int j = 0;
+		for(int i = 0; i < length; i++){
+			sum += (gas[i] - cost[i]);
+			total += (gas[i] - cost[i]);
+			//只要第一次出现gas[i]-cost[i]>0，那么i就可以作为start。
+			//并且此后一直用sum做判断，是否一直满足sum>0。一旦出现一次sum<0,重新修改start的值。
+			if(sum < 0){  
+				j = i + 1;
+				sum = 0;
+			}
+		}
+		if(total >= 0)
+			return j;
+		else
+			return -1;
+	}
+```
+
 
 
 ​	

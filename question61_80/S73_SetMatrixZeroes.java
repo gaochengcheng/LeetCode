@@ -24,7 +24,7 @@ public class S73_SetMatrixZeroes {
 			}
 		}
 		
-		for(int i = 0; i < n; i++){
+		for(int i = 0; i < m; i++){
 			if(rows[i] == -1){
 				for(int j = 0; j < n; j++){
 					matrix[i][j] = 0;   //把对应行的元素全部置为0.
@@ -35,7 +35,7 @@ public class S73_SetMatrixZeroes {
 		for(int i = 0; i < n; i++){
 			if(columns[i] == -1){
 				for(int j = 0; j < m; j++){
-					matrix[i][j] = 0;  //把对应列的元素全部置为0.
+					matrix[j][i] = 0;  //把对应列的元素全部置为0.
 				}
 			}
 		}
