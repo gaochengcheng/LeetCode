@@ -551,7 +551,7 @@ public void setZeroes(int[][] matrix) {
     }
 ```
 
-## 134_Gas Station
+## S.134_Gas Station
 
 原题地址：https://leetcode.com/problems/gas-station/
 
@@ -620,6 +620,61 @@ public int canCompleteCircuit(int[] gas, int[] cost) {
 			return -1;
 	}
 ```
+
+## S.135_Candy
+
+原题地址：https://leetcode.com/problems/candy/
+
+思路：
+
+​	这道题和Trapping water那个是一样的想法，因为无论是水坑还是得到糖的小朋友，影响因素都不只一边，都是左右两边的最小值/最大值来决定的。做法是分别从左右两边遍历数组。
+
+​	1.leftResult数组存从左边遍历，当前小朋友对比其左边小朋友，他能拿到糖的数量；
+
+​	2.rightResult数组存从右边遍历，当前小朋友对比其右边小朋友，他能拿到的糖的数量。
+
+​	3.最后针对这两个数组，每个小朋友能拿到的糖的数量就是这两个数最大的那个数，求总加和就好了。
+
+代码：
+
+```java
+public int candy(int[] ratings){
+		
+		int length = ratings.length;
+		int[] leftResult = new int[length];
+		int[] rightResult = new int[length];
+		//每个元素只和左边元素相比较
+		leftResult[0] = 1;
+		for(int i = 1; i < length; i++){
+			if(ratings[i] > ratings[i-1])
+				leftResult[i] = leftResult[i-1]+1;
+			else
+				leftResult[i] = 1;
+		}
+		//每个元素只和右边元素比较
+		rightResult[length-1] = 1;
+		for(int i = length-2; i >= 0; i--){
+			if(ratings[i] > ratings[i+1])
+				rightResult[i] = rightResult[i+1]+1;
+			else
+				rightResult[i] = 1;
+		}
+		int sum = 0;
+		for(int i = 0; i<length; i++){
+			if(leftResult[i] > rightResult[i])
+				sum += leftResult[i];
+			else
+				sum += rightResult[i];
+		}
+		return sum;
+	}
+```
+
+
+
+
+
+
 
 
 
