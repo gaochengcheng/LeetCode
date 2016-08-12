@@ -670,6 +670,61 @@ public int candy(int[] ratings){
 	}
 ```
 
+## S.136_Single Number
+
+原题地址：https://leetcode.com/problems/single-number/
+
+思路：
+
+​	这道题目要求使用线性的时间复杂度，和很少的附加空间。运用亦或^，相同为0，不同为1的性质。0^x = x.设定一个初始值num=0，然后和数组中所有元素亦或，最后得到的那个值就是出现次数为奇数次的值。 因此出现次数为1次的数字就产生了。
+
+代码：
+
+```java
+public int singleNumber(int[] nums) {
+		int num = 0;
+		int length = nums.length;
+		for(int i = 0; i < length; i++){
+			num = num^nums[i];
+		}
+		return num;
+	}
+```
+
+##137_ Single Number II
+原题地址：https://leetcode.com/problems/single-number-ii/
+思路1：
+
+​	扫描数组，把数据读入hashMap中，然后遍历hashMap，找到按个次数不是3的元素。空间上增加了hashMap的空间，时间上多遍历一次hashMap。
+
+代码：
+
+```java
+public int singleNumber(int[] nums) {
+		int length = nums.length;
+		HashMap<Integer,Integer> map = new HashMap<>();
+		for(int i = 0; i < length; i++){
+			if(map.containsKey(nums[i])){
+				map.put(nums[i], map.get(nums[i])+1);
+			}
+			else
+				map.put(nums[i], 1);
+		}
+		int result = 0;
+		Iterator<java.util.Map.Entry<Integer,Integer>> it = map.entrySet().iterator();
+		while(it.hasNext()){
+			Map.Entry<Integer, Integer> entry = it.next();
+			Integer key = entry.getKey();
+			Integer value = entry.getValue();
+			if(value != 3){
+				result = key;
+				break;
+			}
+		}
+		return result;
+	}
+```
+
 
 
 
