@@ -13,16 +13,16 @@ public class S2_AddTwoNumbers {
 		l1.next = new ListNode(1);
 		l1.next.next = new ListNode(6);
 //		
-//		ListNode l2 = new ListNode(5);
-//		l2.next = new ListNode(6);
-//		l2.next.next = new ListNode(4);
-//		ListNode result = addTwoNumbers(l1,l2);
+		ListNode l2 = new ListNode(5);
+		l2.next = new ListNode(6);
+		l2.next.next = new ListNode(4);
+		ListNode result = addTwoNumbers(l1,l2);
 		
 //		ListNode l1 = new ListNode(1);
 		
-		ListNode l2 = new ListNode(0);
+//		ListNode l2 = new ListNode(0);
 //		l2.next = new ListNode(9);
-		ListNode result = addTwoNumbers(l1,l2);
+//		ListNode result = addTwoNumbers(l1,l2);
 		
 		while(result != null){
 			System.out.println(result.val);
@@ -33,7 +33,7 @@ public class S2_AddTwoNumbers {
 
 	public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
 		ListNode result = new ListNode(0);
-		ListNode lastResult = result;
+		ListNode lastResult = result; // 保存链表的头结点，因为对一个链表而言，只要知道头结点，就可以通过next访问到所有元素
 		while(l1 != null && l2 != null){
 			int val1 = l1.val;
 			int val2 = l2.val;
