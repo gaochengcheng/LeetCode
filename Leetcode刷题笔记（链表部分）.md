@@ -118,3 +118,6 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
     }
 ```
 
+startPoint、node1、node2之间的变换过程如如图：
+
+![链表逆序过程](pics\链表逆序过程.PNG)

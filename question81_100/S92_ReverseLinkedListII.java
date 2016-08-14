@@ -33,6 +33,7 @@ public class S92_ReverseLinkedListII {
 				node2 = node1.next;
 			}
 			else{
+				//核心代码
 				node1.next = node2.next;
 				node2.next = startPoint.next;
 				startPoint.next = node2;
