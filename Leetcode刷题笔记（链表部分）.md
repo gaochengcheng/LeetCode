@@ -174,10 +174,17 @@ public ListNode partition(ListNode head, int x) {
 
 ​	这道题目吧，本质上就是在一个已经排过序的链表中，对元素进行遍历操作，当发现链表中有重复元素的时候，通过修改链表指针达到删除重复元素的效果。
 
-1. 维护两个指针，pre和cur，cur指向当前遍历到的元素，pre指向前面的一个。
-2. 当pre == cur时，cur = cur.next; 
+>这道题是经典的双指针问题，用两个指针一前一后指向链表。如果两个指针指向的值相等，那么就让第二个指针一直往后挪，挪到与第一个指针不同为止。然后让第一个指针的next指向第二个指针，两个指针同时往后挪，进行下面的操作。
+>
+>需要注意，当list的结尾几个node是重复的时候，例如`1->2->3->3，那么ptr2会指向null，需要特殊处理，令ptr1.next = null，这样list尾部就不会丢。`
+>
+>其他情况就不用特殊处理结尾了，因为结尾没有重复值，只须遍历就够了，不用特殊处理尾部。 
 
-3. 当pre != cur时，pre = pre.next;  cur = cur.next;
+
+
+1. 维护两个指针，pre和cur，cur指向当前遍历到的元素，pre指向前面的一个。
+2. 当pre.val == cur.val时，cur = cur.next; 需要注意的是当cur是null的时候，需要特殊处理，令pre.next = null。剩下的情况只需遍历就行，不需要重复处理。
+
 
 代码：
 
@@ -193,21 +200,99 @@ public ListNode partition(ListNode head, int x) {
         pre.next = head;
         cur = head;
         while(cur != null){
-        	while(cur != null && pre.val == cur.val){
+        	if(pre.val == cur.val){
         		cur = cur.next;
+        		if(cur == null)    //特殊处理
+        			pre.next = cur;
         	}
-        	if(cur != null){
+        	else{
         		pre.next = cur;
         		pre = pre.next;
         		cur = cur.next;
-        	}else
-        	{
-        		pre.next = cur;
         	}
         }
         return head;
     }
 ```
+
+## S.82_Remove Duplicates from Sorted List II
+
+原题地址：https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+
+思路：
+
+​	这个题目和上面一个题目很相似，不同之处在于，一旦遇到重复元素，就把该元素全部删除掉。因此要维护3个指针（pre、cur、post），并且曾加一个伪头节点。
+
+​	最开始建立头结点，并将其指向head。
+
+```java
+	ListNode fakehead = new ListNode(-1);
+	fakehead.next = head;
+```
+
+​	建立三个指针，分别代表pre、cur、post
+
+```java
+	ListNode ptr0 = fakehead;  //pre
+	ListNode ptr1 = fakehead.next;  //cur
+	ListNode ptr2 = fakehead.next.next;  //post
+```
+
+​	设置一个flag变量，通过这个变量判断是否需要删除元素。
+
+​	当没有遇到重复（flag == false）元素，三个指针同时向后移动。
+
+```java
+	ptr0 = ptr1;
+	ptr1 = ptr2;
+	ptr2 = ptr2.next;
+```
+
+​	如果遇到重复元素，设置flag为true，并让ptr2一直往后找找到第一个与ptr1值不等的位置时停止，这时，ptr1指向的node的值是一个重复值，需要删除，所以这时就需要让ptr0的next连上当前的ptr2，这样就把所有重复值略过了。然后，让ptr1和ptr2往后挪动继续查找。
+
+​	这里还需要注意的是，当ptr2一直往后找的过程中，是有可能ptr2==null（这种情况就是list的最后几个元素是重复的，例如1->2->3->3->null)，这时ptr1指向的值肯定是需要被删除的，所以要特殊处理，令ptr0的next等于null，把重复值删掉。其他情况说明最后几个元素不重复，不需要处理结尾，遍历就够了。
+
+代码：
+
+```java
+public ListNode deleteDuplicates(ListNode head) {
+        
+		if(head == null || head.next == null){
+			return head;
+		}
+
+		ListNode fakehead = new ListNode(-1);
+		fakehead.next = head;
+		ListNode ptr0 = fakehead;  //pre
+		ListNode ptr1 = fakehead.next;  //cur
+		ListNode ptr2 = fakehead.next.next;  //post
+		
+		boolean flag = false;
+		
+		while(ptr2 != null){
+			if(ptr1.val == ptr2.val){
+				flag = true;
+				ptr2 = ptr2.next;
+				if(ptr2 == null){
+					ptr0.next = null;
+				}
+			}else{
+				if(flag){
+					ptr0.next = ptr2;
+					flag = false;
+				}
+				else{
+					ptr0 = ptr1;
+				}
+				ptr1 = ptr2;
+				ptr2 = ptr2.next;
+			}
+		}
+		return fakehead.next;
+    }
+```
+
+
 
 
 

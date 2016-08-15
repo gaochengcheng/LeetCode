@@ -18,17 +18,33 @@ public class S83_RemoveDuplicatesfromSortedList {
         
         pre.next = head;
         cur = head;
+        //版本1.0
+//        while(cur != null){
+//        	while(cur != null && pre.val == cur.val){
+//        		cur = cur.next;
+//        	}
+//        	if(cur != null){
+//        		pre.next = cur;
+//        		pre = pre.next;
+//        		cur = cur.next;
+//        	}
+//        	else
+//        	{
+//        		pre.next = cur;  
+//        	}
+//        }
+        
+        //版本2.0
         while(cur != null){
-        	while(cur != null && pre.val == cur.val){
+        	if(pre.val == cur.val){
         		cur = cur.next;
+        		if(cur == null)
+        			pre.next = cur;
         	}
-        	if(cur != null){
+        	else{
         		pre.next = cur;
         		pre = pre.next;
         		cur = cur.next;
-        	}else
-        	{
-        		pre.next = cur;
         	}
         }
         return head;
