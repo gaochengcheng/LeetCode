@@ -292,6 +292,72 @@ public ListNode deleteDuplicates(ListNode head) {
     }
 ```
 
+## S.61_Rotate List
+
+原题地址：https://leetcode.com/problems/rotate-list/
+
+思路：
+
+​	这道题主要先理解题意，就是倒着数k个node，从那开始到结尾和之前那部分对调，那个例子就是，4->5拿前面来，1->2->3拿后面去。
+
+​	几个特殊：
+
+​	k是可以大于整个list的长度的，所以这时要对k对len取模
+
+​	如果取模之后得0，相当于不用rotate，直接返回
+
+	>看到这种倒着数数的直接使用双指针，ptr1和ptr2一前一后同时向后移动。两个指针之间的间隔为k，当ptr2到达最后一ige元素后，ptr1就是倒数第k个的位置。
+
+​	移动结束后，newhead = ptr1.next
+
+​	ptr2.next = head;
+
+​	ptr1.next = null;
+
+代码：
+
+```java
+public ListNode rotateRight(ListNode head, int k) {
+		if(head == null || head.next == null){
+			return head;
+		}
+		
+		ListNode fakehead = new ListNode(-1);
+		fakehead.next = head;
+		
+		ListNode ptr1 = head;
+		ListNode ptr2 = head;
+		int length = 0;
+		//计算链表长度
+		while(head != null){
+			length++;
+			head = head.next;
+		}
+
+		k = k % length;
+		int i = 0;
+		
+		//ptr2到达指定位置
+		while(i < k){
+			i++;
+			ptr2 = ptr2.next;
+		}
+
+		//ptr1、ptr2同时向后移动，直到ptr2到达最后
+		while(ptr2.next != null){
+			ptr1 = ptr1.next;
+			ptr2 = ptr2.next;
+		}
+		fakehead.next = ptr1.next;
+		ptr2.next = fakehead.next;
+		ptr1.next = null;
+		
+		return fakehead.next;
+	}
+```
+
+
+
 
 
 
