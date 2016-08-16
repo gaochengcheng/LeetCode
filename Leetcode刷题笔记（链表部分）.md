@@ -306,7 +306,7 @@ public ListNode deleteDuplicates(ListNode head) {
 
 ​	如果取模之后得0，相当于不用rotate，直接返回
 
-	>看到这种倒着数数的直接使用双指针，ptr1和ptr2一前一后同时向后移动。两个指针之间的间隔为k，当ptr2到达最后一ige元素后，ptr1就是倒数第k个的位置。
+	>看到这种倒着数数的直接使用**双指针**，ptr1和ptr2一前一后同时向后移动。两个指针之间的间隔为k，当ptr2到达最后一ige元素后，ptr1就是倒数第k个的位置。
 
 ​	移动结束后，newhead = ptr1.next
 
@@ -353,6 +353,59 @@ public ListNode rotateRight(ListNode head, int k) {
 		ptr1.next = null;
 		
 		return fakehead.next;
+	}
+```
+
+## S.19_Remove Nth Node From End of List
+
+原题地址：https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+
+思路；
+
+​	这道题目的意思是要删除从末尾开始数起，第n个位置的值。采用的方法和上一题很相似，也是使用**双指针**ptr1和ptr2。当第二个指针指向末尾的时候，第一个指针的next就是待删除的元素。这时ptr1.next = ptr2.next.next。返回fakenode.next;
+
+​	需要处理的特殊情况，当删除第一个点（n的值和链表长度值相同时），fakenode.next = fakenode.next.next;返回fakenode.next;
+
+代码：
+
+```java
+public ListNode removeNthFromEnd(ListNode head, int n) {
+		if(head == null )
+			return head;
+		
+		ListNode fakenode = new ListNode(-1);
+		fakenode.next = head;
+		int i = 0;
+		ListNode ptr1 = fakenode;
+		ListNode ptr2 = fakenode;
+		
+		int length = 0;
+		while(head != null){
+			length++;
+			head = head.next;
+		}
+		//处理length == n时的情况
+		if(n == length){
+			fakenode.next = fakenode.next.next;
+			return fakenode.next;
+		}
+		
+		//让ptr2和ptr1之间差别n
+		while(i < n){
+			i++;
+			ptr2 = ptr2.next;
+		}
+		//让ptr1和ptr2同时向后移动，直到ptr2.next == null
+		while(ptr2 != null){
+			ptr1 = ptr1.next;
+			ptr2 = ptr2.next;
+			if(ptr2.next == null)
+				break;
+		}
+		//ptr1.next 就是要删除的元素
+		ptr1.next = ptr1.next.next;
+		
+		return fakenode.next;
 	}
 ```
 

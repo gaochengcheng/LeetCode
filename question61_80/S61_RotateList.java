@@ -42,8 +42,8 @@ public class S61_RotateList {
 			ptr1 = ptr1.next;
 			ptr2 = ptr2.next;
 		}
-		ptr2.next = fakehead.next;
 		fakehead.next = ptr1.next;
+		ptr2.next = fakehead.next;
 		ptr1.next = null;
 		
 		
