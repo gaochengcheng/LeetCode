@@ -409,9 +409,46 @@ public ListNode removeNthFromEnd(ListNode head, int n) {
 	}
 ```
 
+## S.24_Swap Nodes in Pairs
 
+原题地址：https://leetcode.com/problems/swap-nodes-in-pairs/
 
+思路：
 
+​	使用两个指针，分别指向相邻的两个元素，然后交换两个元素的值。
+
+​	交换元素之后，两个指针分别同时向后移动，重复之前的操作。
+
+代码：
+
+```java
+public ListNode swapPairs(ListNode head) {
+       
+        if(head == null || head.next == null)
+        	return head;
+        
+        int value = 0;
+        ListNode fakenode = new ListNode(-1);
+        fakenode.next = head;
+        ListNode ptr1 = head;
+        ListNode ptr2 = head.next;
+        while(ptr1 != null && ptr2 != null){
+        	value = ptr1.val;
+        	ptr1.val = ptr2.val;
+        	ptr2.val = value;
+        	if(ptr2.next != null){
+        		ptr1 = ptr2.next;
+        		if(ptr1.next != null){
+        			ptr2 = ptr1.next;
+        		}
+        		else
+        			break;
+        	}else
+        		break;
+        }
+        return fakenode.next;
+    }
+```
 
 
 
