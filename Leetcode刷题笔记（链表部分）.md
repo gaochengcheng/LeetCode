@@ -67,13 +67,13 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
     }
 ```
 
-## S.92_Reverse Linked List II
+## S.92_Reverse Linked List II（思路巧妙）
 
 原题地址：https://leetcode.com/problems/reverse-linked-list-ii/
 
 思路：
 
-​	本质上是一道链表逆序题目啦！只不过在这道题目中指定了逆序的两端m和n。方法和经典的从头到尾全部逆序的方法是一样的。
+​	本质上是一道链表逆序题目啦！只不过在这道题目中指定了逆序的两端m和n。方法和经典问题的从头到尾全部逆序的方法是一样的。
 
 ​	维护3个指针，startpoint，node1和node2。
 
@@ -121,6 +121,41 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
 startPoint、node1、node2之间的变换过程如如图：
 
 ![链表逆序过程](pics\链表逆序过程.PNG)
+
+这种方法是使用头插法逆序一个链表：
+
+​	new一个伪头结点，dummy或者fakenode，令fakenode.next = head;
+
+​	把遍历的每个元素放到fakenode.next 的位置，当遍历完成时，链表就逆序了。
+
+​	过程是：
+
+​	1--2--3--4--5
+
+​	2--1--3--4--5
+
+​	3--2--1--4--5
+
+​	4--3--2--1--5
+
+​	5--4--3--2--1
+
+```java
+ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode cur = head.next;
+        ListNode last = head;
+        while(cur != null){
+            last.next = cur.next;
+            cur.next = pre.next;
+            pre.next = cur;
+            cur = last.next;
+        }
+        head = dummy.next;
+
+reverse a linked list with a head node
+```
 
 ## S.86_Partition List
 
@@ -445,6 +480,53 @@ public ListNode swapPairs(ListNode head) {
         			break;
         	}else
         		break;
+        }
+        return fakenode.next;
+    }
+```
+
+## 25._Reverse Nodes in k-Group
+
+思路：
+
+​	凡是涉及链表逆序，就是维护好3个指针，pre指向待交换元素的前一个元素，last指向待交换元素的第一个，cur指向待交换元素的第二个。
+
+代码：
+
+```java
+	public ListNode reverse(ListNode pre, ListNode next){
+		//需要维护的一共三个指针，pre指向待交换的前一个、last指向待交换的第一个、cur指向待交换的第二个。	
+			ListNode last = pre.next;
+			ListNode cur = last.next;
+			while(cur != next){
+				last.next = cur.next;
+				cur.next = pre.next;
+				pre.next = cur;
+				cur = last.next;
+			}
+			return last;   //last作为下一次交换时候的pre
+		}
+    public ListNode reverseKGroup(ListNode head, int k) {
+         if(head != null && k == 1){
+        	return head;
+        }
+        
+        ListNode fakenode = new ListNode(-1);
+        fakenode.next = head;
+        
+        ListNode pre = fakenode;
+        ListNode cur = head;
+        int count = 0;
+        
+        //pre指向待交换的前一个，next指向下一轮待交换的头一个
+        while(cur != null){
+        	count++;
+        	ListNode next = cur.next; // next指向下一轮待交换的头一个
+        	if(count == k){
+        		pre = reverse(pre,next);
+        		count = 0;
+        	}
+        	cur = next; //不懂
         }
         return fakenode.next;
     }
