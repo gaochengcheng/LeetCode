@@ -485,7 +485,7 @@ public ListNode swapPairs(ListNode head) {
     }
 ```
 
-## 25._Reverse Nodes in k-Group
+## 25._Reverse Nodes in k-Group（hard）
 
 思路：
 
@@ -530,6 +530,60 @@ public ListNode swapPairs(ListNode head) {
         }
         return fakenode.next;
     }
+```
+
+## S.138_Copy List with Random Pointer（hard）
+
+思路：
+
+​	两步走：
+
+​	1.第一步通过next指针遍历所有元素，先把所有节点创建出来，使用next指针把他们之间的关系连接上。并且再此过程中，把值相同的节点放到map中，key是旧链接的节点，value是新链接的节点。他们的lable值相同。
+
+​	2.第二步，通过next指针再次遍历元素，依次把每个元素的random指向的节点取出来，赋给新链接的random。
+
+​	最后返回新链接的头结点newhead，就OK啦。
+
+​	空间复杂度：使用了hashmap，O（n）。
+
+​	时间复杂度：遍历了两边原来的链接，是O（2n）= O（n）。
+
+代码：
+
+```java
+// 使用hashmap，key存储原始链接的RandomListNode，value存储新链接的RandomListNode。
+	public RandomListNode copyRandomList(RandomListNode head) {
+		if (head == null)
+			return null;
+		// map中key和value的节点值是相同的，不过是不同的对象。
+		HashMap<RandomListNode, RandomListNode> map = new HashMap<RandomListNode, RandomListNode>();
+		RandomListNode newhead = new RandomListNode(head.label);
+		map.put(head, newhead);
+
+		RandomListNode oldp = head.next;
+		RandomListNode newp = newhead;
+
+		while (oldp != null) {
+			RandomListNode newnode = new RandomListNode(oldp.label);
+			map.put(oldp, newnode);
+			newp.next = newnode;
+
+			oldp = oldp.next;
+			newp = newp.next;
+
+		}
+		oldp = head;
+		newp = newhead;
+		while (oldp != null) {
+			// 等号右边是一个新的节点,因为oldp的值和newp的值相同，现在取出oldp.random对应的value给了newp.random。
+			newp.random = map.get(oldp.random);
+			oldp = oldp.next;
+			newp = newp.next;
+
+		}
+
+		return newhead;
+	}
 ```
 
 
