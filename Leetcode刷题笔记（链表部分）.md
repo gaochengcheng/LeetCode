@@ -586,5 +586,55 @@ public ListNode swapPairs(ListNode head) {
 	}
 ```
 
+## S.141_Linked List Cycle
+
+思路：
+
+​	判断一个链表中是否有环存在。
+
+​	遍历这个链表，如果可以遍历到null，则说明这个链表中没有环，那么如果有环要如何判断呢？
+
+​	设置两个指针slow和faster，slow指针每次向后移动一个位置，faster每次向后移动两个指针。如果这个链表中存在环，那么这两个指针肯定会有相遇的时候。
+
+> 为什么他俩肯定能相遇呢？万一一个把一个超了但是没相遇咋办？
+>
+> 直觉和生活经验告诉我，他俩肯定能相遇，比如在操场跑圈，一个快的一个慢的同时开始跑，一直跑，快的肯定能跟慢的相遇。不过有更严谨的说法就更有说服力了。
+>
+>下面我就引用一下CC150里面外加我的完善来说明怎么证明的这个问题：
+>
+> 假设Faster确实把Slower超了而且他俩还没相遇（类似Faster一下迈了2步，Slower一下迈了一步，Faster超了Slower，但是俩人并没遇上）。那么就假设Faster现在在 i+1 位置而Slower在 i 位置。那么前一时刻，Slower肯定是在 i-1 位置，而Faster肯定在(i+1)-2位置，所以前一时刻，俩人都在 i-1 位置，相遇了。
+>
+>还有一种情况就是Faster在i+2位置而slower在i位置，那么前一时刻，Faster在i位置，而Slower在 i-1位置。这样问题又回归到上面那种情况了（再往前一时刻，Faster在i-2位置，Slower在i-1-1位置，相遇）。
+>
+>所以，这就证明Runner和Faster在有环的链表中肯定会相遇。
+
+
+
+代码：
+
+```java
+public boolean hasCycle(ListNode head) {
+		if(head == null || head.next == null)
+			return false;
+		
+		ListNode slow = head;
+		ListNode faster = head;
+		//注意这里不是slow.next != null && faster.next.next != null
+		//应该是faster.next != null && faster.next.next != null
+		//因为只有faster.next != null 才会有faster.next.next,如果faster.next == null,那么faster.next.next会报
+		//nullpointerException的。
+		while(faster.next != null && faster.next.next != null){
+			slow = slow.next;
+			faster = faster.next.next;
+			
+			if(slow == faster)
+				return true;
+		}
+		
+		return false;
+		
+	}
+```
+
 
 
