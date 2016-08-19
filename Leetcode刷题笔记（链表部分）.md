@@ -636,7 +636,7 @@ public boolean hasCycle(ListNode head) {
 	}
 ```
 
-## S.142_Linked List Cycle II
+## S.142_Linked List Cycle II（medium）
 
 思路：
 
@@ -644,7 +644,7 @@ public boolean hasCycle(ListNode head) {
 
 ​	  ![环入口](pics\环入口.PNG)
 
-> 如上图所示，12为带环链表的入口点，简单分析可知243是fast和slow的相遇点（鹊桥相会啊==！），a为环入口点到头结点的路程，x为相遇点到环入口点的路程。我们假设slow指针走过的路程为s，那么fast指针走过的路程则为2s，假设环长为c。且有
+> 如上图所示，12为带环链表的入口点，简单分析可知243是fast和slow的相遇点（鹊桥相会啊==！），a为环入口点到头结点的路程，x为相遇点到环入口点的路程。我们假设slow指针走过的路程为s，那么fast指针走过的路程则为2s（如果理解有困难，自己可以举例），假设环长为c。且有
 
 >2s = s + nc
 >
@@ -670,5 +670,121 @@ public boolean hasCycle(ListNode head) {
 
 代码：
 
+```java
 
+	public ListNode detectCycle(ListNode head) {
+		if(head == null || head.next == null){
+			return null; //因为不存在环么
+		}
+		
+		ListNode slower = head;
+		ListNode faster = head;
+		
+		while(true){
+			if(faster.next == null || faster.next.next == null)
+				return null; //不存在环的情况  
+			
+			slower = slower.next;
+			faster = faster.next.next;
+			
+			if(slower == faster)
+				break;    //slower和faster相遇
+			
+		}
+		slower = head;
+		while(slower != faster){   //slower和faster分别从头节点的位置和相遇节点的位置往后移动
+			slower = slower.next;
+			faster = faster.next;
+		}
+		return slower;
+		
+	}
+
+```
+
+## S.143_Reorder List
+
+思路：
+
+	>把【1，2，3，4】分成两部分，【1，2】和【3，4】，第二部分逆序，成为【4，3】，然后顺次连接两个链表，最后结果：【1，4，2，3】。
+
+**技巧**：在求中间元素的时候，不需要先遍历一遍求出长度，然后再次遍历到中间找到中间元素。只需要搞两个指针，slower和faster，slower每次走一步，faster每次走两步，当faster到达末尾的时候，slower走过的路正好是faster走过的一半，所以slower.next就是第二部分的第一个元素。
+
+1. 第一个链表和第二个链表分开.
+2. 把第二部分元素逆序了.
+3. 把两个链表按序接起来.
+
+积累：
+
+​	链表逆序的方法有两种，上面插图的是一种方法。哪种方法叫做头插法。遍历到的元素往前面放。
+
+​	第二种方法是如下，仅仅修改前后两个元素的指针即可。很简单。
+
+​	
+
+代码：
+
+```java
+
+    public ListNode reverseList(ListNode head){
+		if(head == null || head.next == null){
+			return head;
+		}
+		
+		ListNode pre = head;
+		ListNode cur = head.next;
+		
+		//链表逆序的另外一种写法,也很巧妙。原先的写法是头插法。
+		while(cur != null){
+			ListNode temp = cur.next;
+			cur.next = pre;
+			pre = cur;
+			cur = temp;
+		}
+		
+		head.next = null;//把head.next修改为null。
+		
+		return pre;
+		
+	}
+    public void reorderList(ListNode head) {
+		if(head == null || head.next == null)
+			return ;
+		
+		ListNode slower = head;
+		ListNode faster = head;
+		ListNode firstHalf = head;
+		while(faster.next != null && faster.next.next != null){
+			slower = slower.next;
+			faster = faster.next.next;
+		}
+		
+		ListNode secondHalf = slower.next;
+		//第一个链表和第二个链表分开
+		slower.next = null; 
+		
+		//把第二部分元素逆序了
+		secondHalf = reverseList(secondHalf);
+		
+		//把两个链表按序接起来
+		while(firstHalf != null && secondHalf != null){
+			ListNode node1 = firstHalf.next;
+			ListNode node2 = secondHalf.next;
+			
+			firstHalf.next = secondHalf;
+			secondHalf.next = node1;
+			
+			firstHalf = node1;
+			secondHalf = node2;
+			
+		}
+		
+		
+	}
+
+```
+
+
+
+​	
 
