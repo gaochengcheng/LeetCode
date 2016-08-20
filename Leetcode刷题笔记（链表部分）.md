@@ -485,7 +485,9 @@ public ListNode swapPairs(ListNode head) {
     }
 ```
 
-## 25._Reverse Nodes in k-Group（hard）
+## S.25_Reverse Nodes in k-Group（hard）
+
+原题地址：https://leetcode.com/problems/reverse-nodes-in-k-group/
 
 思路：
 
@@ -533,6 +535,8 @@ public ListNode swapPairs(ListNode head) {
 ```
 
 ## S.138_Copy List with Random Pointer（hard）
+
+原题地址：https://leetcode.com/problems/copy-list-with-random-pointer/
 
 思路：
 
@@ -588,6 +592,8 @@ public ListNode swapPairs(ListNode head) {
 
 ## S.141_Linked List Cycle
 
+原题地址：https://leetcode.com/problems/linked-list-cycle/
+
 思路：
 
 ​	判断一个链表中是否有环存在。
@@ -637,6 +643,8 @@ public boolean hasCycle(ListNode head) {
 ```
 
 ## S.142_Linked List Cycle II（medium）
+
+原题地址：https://leetcode.com/problems/linked-list-cycle-ii/
 
 思路：
 
@@ -703,6 +711,8 @@ public boolean hasCycle(ListNode head) {
 ```
 
 ## S.143_Reorder List（medium）
+
+原题地址：https://leetcode.com/problems/reorder-list/
 
 思路：
 
@@ -786,13 +796,15 @@ public boolean hasCycle(ListNode head) {
 
 ## S.146_LRU Cache
 
+原题地址：https://leetcode.com/problems/lru-cache/
+
 思路：
 
 ​	在所有LeetCode中，这是一道设计数据结构的题目。可以好好看看！
 
 > 这道题要求设计实现LRU cache的数据结构，实现set和get功能。学习过操作系统的都应该知道，cache作为缓存可以帮助快速存取数据，但是确定是容量较小。这道题要求实现的cache类型是LRU，LRU的基本思想就是“最近用到的数据被重用的概率比较早用到的大的多”，是一种更加高效的cache类型。
 
-> 解决这道题的方法是：**双向链表+HashMap**。
+> 解决这道题的方法是：**双向链表+HashMap**。双向链表的顺序表明了在cache满的情况下，把那个元素删除，HashMap是为了能在O（1）的复杂度内访问到一个元素。
 
 > “为了能够快速删除最久没有访问的数据项和插入最新的数据项，我们将双向链表连接Cache中的数据项，并且保证链表维持数据项从**最近访问到最旧访问的顺序**。 每次数据项被查询到时，都将此数据项移动到链表头部（O(1)的时间复杂度）。这样，在进行过多次查找操作后，最近被使用过的内容就向链表的头移动，而没 有被使用的内容就向链表的后面移动。当需要替换时，链表最后的位置就是最近最少被使用的数据项，我们只需要将最新的数据项放在链表头部，当Cache满 时，淘汰链表最后的位置就是了。 ”
 
@@ -802,7 +814,7 @@ public boolean hasCycle(ListNode head) {
 
          其次，双向链表插入、删除很快，可以灵活的调整相互间的次序，时间复杂度为O(1)。”
 
-解决了LRU的特性，现在考虑下算法的时间复杂度。为了能减少整个数据结构的时间复杂度，就要减少查找的时间复杂度，所以这里利用HashMap来做，这样时间苏咋读就是O(1)。
+解决了LRU的特性，现在考虑下算法的时间复杂度。为了能减少整个数据结构的时间复杂度，就要减少查找的时间复杂度，所以这里利用HashMap来做，这样时间复杂度就是O(1)。
 
  所以对于本题来说：
 

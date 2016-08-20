@@ -78,6 +78,8 @@ public class S146_LRUCache {
 				map.put(key, newNode);
 				len++;
 			}else{
+				//map中删除最后的元素，双端队列中也删除
+				//新放入的node放到head,同时放入map中
 				map.remove(end.key);
 				end = end.pre;
 				if(end != null){
@@ -89,6 +91,7 @@ public class S146_LRUCache {
 			}
 		}
 	}
+	
 }
 
 
