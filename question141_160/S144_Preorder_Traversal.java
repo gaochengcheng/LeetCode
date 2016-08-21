@@ -14,6 +14,7 @@ public class S144_Preorder_Traversal {
 		List<Integer> list = PreOrder_2(root);
 		System.out.println(list.get(0)+"  "+list.get(1)+"  "+list.get(2)+"  "+list.get(3));
 	}
+	
 	public static List<Integer> PreOrder(TreeNode root){
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		Stack<TreeNode> stack = new Stack<TreeNode>();
@@ -56,7 +57,6 @@ public class S144_Preorder_Traversal {
 					cur = cur.right;
 				}
 			}
-				
 		}
 		
 		return list;
