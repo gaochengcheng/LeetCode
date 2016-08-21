@@ -26,6 +26,7 @@ public class S145_BinaryTreePostorderTraversal {
 			while(!stack.isEmpty()){
 				p = stack.peek();
 				stack.pop();
+				
 				if(p.right == q){
 					result.add(p.val);
 					q = p;   //保存刚刚访问过的节点

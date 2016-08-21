@@ -12,7 +12,7 @@
 
 ​	这是一道很典型的题目，对一颗二叉树进行先序遍历。有三种方法，第一种是使用递归的方式，第二种是人为地设计一个栈，手动执行入栈和出栈操作，第三种是对这棵树进行线索化，然后遍历这棵树。
 
-​	###**方法一（重点掌握）**：递归，时间复杂度O（n），空间复杂度O（n）。
+### **方法一（重点掌握）**：递归，时间复杂度O（n），空间复杂度O（n）。
 
 ```java
 public static void PreOrder_2(TreeNode root){
@@ -30,7 +30,7 @@ public static void PreOrder_2(TreeNode root){
 	}
 ```
 
-​	**方法二（重点掌握）**：手动使用栈，时间复杂度O（n），空间复杂度O（n）。
+### **方法二（重点掌握）**：手动使用栈，时间复杂度O（n），空间复杂度O（n）。
 
 1. 访问根节点，根节点入栈。
 
@@ -117,7 +117,7 @@ public static void PreOrder_3(TreeNode root){
 
 ​	二叉树的中序遍历，同样是三种方式，前两种方式分别是使用递归遍历、使用一个手动设置的stack。第三种是对二叉树进行中序线索化。
 
-​	**方法一**：使用递归的方式遍历。时间复杂度O（n），空间复杂度O（n）。
+### **方法一(重点掌握)**：使用递归的方式遍历。时间复杂度O（n），空间复杂度O（n）。
 
 ```java
 public static void InOrder_2(TreeNode root){
@@ -133,7 +133,7 @@ public static void InOrder_2(TreeNode root){
 	}
 ```
 
-​	**方法二**：手动设计一个栈，人为控制元素的入栈和出栈。时间复杂度O（n），空间复杂度O（n）。
+### **方法二（重点掌握）**：手动设计一个栈，人为控制元素的入栈和出栈。时间复杂度O（n），空间复杂度O（n）。
 
 ```java
 public static void InOrder_1(TreeNode root){
@@ -214,7 +214,7 @@ public static void InOrder_3(TreeNode root){
 
 ​	3.使用线索二叉树。
 
-​	方法一：使用递归，时间复杂度O（n），空间复杂度O（n）。
+### **方法一（重点掌握）**：使用递归，时间复杂度O（n），空间复杂度O（n）。
 
 ```java
 public static void PostOrder_2(TreeNode root){
@@ -229,7 +229,7 @@ public static void PostOrder_2(TreeNode root){
 	}
 ```
 
-​	方法二：手动创建一个stack，时间复杂度O（n），空间复杂度O（n）。
+### **方法二（重点掌握）**：手动创建一个stack，时间复杂度O（n），空间复杂度O（n）。
 
 1.   从根节点出发，每次判断当前节点的做孩子是否存在，存在则把他们全部压栈。
 
@@ -276,6 +276,291 @@ public List<Integer> postorderTraversal(TreeNode root) {
 		return result;
     }
 ```
+
+## S.102_Binary Tree Level Order Traversal
+
+原题地址：https://leetcode.com/problems/binary-tree-level-order-traversal/
+
+思路：
+
+​	对于一颗形如：
+
+```java
+	3
+   /  \
+  9   20
+      / \
+     15  7
+```
+
+二叉树而言，输出格式为：[ [3], [9, 20], [15, 7] ]。属于list当中套用list的情况。
+
+```java
+
+   向LinkedList类型的current中添加root节点
+   while(!current.isEmpty()){    
+     while(!current.isEmpty()){        
+       从current中取出头部元素node，访问之，并将元素添加到level中        
+         if(node.left != null)            
+           next.addLast(node.left)        
+         if(node.right != null)            
+           next.addLast(node.right)	
+        }
+   			result.add(level);
+     		将next的值赋给current，每次current都保存着一行节点
+   
+   
+   }
+```
+
+代码：
+
+```java
+public static List<List<Integer>> LevelOrder_1(TreeNode root){
+		ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
+		if(root == null)
+			return result;
+		//为什么使用LinkedList，因为它有在末尾添加元素，从头部取出元素的函数。
+		LinkedList<TreeNode> current = new LinkedList<TreeNode>(),next = new LinkedList<TreeNode>();
+		ArrayList<Integer> level = new ArrayList<Integer>();
+		
+		
+		
+		current.push(root);
+		while(!current.isEmpty()){
+			while(!current.isEmpty()){
+				TreeNode node = current.getFirst();
+				current.pop();
+				level.add(node.val);
+				if(node.left != null){
+					next.addLast(node.left);
+				}
+					
+				if(node.right != null){
+					next.addLast(node.right);
+					
+				}
+			}
+			result.add(level);
+//			level.clear();           //  这种写法在这里不对，因为在同一块内存区域上，把之前的值抹去后，用后面的值填写了之前的位置
+			level = new ArrayList<Integer>();     //不能使用level.clear()的解决方法是从新new出空间来
+			LinkedList<TreeNode> temp = null;
+			temp = current;
+			current = next;
+			next = temp;
+			
+		}
+	
+		return result;
+	}
+```
+
+## S.107_Binary Tree Level Order Traversal II
+
+原题地址：https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+
+思路：
+
+​	这道题目和上面一题都是同一类型的题目，对一颗二叉树进行层次遍历么。不过这个题目不是从第一层开始遍历，而是从最后一层开始遍历。没有什么特别的技术含量，就是应用了java的一个集合类Collections的一个函数，叫做reverse()函数。
+
+代码：
+
+```java
+public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        
+		ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
+		LinkedList<TreeNode> current = new LinkedList<TreeNode>();
+		LinkedList<TreeNode> next = new LinkedList<TreeNode>();
+		ArrayList<Integer> level = new ArrayList<Integer>();
+		
+		if(root == null)
+			return result;
+		current.addLast(root);
+		while(!current.isEmpty()){
+			while(!current.isEmpty()){
+				TreeNode node = current.getFirst();
+				current.pop();         //移除第一个元素
+				level.add(node.val);
+				
+				if(node.left != null)
+					next.addLast(node.left);
+				if(node.right != null)
+					next.addLast(node.right);
+			}
+			result.add(level);
+			level = new ArrayList<Integer>();
+			LinkedList<TreeNode> temp = null;
+			temp = current;
+			current = next;
+			next = temp;
+		}
+		Collections.reverse(result);
+		return result;
+	
+    }
+```
+
+## S.103_Binary Tree Zigzag Level Order Traversal
+
+原题地址：https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+
+思路：
+
+​	这个题目同样是层次遍历的变形题目，相邻两层之间的访问次序相反。同样适用Collections.reverse()函数。在所有偶数层的遍历结果上面使用这个函数。
+
+代码：
+
+```java
+public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+		ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
+		LinkedList<TreeNode> current = new LinkedList<TreeNode>();
+		LinkedList<TreeNode> next = new LinkedList<TreeNode>();
+		ArrayList<Integer> level = new ArrayList<Integer>();
+		if(root == null)
+			return result;
+		current.addLast(root);
+		int flag = 1;
+		while (!current.isEmpty()) {
+			{
+				while (!current.isEmpty()) {
+					TreeNode node = current.getFirst();
+					current.poll();
+					level.add(node.val);
+					if (node.left != null)
+						next.addLast(node.left);
+					if (node.right != null)
+						next.addLast(node.right);
+					}
+				if (1 == flag) {
+					flag = -flag;
+				} else {
+					flag = -flag;
+					Collections.reverse(level);
+				}
+				result.add(level);
+				level = new ArrayList<Integer>();
+				LinkedList<TreeNode> temp = current;
+				current = next;
+				next = temp;
+			}
+
+		}
+		return result;
+	}
+```
+
+## S.99_Recover Binary Search Tree
+
+原题地址：https://leetcode.com/problems/recover-binary-search-tree/
+
+思路：
+
+​	这道题目的意思是恢复一颗二叉搜索树。所谓的二叉搜索树是这个样子的，如果对这棵树进行中序遍历，那么遍历的结果是一个从小到大的递增序列。
+
+​	所以解决这道题目的关键在于找到哪两个节点的位置是不符合中序遍历的结果的，找到这两个节点的位置。交换他们的值。
+
+代码：
+
+```java
+public class Solution {
+  
+    TreeNode pre;       // 指向当前遍历元素的前一个
+    TreeNode first;     // 第一个乱序的元素
+    TreeNode second;    // 第二个乱序的元素
+  
+	//找乱序元素的时候，就是当前元素root和前一个元素pre做比较。  
+    public void inorder(TreeNode root){
+        if(root == null){
+            return;
+        }
+        inorder(root.left);
+        if(pre == null){
+            pre = root;
+        }else{
+            if(pre.val > root.val){
+                if(first == null){
+                    first = pre;        // 找到第一个乱序的元素
+                }
+                second = root;           
+            }
+            pre = root;                  // 继续搜索
+        }
+        inorder(root.right);
+    }
+  
+	//两步走，第一步找到乱序的元素，第二步交换乱序元素的值。  
+    public void recoverTree(TreeNode root) {
+        pre = null;                             // 必须在这里初始化一遍，否则OJ会报错
+        first = null;
+        second = null;
+        inorder(root);
+        if(first!=null && second!=null){        // 只需要交换元素值，而没必要进行指针操作！
+            int tmp = first.val;
+            first.val = second.val;
+            second.val = tmp;
+        }
+    }
+    
+}
+```
+
+## S.100_Same Tree
+
+原题地址：https://leetcode.com/problems/same-tree/
+
+思路：
+
+​	按照相同的顺序，同时遍历两棵树，比较每一个位置的结构和值是否是相等的。比如按照先序的方式，同时遍历两棵树。
+
+​	当获得一个节点node之后，依次做一下判断：
+
+​	1.是否是同时为null
+
+​		a)如果同时为空，继续做判断。
+
+​		b)如果不同时为空，其中有一个不为null，那么return false。
+
+​		c)如果都不是null，那么判断他们的值，是否相等，相等继续做判断，不想等则return  false。
+
+​	2.同时访问node的left。
+
+​	3.同时访问node的right。
+
+代码：
+
+```java
+public boolean isSameTree(TreeNode p, TreeNode q) {
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		stack.push(p);
+		stack.push(q);
+		while(!stack.isEmpty()){
+			TreeNode node1 = stack.pop();
+			TreeNode node2 = stack.pop();
+			if(node1 == null && node2 == null)
+				continue;
+			if(node1 == null || node2 == null)
+				return false;
+			if(node1.val != node2.val)
+				return false;
+			stack.push(node1.left);
+			stack.push(node2.left);
+			
+			stack.push(node1.right);
+			stack.push(node2.right);
+		}
+		return true;
+	}
+```
+
+## S.101_Symmetric Tree
+
+原题地址：https://leetcode.com/problems/symmetric-tree/
+
+
+
+
+
+​	
 
 
 

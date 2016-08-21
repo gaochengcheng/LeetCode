@@ -41,6 +41,8 @@ public class S100_SameTree {
 		}
 		return true;
 	}
+	
+	
 	public boolean isSameTree(TreeNode p, TreeNode q){
 		Stack<TreeNode> stack1 = new Stack<TreeNode>();
 		Stack<TreeNode> stack2 = new Stack<TreeNode>();

@@ -25,6 +25,7 @@ import java.util.List;
 
 
 public class S102_LevelOrder {
+	
 	public static void main(String[] args) {
 		TreeNode root = new TreeNode(3);
 		root.left = new TreeNode(9);
@@ -34,13 +35,16 @@ public class S102_LevelOrder {
 		List<List<Integer>> list = LevelOrder_1(root);
 		System.out.println(list);
 	}
+	
 	public static List<List<Integer>> LevelOrder_1(TreeNode root){
 		ArrayList<List<Integer>> result = new ArrayList<List<Integer>>();
 		if(root == null)
 			return result;
-		
+		//为什么使用LinkedList，因为它有在末尾添加元素，从头部取出元素的函数。
 		LinkedList<TreeNode> current = new LinkedList<TreeNode>(),next = new LinkedList<TreeNode>();
 		ArrayList<Integer> level = new ArrayList<Integer>();
+		
+		
 		
 		current.push(root);
 		while(!current.isEmpty()){
