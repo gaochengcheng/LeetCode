@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-       a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+         a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-       b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+         b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -654,7 +654,99 @@ public boolean isBalanced(TreeNode root) {
 
 思路：
 
-​	
+​	根节点入栈，
+
+​	while( ! stack.isEmpty()){
+​		1.取出节点值，并让节点出栈
+
+​		2.节点的右孩子入栈
+
+​		3.节点的做孩子入栈
+
+​		4.修改节点的做孩子为null
+
+​	·	5.如果栈不空，修改节点右孩子为栈顶元素的值。（这一步很难想到的）
+
+}
+
+代码：
+
+```java
+public void flatten(TreeNode root) {
+		 if( root == null){
+			 return;
+		 }
+		 Stack<TreeNode> stack = new Stack<TreeNode>();
+		 stack.push(root);
+		 
+		 while(!stack.isEmpty()){
+			 TreeNode node = stack.peek();
+			 stack.pop();
+			 
+			 if(node.right != null)
+				 stack.push(node.right);
+			 if(node.left != null)
+				 stack.push(node.left);
+			 
+			 node.left = null;
+			 
+			 if(!stack.isEmpty()){
+				 node.right = stack.peek();
+			 }
+		 }
+		 
+	 }
+```
+
+## S.117_Populating Next Right Pointers in Each Node II
+
+原题地址：https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/
+
+思路：
+
+​	层次遍历这棵树，然后给每一层的元素添加next指针的指向。
+
+代码：
+
+```java
+public void connect(TreeLinkNode root) {
+        
+		if(root == null){
+			return;
+		}
+		
+		LinkedList<TreeLinkNode> current = new LinkedList<TreeLinkNode>();
+		LinkedList<TreeLinkNode> next = new LinkedList<TreeLinkNode>();
+		
+		current.addLast(root);
+		while(!current.isEmpty()){
+			while(!current.isEmpty()){
+				TreeLinkNode node = current.getFirst();   //只拿到值，并不删除元素，还需要调用poll，才会删除
+				
+				current.poll();
+				if(!current.isEmpty()){
+					node.next = current.getFirst();
+				}else{
+					node.next = null;
+				}
+				
+				if(node.left != null)
+					next.addLast(node.left);
+				if(node.right != null)
+					next.addLast(node.right);
+				
+			}
+			current = next;
+			next = new LinkedList<TreeLinkNode>();
+		}
+		
+	
+    }
+```
+
+
+
+
 
 ​	
 
