@@ -44,22 +44,20 @@ public class S101_SymmetricTree {
 			//写条件的时候，要保证所有的能遍历到不对称的部分。
 			//每个叶子节点的左右孩子都是null，如果仅仅遍历到这样的null就返回true，就会造成错误。
 			//所以，要使用continue
-			if(p != null & q!= null){ 
+			if(p != null && q!= null){   
 				if(p.val != q.val)
 					return false;
-					stack.push(p.left);
-					stack.push(q.right);
+				stack.push(p.left);
+				stack.push(q.right);
 
-					stack.push(p.right);
-					stack.push(q.left);
+				stack.push(p.right);
+				stack.push(q.left);
 				
-			}else if(p == null && q == null){
+			}else if(p == null && q == null){  //p == null,q == null
 				continue;       //妥善利用好continue
-			}else{
+			}else{   			//p、q 之间有一个是null，这种情况肯定不对称
 				return false;
 			}
-			
-			
 			
 		}
 		

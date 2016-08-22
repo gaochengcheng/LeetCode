@@ -72,7 +72,7 @@ public class S99_RecoverBinarySearchTree {
                 if(first == null){
                     first = pre;        // 找到第一个乱序的元素
                 }
-                second = root;      // 第二个乱序的元素。如果用了else，则无法通过只有两个元素的情况
+                second = root;      
             }
             pre = root;             // 继续搜索
         }

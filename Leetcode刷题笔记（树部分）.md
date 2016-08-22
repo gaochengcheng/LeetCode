@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-     a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+       a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-     b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+       b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -536,6 +536,7 @@ public boolean isSameTree(TreeNode p, TreeNode q) {
 		while(!stack.isEmpty()){
 			TreeNode node1 = stack.pop();
 			TreeNode node2 = stack.pop();
+          	//三个 if 正好把所有情况考虑进来
 			if(node1 == null && node2 == null)
 				continue;
 			if(node1 == null || node2 == null)
@@ -556,9 +557,104 @@ public boolean isSameTree(TreeNode p, TreeNode q) {
 
 原题地址：https://leetcode.com/problems/symmetric-tree/
 
+思路：
 
+​	这道题目的意思是判断一棵树是否是对称的。个人认为应该和判断两棵树是否相同有很相似的地方。从根节点开始，视左右子树为两棵树，然后然后按照对称的方式遍历两个子树，并且比较他们的值。在遍历的过程中出现一次不相等，则return false,如果遍历结束全部相等，return true.
 
+代码：
 
+```java
+public static boolean isSymmetric(TreeNode root) {
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		if(root == null)
+			return true;
+		
+		stack.push(root.left);
+		stack.push(root.right);
+		while(!stack.isEmpty()){
+			TreeNode p = stack.pop();
+			TreeNode q = stack.pop();
+			//写条件的时候，要保证所有的能遍历到不对称的部分。
+			//每个叶子节点的左右孩子都是null，如果仅仅遍历到这样的null就返回true，就会造成错误。
+			//所以，要使用continue
+			if(p != null && q!= null){   
+				if(p.val != q.val)
+					return false;
+				stack.push(p.left);
+				stack.push(q.right);
+
+				stack.push(p.right);
+				stack.push(q.left);
+				
+			}else if(p == null && q == null){  //p == null,q == null
+				continue;       //妥善利用好continue
+			}else{   			//p、q 之间有一个是null，这种情况肯定不对称
+				return false;
+			}
+			
+		}
+		
+		return true;
+	}
+```
+
+## S.110_Balanced Binary Tree
+
+原题地址：https://leetcode.com/problems/balanced-binary-tree/
+
+思路：
+
+​	这道题目的意思是判断一棵树是否是平衡二叉树。那什么是平衡二叉树呢？对每个节点而言，它左右子树的高度不超过1.
+
+​	求一颗树的高度的时候，使用递归程序：
+
+```java
+ public int getHeight(TreeNode root){
+		if(root == null)
+			return 0;
+		
+		int left = getHeight(root.left);
+		int right = getHeight(root.right);
+		
+		return Math.max(left, right)+1;
+	}
+```
+
+​	在求树高的基础上，加入一些处理，即一旦某个节点的左右子树的树高差超过1，则return -1.
+
+代码：
+
+```java
+public boolean isBalanced(TreeNode root) {
+        if(root == null)
+			return true;
+		if(getHeight(root) == -1)
+			return false;
+		
+		return true;
+    }
+    public int getHeight(TreeNode root){
+		if(root == null)
+			return 0;
+		
+		int left = getHeight(root.left);
+		int right = getHeight(root.right);
+		if(left == -1 || right == -1)
+			return -1;
+		if(Math.abs(left - right) > 1)
+			return -1;
+		
+		return Math.max(left, right)+1;
+	}
+```
+
+## S.114_Flatten Binary Tree to Linked List
+
+原题地址：https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
+
+思路：
+
+​	
 
 ​	
 

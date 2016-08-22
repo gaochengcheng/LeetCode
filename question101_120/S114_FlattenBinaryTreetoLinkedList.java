@@ -18,11 +18,11 @@ public class S114_FlattenBinaryTreetoLinkedList {
 		root.left.right = new TreeNode(4);
 		root.right = new TreeNode(5);
 		root.right.right = new TreeNode(6);
-		flatten(root);
+		flatten0(root);
 	}
 	
 	
-	public void flatten(TreeNode root){
+	public void flatten0(TreeNode root){
 		Stack<TreeNode> stack = new Stack<TreeNode>();
 		
 		if(root == null)
@@ -79,4 +79,30 @@ public class S114_FlattenBinaryTreetoLinkedList {
 			p = p.right;
 		}
 	}
+	 public void flatten(TreeNode root) {
+		 if( root == null){
+			 return;
+		 }
+		 Stack<TreeNode> stack = new Stack<TreeNode>();
+		 stack.push(root);
+		 
+		 while(!stack.isEmpty()){
+			 TreeNode node = stack.peek();
+			 stack.pop();
+			 
+			 if(node.right != null)
+				 stack.push(node.right);
+			 if(node.left != null)
+				 stack.push(node.left);
+			 
+			 node.left = null;
+			 
+			 if(!stack.isEmpty()){
+				 node.right = stack.pop();
+			 }
+		 }
+		 
+	 }
+	
+	
 }
