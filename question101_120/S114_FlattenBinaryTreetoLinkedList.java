@@ -98,7 +98,7 @@ public class S114_FlattenBinaryTreetoLinkedList {
 			 node.left = null;
 			 
 			 if(!stack.isEmpty()){
-				 node.right = stack.pop();
+				 node.right = stack.peek();
 			 }
 		 }
 		 

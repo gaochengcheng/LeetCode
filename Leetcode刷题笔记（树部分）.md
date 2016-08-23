@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-         a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+           a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-         b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+           b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -742,6 +742,60 @@ public void connect(TreeLinkNode root) {
 		
 	
     }
+```
+
+## S.105_Construct Binary Tree from Preorder and Inorder Traversal
+
+原题地址：https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+
+思路：
+
+1. 先序数组中最左边的值就是树的头结点值，记为head。在中序数组中找到head，下标记为rootIndex。那么在中序数组中rootIndex左边的数组就是头结点左子树的中序数组，长度记为len，则左子树的先序数组就是先序数组中head往后长为len的数组。
+
+   同理于右子树。
+
+2. 用左子树的先序和中序数组，递归整个过程建立左子树，返回的头节点记为root.left.
+
+3. 用右子树的先序和中序数组，递归整个过程建立右子树，返回的头节点记为root.right.
+
+4. 等head的left和right构建完成，返回root。
+
+代码：
+
+```java
+public TreeNode buildTree(int[] preorder, int[] inorder) {
+        
+		int preLength = preorder.length;
+		int inLength = inorder.length;
+		return buildTree(preorder, 0, preLength - 1, inorder, 0, inLength - 1);
+	
+    }
+    public TreeNode buildTree(int[] pre, int preStart, int preEnd, int[] in, int inStart, int inEnd) {
+		if (inStart > inEnd) {
+			return null;
+		}
+		
+		//rootVal是根节点
+		int rootVal = pre[preStart];
+		int rootIndex = 0;
+		//找到根节点下标,rootIndex
+		for (int i = inStart; i <= inEnd; i++) {
+			if (in[i] == rootVal) {
+				rootIndex = i;
+				break;
+			}
+		}
+		
+		int len = rootIndex - inStart;
+		TreeNode root = new TreeNode(rootVal);
+		
+		//详细解读这里的参数
+		//构建左子树的时候，通过左子树的先序和左子树的中序来构建。所以需要传递整个先序序列，以及控制左子树范围的首尾下标。
+		//传递整个中序序列，和确保是左子树范围的首尾下标
+		root.left = buildTree(pre, preStart + 1, preStart + len, in, inStart, rootIndex - 1);
+		root.right = buildTree(pre, preStart + len + 1, preEnd, in, rootIndex + 1, inEnd);
+		return root;
+	}
 ```
 
 
