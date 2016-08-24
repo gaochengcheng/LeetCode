@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-           a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+             a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-           b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+             b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -794,6 +794,58 @@ public TreeNode buildTree(int[] preorder, int[] inorder) {
 		//传递整个中序序列，和确保是左子树范围的首尾下标
 		root.left = buildTree(pre, preStart + 1, preStart + len, in, inStart, rootIndex - 1);
 		root.right = buildTree(pre, preStart + len + 1, preEnd, in, rootIndex + 1, inEnd);
+		return root;
+	}
+```
+
+## S.108_Construct Binary Tree from Inorder and Postorder Traversal
+
+原题地址：https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+
+思路：
+
+​	使用递归的方法构建这颗二叉树。对比于上一道题目（通过先序和中序构建二叉树），这道题目是通过中序和后序遍历构建二叉树。
+
+1. 后序遍历中最后一个节点是整棵树的头节点，记为root，然后在中序数组中找到这个root，并且标记为rootIndex。那么在中序数组中rootIndex左边的数组就是头结点左子树的中序数组，长度记为len，左子树的后序数组就是后序数组中从0开始到len-1的部分。
+
+   同理于头节点的右子树。
+
+2. 用head节点左子树的中序数组和后序数组，递归构建head节点的左子树部分，返回结果记为root.left.
+
+3. 用head节点右子树的中序数组和后序数组，递归构建head节点的右子树部分，返回结果记为root.right.
+
+4. 当root的left和right全部构建完成，返回root。
+
+代码：
+
+```java
+public TreeNode buildTree(int[] inorder, int[] postorder) {
+        
+		int inLength = inorder.length;
+		int postLength = postorder.length;
+		
+		return buildTree(inorder, 0, inLength-1, postorder, 0, postLength-1);
+    
+    }
+    public TreeNode buildTree(int[] inorder, int inStart, int inEnd,int[] postorder, int postStart, int postEnd){
+		
+		if(inStart > inEnd || postStart > postEnd){
+			return null;
+		}
+		
+		int rootVal = postorder[postEnd];
+		int rootIndex = 0;
+		for(int i = inStart; i <= inEnd; i++){
+			if(inorder[i] == rootVal){
+				rootIndex = i;
+				break;
+			}
+		}
+		int len = rootIndex - inStart;
+		TreeNode root = new TreeNode(rootVal);
+		root.left = buildTree(inorder,inStart,rootIndex-1,postorder,postStart,postStart+len-1);
+		root.right = buildTree(inorder,rootIndex+1,inEnd,postorder,postStart+len,postEnd-1);
+		
 		return root;
 	}
 ```
