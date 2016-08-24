@@ -771,7 +771,7 @@ public TreeNode buildTree(int[] preorder, int[] inorder) {
 	
     }
     public TreeNode buildTree(int[] pre, int preStart, int preEnd, int[] in, int inStart, int inEnd) {
-		if (inStart > inEnd) {
+		if (inStart > inEnd || preStart > preEnd) {
 			return null;
 		}
 		
