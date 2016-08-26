@@ -980,6 +980,91 @@ public boolean isValidBST(TreeNode root) {
 	}
 ```
 
+解法二：
+
+>“根据题目中的定义来实现，其实就是对于每个结点保存左右界，也就是保证结点满足它的左子树的每个结点比当前结点值小，右子树的每个结点比当前结 点值大。对于根节点不用定位界，所以是无穷小到无穷大，接下来当我们往左边走时，上界就变成当前结点的值，下界不变，而往右边走时，下界则变成当前结点 值，上界不变。如果在递归中遇到结点值超越了自己的上下界，则返回false，否则返回左右子树的结果。” 
+>
+
+代码：
+
+​	备注：这个代码测试没有通过
+
+```java
+public boolean isValidBST(TreeNode root){
+		
+		return isBST(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
+	}
+	public boolean isBST(TreeNode node, int low, int high){
+		if(node == null)
+			return true;
+		if(node.val > low && node.val < high)
+			//往左边递归的时候，所有节点要小于root.val，往右边递归的时候，所有节点要大于root.val
+			return isBST(node.left, low, node.val) && isBST(node.right, node.val, high);
+		else
+			return false;
+	}
+```
+
+
+
+
+
+## S.108_Convert Sorted Array to Binary Search Tree
+
+原题地址：https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
+
+思路：
+
+​	树这块，很多问题都使用到递归的思想。因为树的很多定义本身就是使用递归方式来定义的，所以要构建符合一些定义的树的时候，使用**递归**是一种很好的方式。
+
+​	解决方法：选中点构造根节点，然后递归的构造左子树和右子树。
+
+​	比如：对于1，2，3，4，5，6，7，这样的一个序列。中间节点是4，4就是整个树的根节点。1，2，3节点是根节点的左边的数组。5，6，7值根节点的右边的数组。其中，1，2，3的中间节点是2，而这个2就是4的左孩子。5，6，7的中间节点是6，6这个节点就是4的右孩子。
+
+​	按照这样的顺序，递归构建这颗树。
+
+> 什么是二叉查找树？
+>
+> **二叉查找树**（*Binary Search Tree*），也称有序二叉树（ordered binary tree）,排序二叉树（sorted binary tree），是指一棵空树或者具有下列性质的[二叉树](http://zh.wikipedia.org/wiki/%E4%BA%8C%E5%8F%89%E6%A0%91)：
+>
+> 1. 若任意节点的左子树不空，则左子树上所有结点的值均小于它的根结点的值；
+> 2. 任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；
+> 3. 任意节点的左、右子树也分别为二叉查找树。
+>
+> 什么是平衡二叉树？
+>
+> An empty tree is height-balanced. A non-empty binary tree T is balanced if:   
+>
+> 1) Left subtree of T is balanced   
+>
+> 2) Right subtree of T is balanced   
+>
+> 3) The difference between heights of left subtree and right subtree is not more than 1.  
+
+代码：
+
+```java
+public TreeNode sortedArrayToBST(int[] nums) {
+        return createTree(nums, 0, nums.length-1);
+    }
+
+    public TreeNode createTree(int[] nums, int low, int high){
+		
+		//递归基是什么？什么时候停止呢？
+		if(low > high)
+			return null;
+		
+		int mid = (low+high)/2;
+		TreeNode root = new TreeNode(nums[mid]);
+		root.left = createTree(nums, low, mid-1);
+		root.right = createTree(nums, mid+1, high);
+		
+		return root;
+	}
+```
+
+
+
 
 
 
