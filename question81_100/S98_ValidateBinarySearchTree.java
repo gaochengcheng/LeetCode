@@ -44,12 +44,12 @@ public class S98_ValidateBinarySearchTree {
 		
 		return isBST(root,Integer.MIN_VALUE,Integer.MAX_VALUE);
 	}
-	public boolean isBST(TreeNode root, int low, int high){
-		if(root == null)
+	public boolean isBST(TreeNode node, int low, int high){
+		if(node == null)
 			return true;
-		if(root.val > low && root.val < high)
+		if(node.val > low && node.val < high)
 			//往左边递归的时候，所有节点要小于root.val，往右边递归的时候，所有节点要大于root.val
-			return isBST(root.left, low, root.val) && isBST(root.right, root.val, high);
+			return isBST(node.left, low, node.val) && isBST(node.right, node.val, high);
 		else
 			return false;
 	}
