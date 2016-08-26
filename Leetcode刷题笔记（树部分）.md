@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-               a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                   a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-               b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                   b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -928,6 +928,58 @@ f(3) = f(0)*f(2),   1为根的情况
     } 
 ```
 
- 	
+## S.95_Unique Binary Search Trees II（难度很大）
+
+原题地址：https://leetcode.com/problems/unique-binary-search-trees-ii/
+
+思路：
+
+
+
+
+
+## S.98_Validate Binary Search Tree
+
+原题地址：https://leetcode.com/problems/validate-binary-search-tree/
+
+思路：
+
+​	最最直接的思路，因为一颗二叉查找树的中序遍历结果是一个递增序列。所以：
+
+1. 对这个树进行中序遍历。
+2. 判断这个序列是不是递增的。如果是递增，返回true，如果不是，返回false。
+
+代码：
+
+```java
+public boolean isValidBST(TreeNode root) {
+		if(root == null)
+			return true;
+		
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		TreeNode p = root;
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		while(!stack.isEmpty() || p != null){
+			if(p != null){
+				stack.push(p);
+				p = p.left;
+			}
+			else{
+				TreeNode node = stack.pop();
+				list.add(node.val);
+				p = node.right;
+			}
+			
+		}
+		int length = list.size();
+		for(int i = 0; i < length-1; i++){
+			if(list.get(i) >= list.get(i+1))
+				return false;
+		}
+		return true;
+	}
+```
+
+
 
 
