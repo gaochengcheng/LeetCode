@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                   a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                     a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                   b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                     b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -1062,6 +1062,113 @@ public TreeNode sortedArrayToBST(int[] nums) {
 		return root;
 	}
 ```
+
+## S.109_Convert Sorted List to Binary Search Tree（未完成）
+
+原题地址：https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/
+
+我写了题目，但是结果不通过。C++版本可以通过。
+
+思路：
+
+​	自底向上构建这棵树。
+
+代码：
+
+```C++
+class Solution {
+	public:
+	TreeNode *sortedListToBST(ListNode *head) {
+	int len = 0;
+	ListNode *p = head;
+	while (p) {
+		len++;
+		p = p->next;
+	}
+	return sortedListToBST(head, 0, len - 1);
+}
+private:
+	TreeNode* sortedListToBST(ListNode*& list, int start, int end) {
+	if (start > end) return nullptr;
+	int mid = start + (end - start) / 2;
+	TreeNode *leftChild = sortedListToBST(list, start, mid - 1);
+	TreeNode *parent = new TreeNode(list->val);
+	parent->left = leftChild;
+	list = list->next;
+	parent->right = sortedListToBST(list, mid + 1, end);
+	return parent;
+	}
+};
+```
+
+## S.111_Minimum Depth of Binary Tree
+
+原题地址：https://leetcode.com/problems/minimum-depth-of-binary-tree/
+
+思路：
+
+​	树是一种递归的数据结构，所以在求最小树高的时候，使用递归的思想进行求解。
+
+​	递归程序结构如下：
+
+1. 如果root == null，返回0.
+
+2. 否则比较当前节点root的左子树和右子树，返回min（root.left+1,root.right+1）。+1加的是本层所占的高度。
+
+   但是这个时候出现一个问题，就是当只有两个节点的时候，理应返回2.我们的程序却返回1.所以加了一些判断处理。当前节点左孩子为空时，返回右子树高度+1，当前节点右孩子为空时，返回左子树高度+1.只有左右子树都不空时，我们返回较小值+1.
+
+代码：
+
+```java
+public int minDepth(TreeNode root) {
+        return Depth(root);
+    }
+    public int Depth(TreeNode root){
+		
+		if(root == null)
+			return 0;
+		if(root.left != null && root.right != null)
+			return Depth(root.left) > Depth(root.right) ? Depth(root.right)+1 : Depth(root.left)+1;
+		else if(root.left != null)
+			return Depth(root.left) +1;
+		else
+			return Depth(root.right) +1;
+			
+	
+	}
+```
+
+## S.104_Maximum Depth of Binary Tree
+
+原题地址：https://leetcode.com/problems/maximum-depth-of-binary-tree/
+
+思路：
+
+​	树作为一个递归定义的数据结构，依然使用递归思想解决。
+
+​	递归求解树的高度，返回当前节点左右子树中较大值+1。
+
+代码：
+
+```java
+public int maxDepth(TreeNode root) {
+		return Depth(root);
+	}
+
+	public int Depth(TreeNode root) {
+		if(root == null)
+			return 0;
+		return Integer.max(Depth(root.left)+1, Depth(root.right)+1);
+	}
+```
+
+## S.112_Path Sum
+
+原题地址：https://leetcode.com/problems/path-sum/
+
+思路：
+
+
 
 
 
