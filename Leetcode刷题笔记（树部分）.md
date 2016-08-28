@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                     a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                         a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                     b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                         b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -1063,7 +1063,7 @@ public TreeNode sortedArrayToBST(int[] nums) {
 	}
 ```
 
-## S.109_Convert Sorted List to Binary Search Tree（未完成）
+## S.109_Convert Sorted List to Binary Search Tree
 
 原题地址：https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/
 
@@ -1099,6 +1099,80 @@ private:
 	return parent;
 	}
 };
+```
+
+### java版本的错误代码：
+
+```java
+public TreeNode sortedListToBST(ListNode head) {
+		
+		if(head == null)
+			return null;
+		int length = 0;
+		ListNode cur = head;
+		while(cur != null){
+			length++;
+			cur = cur.next;
+		}
+		System.out.println(length);
+		return sortedListToBST(head, 0, length-1);
+    }
+	
+	public TreeNode sortedListToBST(ListNode list, int start, int end){
+		if(start > end)
+			return null;
+		
+		int mid = (start+end)/2;
+		TreeNode leftChild = sortedListToBST(list, start, mid-1);
+		TreeNode parent = new TreeNode(list.val);
+		parent.left = leftChild;
+		list = list.next;   //错就错在这里是值传递不是C++中引用传递，在第n层改变list后，不能作用在n-1这层。
+		parent.right = sortedListToBST(list, mid+1, end);
+		
+		return parent;
+	}
+```
+
+### 错误版本的运行过程图：
+
+   ![二叉树递归回溯](pics\二叉树递归回溯.jpg)
+
+解决方法：
+
+​	拿上面的例子来做说明，就是第3层调用中，修改的list能够影响到第2层的list。否则list在第2层的值还是3.就会出现3的parent还是3，而不是3的parent是5.设置为全局变量可以解决这个问题。
+
+### 正确代码：
+
+```java
+static ListNode h;  //为了解决java中没有引用传递，只有值传递的情况，我们在这里搞了一个全局变量。
+	public TreeNode sortedListToBST(ListNode head) {
+		
+		if(head == null)
+			return null;
+		int length = 0;
+		h = head;
+		ListNode cur = head;
+		while(cur != null){
+			length++;
+			cur = cur.next;
+		}
+		System.out.println(length);
+		return sortedListToBST(0, length-1);
+    }
+	
+	public TreeNode sortedListToBST(int start, int end){
+		if(start > end)
+			return null;
+		
+		int mid = (start+end)/2;
+		TreeNode leftChild = sortedListToBST(start, mid-1);
+		TreeNode parent = new TreeNode(h.val);
+		parent.left = leftChild;
+		h = h.next;
+		parent.right = sortedListToBST(mid+1, end);
+		
+		return parent;
+	}
 ```
 
 ## S.111_Minimum Depth of Binary Tree
@@ -1167,6 +1241,39 @@ public int maxDepth(TreeNode root) {
 原题地址：https://leetcode.com/problems/path-sum/
 
 思路：
+
+​	一句老话写在前面，树是一种使用递归方式定义的数据结构。所以，在解决的时候仍然使用递归的思路。
+
+​	题目的意思是，在一颗二叉树中，是否存在一条从根节点到叶子节点的路径，让这条路径上的和等于sum。
+
+1. 如果root==null，直接返回false。
+2. 否则，每次访问到一个节点，sum就减去这个节点的值。然后递归该节点的左子树和右子树。
+3. 直到，访问到根节点（root.left==null && root.right == null）,判断sum是不是减到0.如果减到0，那么说明这样的一条路径知道了。
+
+代码：
+
+```java
+public boolean hasPathSum(TreeNode root, int sum) {
+		if(root == null)
+			return false;
+		
+		sum = sum-root.val;
+		if(root.left == null && root.right == null)
+			//当root.left==null,root.right==null的时候，说明这个节点是根节点。
+			//并且这个时候如果sum的和也是0，那就说明找到一条路径，他的和是0.
+			return sum == 0;   
+		return hasPathSum(root.left,sum) || hasPathSum(root.right,sum);
+		
+	}
+```
+
+## S113_Path Sum II
+
+原题地址：https://leetcode.com/problems/path-sum-ii/
+
+思路：
+
+​	
 
 
 

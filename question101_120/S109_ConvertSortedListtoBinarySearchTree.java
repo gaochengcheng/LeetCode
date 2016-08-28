@@ -9,30 +9,33 @@ import org.junit.Test;
  *
  */
 public class S109_ConvertSortedListtoBinarySearchTree {
+	
+	static ListNode h;  //为了解决java中没有引用传递，只有值传递的情况，我们在这里搞了一个全局变量。
 	public TreeNode sortedListToBST(ListNode head) {
 		
 		if(head == null)
 			return null;
 		int length = 0;
+		h = head;
 		ListNode cur = head;
 		while(cur != null){
 			length++;
 			cur = cur.next;
 		}
 		System.out.println(length);
-		return sortedListToBST(head, 0, length-1);
+		return sortedListToBST(0, length-1);
     }
 	
-	public TreeNode sortedListToBST(ListNode list, int start, int end){
+	public TreeNode sortedListToBST(int start, int end){
 		if(start > end)
 			return null;
 		
 		int mid = (start+end)/2;
-		TreeNode leftChild = sortedListToBST(list, start, mid-1);
-		TreeNode parent = new TreeNode(list.val);
+		TreeNode leftChild = sortedListToBST(start, mid-1);
+		TreeNode parent = new TreeNode(h.val);
 		parent.left = leftChild;
-		list = list.next;
-		parent.right = sortedListToBST(list, mid+1, end);
+		h = h.next;
+		parent.right = sortedListToBST(mid+1, end);
 		
 		return parent;
 	}
