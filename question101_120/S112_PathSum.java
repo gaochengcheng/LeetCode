@@ -1,4 +1,9 @@
 package question101_120;
+
+import java.util.LinkedList;
+
+import org.junit.Test;
+
 /**
  * 
  * @author chengcheng
@@ -19,7 +24,48 @@ public class S112_PathSum {
 		
 	}
 	
-	
-	
+	public boolean hasPathSum_2(TreeNode root, int sum){
+		if(root == null)
+			return false;
+		
+		
+		LinkedList<TreeNode> nodes = new LinkedList<TreeNode>();
+        LinkedList<Integer> values = new LinkedList<Integer>();
+ 
+        nodes.add(root);
+        values.add(root.val);
+ 
+        while(!nodes.isEmpty()){
+            TreeNode curr = nodes.poll();
+            int sumValue = values.poll();
+ 
+            if(curr.left == null && curr.right == null && sumValue==sum){
+                return true;
+            }
+ 
+            if(curr.left != null){
+                nodes.add(curr.left);
+                values.add(sumValue+curr.left.val);
+            }
+ 
+            if(curr.right != null){
+                nodes.add(curr.right);
+                values.add(sumValue+curr.right.val);
+            }
+            
+        }
+ 
+        return false;
+		
+	}
+	@Test
+	public void test(){
+		TreeNode root = new TreeNode(3);
+		root.left = new TreeNode(9);
+		root.right = new TreeNode(20);
+		root.right.left = new TreeNode(15);
+		root.right.right = new TreeNode(7);
+		System.out.println(hasPathSum_2(root,38));
+	}
 	
 }

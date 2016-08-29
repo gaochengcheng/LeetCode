@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                         a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                           a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                         b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                           b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -1240,7 +1240,7 @@ public int maxDepth(TreeNode root) {
 
 原题地址：https://leetcode.com/problems/path-sum/
 
-思路：
+思路1：
 
 ​	一句老话写在前面，树是一种使用递归方式定义的数据结构。所以，在解决的时候仍然使用递归的思路。
 
@@ -1250,7 +1250,7 @@ public int maxDepth(TreeNode root) {
 2. 否则，每次访问到一个节点，sum就减去这个节点的值。然后递归该节点的左子树和右子树。
 3. 直到，访问到根节点（root.left==null && root.right == null）,判断sum是不是减到0.如果减到0，那么说明这样的一条路径知道了。
 
-代码：
+代码1：
 
 ```java
 public boolean hasPathSum(TreeNode root, int sum) {
@@ -1267,13 +1267,94 @@ public boolean hasPathSum(TreeNode root, int sum) {
 	}
 ```
 
-## S113_Path Sum II
+思路2：
+
+1. 使用两个LinkedList，其中一个（nodes）存放入队列的节点，另外一个（values）存放入到当前节点为止的和。
+2. 当nodes队列不空时，取出nodes中的节点和values中的值，然后根据该节点，向左左右孩子扩展，让左右孩子入连同从根到左右孩子节点的求和值分别入队列。
+3. 如果左右孩子为空，则说明访问到叶子节点，判断当前的和与给定值是否相等。
+4. 如果左右孩子不为空，重复第2步操作。
+
+代码2：
+
+```java
+public boolean hasPathSum_2(TreeNode root, int sum){
+		if(root == null)
+			return false;
+		
+		
+		LinkedList<TreeNode> nodes = new LinkedList<TreeNode>();
+        LinkedList<Integer> values = new LinkedList<Integer>();
+ 
+        nodes.add(root);
+        values.add(root.val);
+ 
+        while(!nodes.isEmpty()){
+            TreeNode curr = nodes.poll();
+            int sumValue = values.poll();
+ 
+            if(curr.left == null && curr.right == null && sumValue==sum){
+                return true;
+            }
+ 
+            if(curr.left != null){
+                nodes.add(curr.left);
+                values.add(sumValue+curr.left.val);
+            }
+ 
+            if(curr.right != null){
+                nodes.add(curr.right);
+                values.add(sumValue+curr.right.val);
+            }
+        }
+ 
+        return false;
+		
+	}
+```
+
+## S113_Path Sum II（重点看）
 
 原题地址：https://leetcode.com/problems/path-sum-ii/
 
 思路：
 
-​	
+​	这个题目想不出来。参考别人的结题报告：还是使用递归方法：
+
+> 这道题除了要判断是否有这样的一个path sum，还需要把所有的都可能性结果都返回，所以就用传统的DFS递归解决子问题。代码如下：
+
+代码：
+
+```java
+public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> pathlist = new ArrayList();
+        List<Integer> sumlist = new ArrayList();
+        pathSumHelper(root,sum,sumlist,pathlist);
+        return pathlist;
+    }
+    
+    //因为是数组传递，空间是共享的。返回值是void，但是主调函数中的pathlist已经被修改了
+	public void pathSumHelper(TreeNode root, int sum, List <Integer> sumlist, List<List<Integer>> pathlist){
+		if(root == null)
+			return ;
+		
+		sumlist.add(root.val);
+		sum = sum-root.val;
+		if(root.left == null && root.right == null){
+			if(sum == 0){
+				pathlist.add(new ArrayList<Integer>(sumlist));
+			}
+		}else{
+			if(root.left != null)
+				pathSumHelper(root.left,sum,sumlist,pathlist);
+			if(root.right != null)
+				pathSumHelper(root.right,sum,sumlist,pathlist);
+		}
+		sumlist.remove(sumlist.size()-1);
+		
+	}
+```
+
+
 
 
 
