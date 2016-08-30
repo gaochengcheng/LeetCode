@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                           a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                             a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                           b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                             b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -1312,7 +1312,7 @@ public boolean hasPathSum_2(TreeNode root, int sum){
 	}
 ```
 
-## S113_Path Sum II（重点看）
+## S.113_Path Sum II（重点看）
 
 原题地址：https://leetcode.com/problems/path-sum-ii/
 
@@ -1352,6 +1352,50 @@ public List<List<Integer>> pathSum(TreeNode root, int sum) {
 		sumlist.remove(sumlist.size()-1);
 		
 	}
+```
+
+## S.116_Populating Next Right Pointers in Each Node
+
+原题地址：https://leetcode.com/problems/populating-next-right-pointers-in-each-node/
+
+思路：
+
+​	没有使用递归，使用了层次遍历，cur保存当前层所有节点。next保存下一层所有节点。每当获取一层的节点之后，就顺次把每个节点的next指赋值。
+
+代码：
+
+```java
+public void connect(TreeLinkNode root) {
+        
+        if(root == null)
+            return ;
+        
+        LinkedList<TreeLinkNode> cur = new LinkedList<TreeLinkNode>();
+        LinkedList<TreeLinkNode> next = new LinkedList<TreeLinkNode>();
+        
+        cur.addLast(root);
+        while(!cur.isEmpty()){
+            while(!cur.isEmpty()){
+                TreeLinkNode node = cur.getFirst();
+                cur.poll();
+                
+                if(!cur.isEmpty()){
+                    node.next = cur.getFirst();
+                }else{
+                    node.next = null;
+                }
+                
+                if(node.left != null)
+                    next.addLast(node.left);
+                if(node.right != null)
+                    next.addLast(node.right);
+                    
+                
+            } 
+            cur = next;
+            next = new LinkedList<TreeLinkNode>();
+        }            
+    }
 ```
 
 
