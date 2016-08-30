@@ -28,9 +28,9 @@ public class S116_PopulatinNextRightPointersinEachNode {
                 }
                 
                 if(node.left != null)
-                    next.addLast(root.left);
+                    next.addLast(node.left);
                 if(node.right != null)
-                    next.addLast(root.right);
+                    next.addLast(node.right);
                     
                 
             }

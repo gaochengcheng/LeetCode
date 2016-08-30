@@ -1236,7 +1236,7 @@ public int maxDepth(TreeNode root) {
 	}
 ```
 
-## S.112_Path Sum
+## S.112_Path Sum(重点看)
 
 原题地址：https://leetcode.com/problems/path-sum/
 
@@ -1388,8 +1388,7 @@ public void connect(TreeLinkNode root) {
                 if(node.left != null)
                     next.addLast(node.left);
                 if(node.right != null)
-                    next.addLast(node.right);
-                    
+                    next.addLast(node.right);      
                 
             } 
             cur = next;
@@ -1397,6 +1396,12 @@ public void connect(TreeLinkNode root) {
         }            
     }
 ```
+
+## S.129_Sum Root to Leaf Numbers
+
+原题地址：https://leetcode.com/problems/sum-root-to-leaf-numbers/
+
+思路：
 
 
 
