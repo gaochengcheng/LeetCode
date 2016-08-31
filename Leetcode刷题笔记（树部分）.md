@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                             a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                                 a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                             b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                                 b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -1262,6 +1262,7 @@ public boolean hasPathSum(TreeNode root, int sum) {
 			//当root.left==null,root.right==null的时候，说明这个节点是根节点。
 			//并且这个时候如果sum的和也是0，那就说明找到一条路径，他的和是0.
 			return sum == 0;   
+  
 		return hasPathSum(root.left,sum) || hasPathSum(root.right,sum);
 		
 	}
@@ -1402,6 +1403,66 @@ public void connect(TreeLinkNode root) {
 原题地址：https://leetcode.com/problems/sum-root-to-leaf-numbers/
 
 思路：
+
+​	题目的意思是从根节点到叶子节点会构成一个数，构成的方式是父节点的值*10+子节点的值。然后把所有构成相加求和。
+
+​	使用递归思想，求左子树的值+右子树的值。并且每次都是父节点*10+当前节点值。
+
+代码：
+
+```java
+public int sumNumbers(TreeNode root) {
+        return dfs(root,0);
+    }
+    
+    public int dfs(TreeNode root, int sum){
+		if(root == null)
+			return 0;
+		
+		
+		if(root.left == null && root.right == null)
+			return sum = sum*10 + root.val;
+		
+		return dfs(root.left,sum*10+root.val)+dfs(root.right,sum*10+root.val);
+	}
+```
+
+## S.124_Binary Tree Maximum Path Sum
+
+原题地址：https://leetcode.com/problems/binary-tree-maximum-path-sum/
+
+思路：
+
+​	题目的含义是从树中的任意一个节点出发，到达另外一个点，从而使这个路径上所有节点的和最大。
+
+​	维护的max使用的是数组。为什么使用数组呢？因为数组是引用类型，在递归的过程中可以保存结果。而如果不实用引用类型，在递归层层递进过程中值就无法保存。
+
+​	除了使用数组之外，可以设置一个全局变量。
+
+代码：
+
+```java
+int maxValue;
+    public int maxPathSum(TreeNode root) {
+        maxValue = Integer.MIN_VALUE;
+//        System.out.println(maxPathDown(root));
+		maxPathDown(root);
+        return maxValue;
+    }
+    
+    public int maxPathDown(TreeNode root){
+        if(root == null)
+            return 0;
+            
+        int left = Math.max(0,maxPathDown(root.left));
+        int right = Math.max(0,maxPathDown(root.right));
+        //下面都是回溯过程中要执行的
+        maxValue = Math.max(maxValue, left + right + node.val);//我们认为最大值从root+root.left+root.right中产生。
+        return Math.max(left, right) + node.val;//每次返回的时候，必须选择较大的那个值，然后加上当前节点的值。
+    }
+```
+
+
 
 
 
