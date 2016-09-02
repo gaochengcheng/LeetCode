@@ -9,20 +9,21 @@ import org.junit.Test;
  *
  */
 public class S23_MergekSortedLists {
-	public ListNode mergeKLists(ListNode[] lists) {
-
-		int length = lists.length;
-		if (length == 0)
-			return null;
-
-		ListNode head = lists[0];
-		for (int i = 1; i < length; i++) {
-			head = mergeList(head, lists[i]);
-		}
-
-		return head;
-	}
-
+	//方法超时
+//	public ListNode mergeKLists(ListNode[] lists) {
+//
+//		int length = lists.length;
+//		if (length == 0)
+//			return null;
+//
+//		ListNode head = lists[0];
+//		for (int i = 1; i < length; i++) {
+//			head = mergeList(head, lists[i]);
+//		}
+//
+//		return head;
+//	}
+//
 	public ListNode mergeList(ListNode l1, ListNode l2) {
 		if (l1 == null)
 
@@ -52,57 +53,55 @@ public class S23_MergekSortedLists {
 		return head.next;
 	}
 
+	
+	public ListNode mergeKLists(ListNode[] lists) {
+		if(lists == null || lists.length == 0)
+			return null;
+		
+		if(lists.length == 1)
+			return lists[0];
+		
+		int length = lists.length;
+		return mergeKLists(lists, 0, length-1);
+	}
+	
+	public ListNode mergeKLists(ListNode[] lists, int startIndex, int endIndex){
+			
+		if(startIndex < endIndex){
+			int mid = (startIndex + endIndex)/2;
+			ListNode l1 = mergeKLists(lists, startIndex, mid);
+			ListNode l2 = mergeKLists(lists, mid+1, endIndex);
+			return mergeList(l1,l2);
+		}
+		else{
+			return lists[startIndex];
+		}
+	}
+	
+	
 	@Test
 	public void test() {
-
-	}
-
-	/**
-	 * 对一个数组进行归并排序
-	 * 
-	 * @param arr
-	 * @return
-	 */
-	public int[] mergeSort(int[] arr) {
-		if (arr.length < 2 || arr == null)
-			return arr;
-
-		return MSort(arr, 0, arr.length - 1);
-	}
-
-	public int[] MSort(int[] arr, int low, int high) {
-		if (low < high) {
-			int mid = (low + high) / 2;
-			int[] left = MSort(arr, low, mid);
-			int[] right = MSort(arr, mid + 1, high);
-			return mergeTwoList(left, right);
-		}
-		return mergeTwoList(arr,arr);
-	}
-
-	public int[] mergeTwoList(int[] a, int[] b) {
-		int[] c = new int[a.length + b.length];
-		int i = 0; // visit a
-		int j = 0; // visit b
-		int k = 0; // visit c
-		while (i < a.length && j < b.length) {
-			if (a[i] < b[j])
-				c[k++] = a[i++];
-			else
-				c[k++] = b[j++];
-		}
-		while (i < a.length)
-			c[k++] = a[i++];
-		while (j < b.length)
-			c[k++] = b[j++];
-		return c;
-	}
-	@Test
-	public void testmergeSort(){
-		int[] a = {9,8,7,6,5,4,3,2,1};
-		int[] b = mergeSort(a);
-		for(int ele:b)
-			System.out.println(ele);
+		ListNode l1 = new ListNode(1);
+		l1.next = new ListNode(5);
+		l1.next.next = new ListNode(10);
 		
-	}
+		ListNode l2 = new ListNode(2);
+		l2.next = new ListNode(4);
+		l2.next.next = new ListNode(8);
+		
+		ListNode l3 = new ListNode(3);
+		l3.next = new ListNode(7);
+		l3.next.next = new ListNode(11);
+		
+		ListNode l4 = new ListNode(6);
+		l4.next = new ListNode(12);
+		l4.next.next = new ListNode(15);
+		
+		ListNode[] lists = {l1,l2,l3,l4};
+		ListNode newlist = mergeKLists(lists);
+		while(newlist != null){
+			System.out.println(newlist.val);
+			newlist = newlist.next;
+		}
+ 	}
 }
