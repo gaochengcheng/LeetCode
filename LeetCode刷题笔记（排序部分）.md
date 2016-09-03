@@ -160,7 +160,25 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
 
 ​	这道题目是让对K个sorted list进行排序。可以在对两个sorted list排序的基础上进行扩展，比如说每次都调用两两排序的方法，但是这样做，时间复杂度会很高。
 
+超时的代码及复杂度分析：
 
+​	假设每条链表平均有n个元素，此种时间复杂度是O(2n+3n+…+kn), 为O(nk²)。因此会超时。	
+
+```java
+public ListNode mergeKLists(ListNode[] lists) {
+
+		int length = lists.length;
+		if (length == 0)
+			return null;
+
+		ListNode head = lists[0];
+		for (int i = 1; i < length; i++) {
+			head = mergeList(head, lists[i]);
+		}
+
+		return head;
+	}
+```
 
 ### 回顾一下什么是归并排序：
 
@@ -225,11 +243,11 @@ public class Merge {
 }
 ```
 
-思路：
+正确思路：
 
 ​	借鉴归并排序的思想，针对这个lists进行排序。不同于传统归并排序的地方在于：lists数组中的元素不是基础类型，而是自定义类型的ListNode。假如lists中有4个元素，先分别归并前两个和后两个，然后再并归并后的结果再次进行归并，得到结果。
 
-代码：（这道题目困了我一天）
+代码：（这道题目困了我一天，难点在于不知道如何写递归）
 
 ```java
 public ListNode mergeList(ListNode l1, ListNode l2) {
@@ -260,19 +278,7 @@ public ListNode mergeList(ListNode l1, ListNode l2) {
 
 		return head.next;
 	}
-
-	
-	public ListNode mergeKLists(ListNode[] lists) {
-		if(lists == null || lists.length == 0)
-			return null;
-		
-		if(lists.length == 1)
-			return lists[0];
-		
-		int length = lists.length;
-		return mergeKLists(lists, 0, length-1);
-	}
-	
+	//把这里的边界条件控制好
 	public ListNode mergeKLists(ListNode[] lists, int startIndex, int endIndex){
 			
 		if(startIndex < endIndex){
@@ -284,6 +290,17 @@ public ListNode mergeList(ListNode l1, ListNode l2) {
 		else{
 			return lists[startIndex];
 		}
+	}
+
+	public ListNode mergeKLists(ListNode[] lists) {
+		if(lists == null || lists.length == 0)
+			return null;
+		
+		if(lists.length == 1)
+			return lists[0];
+		
+		int length = lists.length;
+		return mergeKLists(lists, 0, length-1);
 	}
 
 	//下面是测试用例：
@@ -313,3 +330,10 @@ public ListNode mergeList(ListNode l1, ListNode l2) {
  	}
 ```
 
+## S.147_Insertion Sort List
+
+原题地址：https://leetcode.com/problems/insertion-sort-list/
+
+思路：
+
+​	
