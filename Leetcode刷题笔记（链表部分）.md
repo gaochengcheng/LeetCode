@@ -710,7 +710,7 @@ public boolean hasCycle(ListNode head) {
 
 ```
 
-## S.143_Reorder List（medium）
+## S.143_Reorder List（medium，重点）
 
 原题地址：https://leetcode.com/problems/reorder-list/
 
@@ -791,7 +791,6 @@ public boolean hasCycle(ListNode head) {
 		
 		
 	}
-
 ```
 
 ## S.146_LRU Cache

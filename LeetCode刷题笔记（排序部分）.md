@@ -336,4 +336,111 @@ public ListNode mergeList(ListNode l1, ListNode l2) {
 
 思路：
 
+​	思路很简单，就是把一个一个元素往已排好序的list中插入的过程。
+
+​	初始时，sorted list是空，把一个元素插入sorted list中。然后，在每一次插入过程中，都是找到最合适位置进行插入。
+
+​	 因为是链表的插入操作，需要维护pre，cur和next3个指针。
+
+​	 pre始终指向sorted list的fakehead，cur指向当前需要被插入的元素，next指向下一个需要被插入的元素。
+
+​	 当sortedlist为空以及pre.next所指向的元素比cur指向的元素值要大时，需要把cur元素插入到pre.next所指向元素之前。否则，pre指针后移。最后返回fakehead的next即可。
+
+ ![链表实现插入排序](C:\Users\chengcheng\Desktop\链表实现插入排序.jpg)
+
+​	
+
+代码：
+
+```java
+public ListNode insertionSortList(ListNode head) {
+		if(head == null || head.next == null)
+			return head;
+		
+		ListNode sortedListHead = new ListNode(0);//fakenode
+		ListNode cur = head;
+		while(cur != null){
+			ListNode next = cur.next;
+			ListNode pre = sortedListHead;
+			while(pre.next != null && pre.next.val < cur.val){
+				pre = pre.next;
+			}
+			//下面看不懂
+			cur.next = pre.next;
+			pre.next = cur;
+			cur = next;
+		}
+        return sortedListHead;
+    }
+```
+
+## S.148_Sort List
+
+原题地址：https://leetcode.com/problems/sort-list/
+
+思路：
+
+​	对这个LinkedList进行归并排序，时间复杂度是O（nlgn）。此前实现的归并排序都是基于数组这样的数据结构的，现在做归并排序要使用list这样的数据结构。其核心是如何找到这个链表的中间位置，对其进行二分吧。
+
+代码：
+
+```java
+public ListNode sortList(ListNode head) {
+        if(head == null || head.next == null)
+        	 return head;
+         
+         return recursiveSort(head);
+    }
+   public ListNode recursiveSort(ListNode head){
+		
+		ListNode slower = head;
+        ListNode faster = head;
+     //在找中点的时候使用到快慢指针的技巧
+        while(faster.next != null && faster.next.next != null){
+        	
+       	 	slower = slower.next;
+       	 	faster = faster.next.next;
+        }
+        if(head != faster && head.next != faster){
+        	ListNode part2 = slower.next;
+        	slower.next = null;
+        	ListNode first = recursiveSort(head);
+        	ListNode second = recursiveSort(part2);
+        	return mergeListNode(first, second);
+        }
+        else{
+        	ListNode part2 = head.next;
+        	head.next = null;
+        	return mergeListNode(head,part2);
+        }  
+	}
+	
+	public ListNode mergeListNode(ListNode first, ListNode second){
+		
+		ListNode node = new ListNode(-1);
+		ListNode result = node;
+		while(first != null && second != null){
+			if(first.val < second.val){		
+				node.next = first;
+				first = first.next;
+				node = node.next;
+			}
+			else{
+				node.next = second;
+				second = second.next;
+				node = node.next;
+			}
+		}
+		if(first != null){
+			node.next = first;
+		}
+		if(second != null){
+			node.next = second;	
+		}
+		return result.next;
+	}
+```
+
+
+
 ​	
