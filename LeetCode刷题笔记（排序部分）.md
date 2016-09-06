@@ -391,6 +391,7 @@ public ListNode sortList(ListNode head) {
          
          return recursiveSort(head);
     }
+	//不断对list进行二分部分
    public ListNode recursiveSort(ListNode head){
 		
 		ListNode slower = head;
@@ -414,7 +415,7 @@ public ListNode sortList(ListNode head) {
         	return mergeListNode(head,part2);
         }  
 	}
-	
+	//真正做归并的部分
 	public ListNode mergeListNode(ListNode first, ListNode second){
 		
 		ListNode node = new ListNode(-1);
@@ -441,6 +442,53 @@ public ListNode sortList(ListNode head) {
 	}
 ```
 
+## S.41_First Missing Positive（妈啊，我都看不懂这个题目的意思）
 
+原题地址：https://leetcode.com/problems/first-missing-positive/
+
+思路：
+
+​	在一个未排序的数组中，返回第一个本应该出现，但是却没有出现的正整数。
+
+>Given [1,2,0] return 3, 分析：0，1，2之后应该出现3.
+>
+>and [3,4,-1,1] return 2. 分析：-1，1，3，4。1之后应该出现2的。但是没有出现。
+
+代码：
+
+```java
+public int firstMissingPositive(int[] A) {
+        
+		if(A==null || A.length==0)  
+              return 1;  
+              
+          for(int i=0;i<A.length;i++){  
+              if(A[i]<=A.length && A[i]>0 && A[A[i]-1]!=A[i]){  
+                  int temp = A[A[i]-1];  
+                  A[A[i]-1] = A[i];  
+                  A[i] = temp;  
+                 i--;  
+             }  
+         }  
+         
+         for(int i=0;i<A.length;i++){  
+             if(A[i]!=i+1)  
+                 return i+1;  
+         } 
+         return A.length+1;  
+    }
+```
+
+## S.75_Sort Colors
+
+原题地址：https://leetcode.com/problems/sort-colors/
+
+思路：
+
+​	这道题目抽象出来后的意思就是：数组中有0，1，2共3种不同的数字，他们之间是乱序的，然后对这个数组进行排序，使得所有相同的数字是相邻在一起的。并且顺序按照0，1，2。
+
+​	思路一：
+
+​	直接调用系统的方法：Arrays.sort(nums)就可以对数组进行排序。
 
 ​	

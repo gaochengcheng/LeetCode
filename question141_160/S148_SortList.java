@@ -23,7 +23,7 @@ public class S148_SortList {
 		ListNode slower = head;
         ListNode faster = head;
         while(faster.next != null && faster.next.next != null){
-        	System.out.println("while....");
+        	
        	 	slower = slower.next;
        	 	faster = faster.next.next;
         }
@@ -35,7 +35,7 @@ public class S148_SortList {
         	return mergeListNode(first, second);
         }
         else{
-        	System.out.println("else");
+        	
         	ListNode part2 = head.next;
         	head.next = null;
         	return mergeListNode(head,part2);
@@ -44,14 +44,12 @@ public class S148_SortList {
 	}
 	
 	public ListNode mergeListNode(ListNode first, ListNode second){
-		System.out.println("----");
-		System.out.println("first : "+first.val);
-		System.out.println("second : "+second.val );
+		
 		ListNode node = new ListNode(-1);
 		ListNode result = node;
 		while(first != null && second != null){
 			if(first.val < second.val){
-				System.out.println("first.val : "+first.val);
+				
 				node.next = first;
 				first = first.next;
 				node = node.next;
