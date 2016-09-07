@@ -12,7 +12,7 @@ import org.junit.Test;
  */
 public class S75_SortColors {
 
-	public void sortColors(int[] nums) {
+	public void sortColors_1(int[] nums) {
 		if(nums.length == 0 || nums.length == 1)
 			return ;
 		
@@ -20,6 +20,11 @@ public class S75_SortColors {
 		
     }
 	
+	public void sortColors(int[] nums) {
+		if(nums.length == 0 || nums.length == 1)
+			return ;
+		
+    }
 	@Test
 	public void test(){
 		int[] arr = {0,1,0,2,0,2,0,1,0,};

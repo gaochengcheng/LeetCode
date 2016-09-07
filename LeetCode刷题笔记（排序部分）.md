@@ -491,4 +491,20 @@ public int firstMissingPositive(int[] A) {
 
 ​	直接调用系统的方法：Arrays.sort(nums)就可以对数组进行排序。
 
+代码：
+
+```java
+	public void sortColors(int[] nums) {
+		if(nums.length == 0 || nums.length == 1)
+			return ;
+		
+		Arrays.sort(nums);
+		
+    }
+```
+
+​	思路二：
+
+​	由于题目明确要求不能使用库函数，所以要使用其他方法。
+
 ​	
