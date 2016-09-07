@@ -36,10 +36,31 @@ public class Maxlen {
 		
 	}
 	
+	
+	public int getLongestLength(int[] arr, int k){
+		if(arr == null || arr.length == 0)
+			return 0;
+		
+		HashMap<Integer,Integer> hashmap = new HashMap<Integer,Integer>();
+		hashmap.put(0, -1);
+		int sum = 0;
+		int len = 0;
+		for(int i = 0; i < arr.length; i++){
+			
+			sum += arr[i];
+			if(hashmap.containsKey(sum-k)){
+				len = Math.max(i-hashmap.get(sum-k), len);
+			}
+			if(!hashmap.containsKey(sum)){
+				hashmap.put(sum, i);
+			}
+		}
+		return len;
+	}
 	@Test
 	public void test(){
 		int[] arr = {1,2,3,1,1,1,1,1,1,6,7,8};
-		int result = MaxLength(arr,6);
+		int result = getLongestLength(arr,6);
 		System.out.println(result);
  	}
 }

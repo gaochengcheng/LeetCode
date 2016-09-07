@@ -479,7 +479,7 @@ public int firstMissingPositive(int[] A) {
     }
 ```
 
-## S.75_Sort Colors
+## S.75_Sort Colors(方法二很巧妙啊)
 
 原题地址：https://leetcode.com/problems/sort-colors/
 
@@ -507,4 +507,111 @@ public int firstMissingPositive(int[] A) {
 
 ​	由于题目明确要求不能使用库函数，所以要使用其他方法。
 
-​	
+>这道题就是运用指针来解决了，可以说叫3指针吧。
+>
+>一个指针notred从左开始找，指向第一个不是0（红色）的位置；一个指针notblue从右开始往左找，指向第一个不是2（蓝色）的位置。
+>
+>然后另一个新的指针i指向notred指向的位置，往后遍历，遍历到notred的位置。
+>
+>这途中需要判断：
+>
+>当i指向的位置等于0的时候，说明是红色，把他交换到notred指向的位置，然后notred++，i++。
+>
+>当i指向的位置等于2的时候，说明是蓝色，把他交换到notblue指向的位置，然后notred--。
+>
+>当i指向的位置等于1的时候，说明是白色，不需要交换，i++即可。
+
+代码：
+
+```java
+public void sortColors(int[] nums) {
+		if(nums.length == 0 || nums.length == 1)
+			return ;
+			
+		int notred = 0;
+		int notblue = nums.length-1;
+		
+		while(notred < nums.length && nums[notred] == 0)
+			notred ++;
+		while(notblue >= 0 && nums[notblue] == 2)
+			notblue --;
+		
+		int i = notred;
+		while(i <= notblue){
+			//i指向的位置是red，所以和notred交换
+			if(nums[i] == 0){
+				swap(nums,i,notred);
+				i++;
+				notred++;
+			}
+			else if(nums[i] == 2){
+				swap(nums,i,notblue);
+				notblue--;
+				//这里不需要再进行i++,因为交换完成后，不知道这个notblue的值究竟是多少，还需要再次进行判断这个位置
+				//i++;
+			}
+			else{
+				i++;
+			}	
+		}
+    }
+    public void swap(int[] A, int i, int j){
+		int temp = A[i];
+		A[i] = A[j];
+		A[j] = temp;
+	}
+```
+
+## S.34_Search for a Range
+
+原题地址：https://leetcode.com/problems/search-for-a-range/
+
+思路：
+
+>Given a sorted array of integers, find the starting and ending position of a given target value.
+>
+>Your algorithm's runtime complexity must be in the order of *O*(log *n*).
+>
+>If the target is not found in the array, return `[-1, -1]`.
+>
+>For example,
+>Given `[5, 7, 7, 8, 8, 10]` and target value 8,
+>return `[3, 4]`.
+
+​	这道题目最直接的写法就是顺序查找，时间复杂度O(n).但是题目中明确说明了复杂度得是O（log n）,所以一定要使用二分的思想。通过二分的方法找到target的值在哪里。然后再基于该位置向数组的左右两边进行扩展，就得到的最后的答案。
+
+代码：
+
+```java
+public int[] searchRange(int[] nums, int target) {
+		int[] result = {-1,-1};
+		if(nums == null || nums.length == 0)
+			return result;
+        
+		int low = 0, high = nums.length-1;
+		int mid = 0;
+		while(low <= high){
+			mid = (low+high)/2;
+			if(nums[mid] == target)
+				break;
+			if(nums[mid] < target){
+				low = mid + 1;
+			}
+			if(nums[mid] > target){
+				high = mid - 1;
+			}
+		}
+		int pos = mid;
+		while(mid >=0 && nums[mid] == target){
+			result[0] = mid;
+			mid--;
+		}
+		while(pos <= high && nums[pos] == target){
+			result[1] = pos;
+			pos++;
+		}
+		
+        return result;
+	}
+```
+
