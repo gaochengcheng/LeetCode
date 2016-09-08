@@ -696,7 +696,7 @@ public int searchInsert(int[] nums, int target) {
 >
 >return low = 4; 
 >
->** [1,3,5,6], 0 **
+>**[1,3,5,6], 0 **
 >
 >low = 0, high = 3
 >
@@ -721,4 +721,87 @@ public int searchInsert(int[] nums, int target) {
 >low = 0, high = -1
 >
 >return 0 
+
+代码：
+
+```java
+public int searchInsert(int[] nums, int target) {
+		if(nums == null || nums.length == 0)
+			return 0;
+		
+		int high = nums.length-1;
+		int low = 0;
+		while(low <= high){
+			int mid = (low+high)/2;
+			if(nums[mid] < target)
+				low = mid + 1;
+			else if(nums[mid] > target)
+				high = mid -1;
+			else
+				return mid;
+		}
+		return low;
+	}
+```
+
+## S.74_Search a 2D Matrix
+
+原题地址：https://leetcode.com/problems/search-a-2d-matrix/
+
+思路：
+
+>Write an efficient algorithm that searches for a value in an *m* x *n* matrix. This matrix has the following properties:
+>
+>- Integers in each row are sorted from left to right.
+>- The first integer of each row is greater than the last integer of the previous row.
+>
+>For example,
+>
+>Consider the following matrix:
+>
+>```
+>[
+>  [1,   3,  5,  7],
+>  [10, 11, 16, 20],
+>  [23, 30, 34, 50]
+>]
+>```
+>Given target = 3, return true.
+
+​	这道题目抽象出来之后，就是在2维数组中进行二分查找。思路是把二维数组转变为一维数组，然后仍然使用针对一维数组进行二分查找的思路，对其进行二分查找。
+
+代码：
+
+```java
+public boolean searchMatrix(int[][] matrix, int target) {
+        
+		if(matrix == null || matrix[0].length == 0)
+			return false;
+		int minLength = 0;
+		int maxLength = matrix.length * matrix[0].length - 1;
+		int len = matrix[0].length;
+		int x = 0;
+		int y = 0;
+		int cur = 0;
+		while(minLength <= maxLength){
+			cur = (minLength+maxLength)/2;
+			//第几行用y表示，第几列用x表示
+			y = cur/len ;
+			x = cur%len ;
+			if(matrix[y][x] > target)
+				maxLength = cur -1 ;
+			else if(matrix[y][x] < target)
+				minLength = cur + 1;
+			else
+				return true;
+		}
+			
+		return false;
+	
+    }
+```
+
+
+
+
 
