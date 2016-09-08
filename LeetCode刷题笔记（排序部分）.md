@@ -1,4 +1,4 @@
-# LeetCode刷题笔记（排序部分）
+# LeetCode刷题笔记（排序部分和查找部分）
 
 [TOC]
 
@@ -614,4 +614,111 @@ public int[] searchRange(int[] nums, int target) {
         return result;
 	}
 ```
+
+## S.35_Search Insert Position
+
+原题地址：https://leetcode.com/problems/search-insert-position/
+
+### 思路1：
+
+> Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+>
+> You may assume no duplicates in the array.
+>
+> [1,3,5,6], 5 → 2
+> [1,3,5,6], 2 → 1
+> [1,3,5,6], 7 → 4
+> [1,3,5,6], 0 → 0
+>
+
+​	遍历数组，如果找到target，就返回target的下标。否则就不断更新position的值，position的含义是比target小的值的下标。
+
+代码：
+
+```java
+public int searchInsert(int[] nums, int target) {
+        
+		if(nums == null || nums.length == 0)
+			return 0;
+		int length = nums.length;
+		int position = -1;
+		for(int i = 0; i < length; i++){
+			if(nums[i] == target)
+				return i;
+			if(nums[i] < target)
+				position = i;
+		}
+		return position+1;
+    }
+```
+
+### 思路2：二分思想
+
+这道题目可以很好的学习二分思想。
+
+>本题是基本考察二分查找的题目，与基本二分查找方法不同的地方是，二分查找法当查找的target不在list中存在时返回-1，而本题则需要返回该target应在此list中插入的位置。 
+>
+>当循环结束时，如果没有找到target，那么low一定停target应该插入的位置上，high一定停在恰好比target小的index上。 
+>
+>可以举例：
+>
+>**[1,3,5,6], 7**
+>
+>low = 0, high = 3
+>
+>step1: mid = 1
+>
+>          A[mid] = 3, 3<7
+>
+>          low = mid + 1 = 2
+>
+> 
+>
+>low = 2, high = 3
+>
+>step2: mid = 2
+>
+>          A[mid] = 5, 5<7
+>
+>         low = mid + 1 = 3
+>
+> 
+>
+>low = 3, high = 3
+>
+>step3: mid = 3
+>
+>          A[mid] = 6, 6<7
+>
+>          low = mid + 1 = 4 
+>
+>low = 4, high = 3
+>
+>return low = 4; 
+>
+>** [1,3,5,6], 0 **
+>
+>low = 0, high = 3
+>
+>step1: mid = 1
+>
+>          A[mid] = 3, 3>0
+>
+>          high = mid - 1 = 0
+>
+> 
+>
+>low = 0, high = 0
+>
+>step2: mid = 0
+>
+>          A[mid] = 1, 1>0
+>
+>          high = mid - 1 = -1
+>
+> 
+>
+>low = 0, high = -1
+>
+>return 0 
 
