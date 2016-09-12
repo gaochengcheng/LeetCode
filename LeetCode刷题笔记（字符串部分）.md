@@ -99,5 +99,62 @@ public int strStr(String haystack, String needle) {
 	}
 ```
 
+## S.5_Longest Palindromic Substring
+
+原题地址：https://leetcode.com/problems/longest-palindromic-substring/
+
+思路：
+
+>Given a string *S*, find the longest palindromic substring in *S*. You may assume that the maximum length of *S* is 1000, and there exists one unique longest palindromic substring.
+
+在一个字符串中，找到一个最长的回文子串，并且返回这个回文子串。
+
+一开始我是没有思路的，一点思路都没有，无从下手的感觉。后来想到以每个字符为中心，从左右两边扩展，每次只要新的回文串的长度更长，便进行更新，就可以得到最长的回文串。
+
+
+
+是对于每个子串的中心（可以是一个字符，或者是两个字符的间隙，比如串abc,中心可以是a,b,c,或者是ab的间隙，bc的间隙，例如aba是回文，abba也是回文，这两种情况要分情况考虑）往两边同时进 行扫描，直到不是回文串为止。假设字符串的长度为n,那么中心的个数为2*n-1(字符作为中心有n个，间隙有n-1个）。对于每个中心往两边扫描的复杂 度为O(n),所以时间复杂度为O((2*n-1)*n)=O(n^2),空间复杂度为O(1)
+
+代码：
+
+```java
+public String longestPalindrome(String s) {  
+        
+		if(s.isEmpty() || s == null || s.length() ==1)
+			return s;
+		
+		String longest = s.substring(0,1);
+		for(int i = 0; i < s.length(); i++){
+			//get longest palindrome with center of i
+			String tmp = helper(s, i, i);
+			if(tmp.length() > longest.length())
+				longest = tmp;
+			
+			//get longest palindrome with center of i, i+1
+			tmp = helper(s, i, i+1);
+			if(tmp.length() > longest.length())
+				longest = tmp;
+		}
+		return longest;
+    }
+    
+    public String helper(String s, int begin, int end){
+		while(begin >= 0 && end <= s.length()-1 && s.charAt(begin) == s.charAt(end)){
+			begin--;
+			end++;
+		}
+		//因为在begin 这个环节不相等了，所以从begin+1这个位置起，存在一个回文
+		return s.substring(begin+1,end);
+	}
+```
+
+## S.10_Regular Expression Matching
+
+原题地址：https://leetcode.com/problems/regular-expression-matching/
+
+思路：
+
+​	
+
 
 
