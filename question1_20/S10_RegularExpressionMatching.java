@@ -40,7 +40,6 @@ public class S10_RegularExpressionMatching {
 			return isMatch(s,p.substring(2));
 		}
 	
-	
 	}
 	
 	
