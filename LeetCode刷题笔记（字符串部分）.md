@@ -272,5 +272,52 @@ public boolean isMatch(String s, String p) {
     }
 ```
 
+## S.14_Longest Common Prefix
 
+原题地址：https://leetcode.com/problems/longest-common-prefix/
+
+思路：
+
+> Write a function to find the longest common prefix string amongst an array of strings.
+
+- 从第一个字符串的第一个位置开始扫描，同时依次分别扫描其他字符串。如果所有字符串都包含该字符，那么就在commonprefix中添加该字符，否则不添加，并且终止程序。
+
+代码：
+
+```java
+public String longestCommonPrefix(String[] strs) {
+		if(strs == null || strs.length == 0)
+			return "";
+		
+		String prefix = "";
+		int length = strs.length;
+		int index = 0;
+		int len = strs[0].length();
+		while(index < len){
+			char temp = strs[0].charAt(index);
+			boolean flag = true;
+			for(int i = 1; i < length; i++){
+				if(strs[i].length() > index && strs[i].charAt(index) != temp){
+					flag = false;
+					break;
+				}
+				if(strs[i].length() <= index){
+					flag = false;
+				}
+			}
+			if(flag == true)
+				prefix = prefix+temp;
+			else{
+				break;
+			}	
+			index++;
+		}
+		
+		return prefix;
+	}
+```
+
+
+
+​	
 

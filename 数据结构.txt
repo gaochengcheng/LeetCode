@@ -1,0 +1,19 @@
+数据结构部分：
+a.	Array(数组)  								done
+b.	Binary Search(二分查找)  					done
+c.	Linked List(链表)   						done
+d.	Stack and Queue(栈与队列)  
+e.	Recursion(递归)   							done
+f.	Dynamic Programming(动归)
+g.	Tree(树)   									done  
+h.	BFS, DFS(广搜深搜)
+i.	Heap(堆)
+j.	Hash(哈希表)
+
+系统设计部分：
+a.	系统设计的方法论；
+b. 实例解析如何设计数据库系统(Whatsapp)、爬虫系统(Web Crawler)、搜索建议系统(Google Suggestion)、分布式文件系统(GFS)、地理位置分布系统(Uber)、并行系统(Map Reduce)；
+c. 学员们可自行组队，设计并搭建系统，有任何问题可咨询导师和助教；
+d. 面试常考的计算机基础知识，以及习题精讲
+d-1. 系统介绍面试常考的计算机基础知识，操作系统、计算机网络、数据库、数据结构等；
+d-2. 习题精讲：分享典型的习题，并制定计算机基础知识的复习大纲；
