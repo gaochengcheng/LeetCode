@@ -317,7 +317,29 @@ public String longestCommonPrefix(String[] strs) {
 	}
 ```
 
+## S.65_Valid Number
+
+原题地址：https://leetcode.com/problems/valid-number/
+
+思路：
+
+>Validate if a given string is numeric.
+>
+>Some examples:
+>`"0"` => `true`
+>`" 0.1 "` => `true`
+>`"abc"` => `false`
+>`"1 a"` => `false`
+>`"2e10"` => `true`
+>
 
 
-​	
+
+
+
+​	一维DP
+
+二维DP
+
+
 
