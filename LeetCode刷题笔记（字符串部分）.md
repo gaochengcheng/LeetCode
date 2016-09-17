@@ -317,7 +317,7 @@ public String longestCommonPrefix(String[] strs) {
 	}
 ```
 
-## S.65_Valid Number
+## S.65_Valid Number（未完成）
 
 原题地址：https://leetcode.com/problems/valid-number/
 
@@ -335,11 +335,112 @@ public String longestCommonPrefix(String[] strs) {
 
 
 
+## S.12_Integer to Roman
+
+原题地址：https://leetcode.com/problems/integer-to-roman/
+
+思路：
+
+>Given an integer, convert it to a roman numeral.
+>
+>Input is guaranteed to be within the range from 1 to 3999.
+
+​	以下代码太精巧了。
+
+​	这道题目的要求就是把一个数字转换成古罗马记号的数字。那具体来说应该怎么做呢，其实就和进制转换很像。
+
+- 用radix中的数字，从大到小尝试着去除num。
+  - 如果结果>0（其实如果结果>0，结果只可能是1，因为是从大到小试着除的，在此之前已经尝试过大的）,说明num中包含这个数字。当包含这个数字的时候，需要在下一次做运算之前，减去这个数字。用mod运算，正好可以达到这个目的。
+  - 如果结果==0.说明不包含这个数字，换下一个较小的数字，接着做运算。
 
 
-​	一维DP
 
-二维DP
+代码：
+
+```java
+public String intToRoman(int num) {
+        
+		int radix[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9,5,4,1};
+		String symbol[] = {"M", "CM", "D", "CD", "C", "XC",
+				"L", "XL", "X", "IX", "V", "IV", "I"};
+		
+		String roman = "";
+		for(int i = 0; num > 0; i++){
+			int count = num / radix[i];
+			num = num % radix[i];
+			for(; count > 0; count--)
+				roman += symbol[i];
+		}
+		
+		return roman;
+    
+    }
+```
+
+## S.13_Roman to Integer
+
+原题地址：https://leetcode.com/problems/roman-to-integer/
+
+思路：
+
+>Given a roman numeral, convert it to an integer.
+>
+>Input is guaranteed to be within the range from 1 to 3999.
+
+​	起初，我的做法是从左往后，依次遍历。在遍历的过程中同时判断相邻的两个字符是否满足罗马数字中用两个字符表示一个数字的情况。这个时候，发现有一个测试用例不能通过。`MLXXIV`转化为数字之后应该是`1074`的。其中`ML`是分别表示`M`和`L`，但是使用之前的算法会把`ML`解析为一个数字。
+
+​	所以，转化思路，我们从右往左开始判断。并且这次做判断的时候，只判断每个位置的单个字符，不对连续两个字符的情况做处理。对于某些字符，根据当前的和来判断究竟是加这个字符对应的数字，还是减去一个值。
+
+代码：
+
+```java
+public static int romanToInt(String s) {
+        
+		if(s == null || s.length() == 0)
+			return 0;
+		int sum = 0;
+		int length = s.length()-1;
+		for(int i = length; i >= 0; i--){
+			char c = s.charAt(i);
+			
+			if(c == 'I'){   
+				if(sum >= 5)      //通过当前和的大小判断究竟是加操作还是减操作
+					sum = sum - 1;
+				else
+					sum = sum + 1;
+			}
+			else if(c == 'X'){
+				if(sum >= 50)
+					sum = sum - 10;
+				else
+					sum = sum + 10;
+			}
+			else if(c == 'C'){
+				if(sum >= 500)
+					sum = sum - 100;
+				else
+					sum = sum + 100;
+			}
+			else if(c == 'V')
+				sum = sum + 5;
+			else if(c == 'L')
+				sum = sum + 50;
+			else if(c == 'D')
+				sum = sum + 500;
+			else
+				sum = sum + 1000;
+				
+		}
+		return sum;
+    
+    }
+```
+
+
+
+
+
+
 
 
 
