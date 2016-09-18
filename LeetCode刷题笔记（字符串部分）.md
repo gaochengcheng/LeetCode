@@ -436,6 +436,121 @@ public static int romanToInt(String s) {
     }
 ```
 
+## S.38_Count and Say
+
+原题地址：https://leetcode.com/problems/count-and-say/
+
+思路：
+
+>The count-and-say sequence is the sequence of integers beginning as follows:
+>`1, 11, 21, 1211, 111221, ...`
+>
+>`1` is read off as `"one 1"` or `11`.
+>`11` is read off as `"two 1s"` or `21`.
+>`21` is read off as `"one 2`, then `one 1"` or `1211`.
+>
+>Given an integer *n*, generate the *n*th sequence.
+
+​	这道题目的意思起初根本没有看懂，参考了别人的解答之后才明白题目是什么意思。
+
+​	第一行是`1`.
+
+​	第二行是描述第一行的：一个一，所以第二行是`11`.
+
+​	第三行是描述第二行的：两个一，所以第三行是`21`.
+
+​	第四行是描述第3行的：一个二，一个一，所以是`1211`.
+
+​	依次类推，所以这个题目本质上就是一道细节实现题，去实现这样一种规律。
+
+​	需要注意的一点是，跑完for循环之后记得把最后一个字符也加上，因为之前只是计数而已。
+
+代码：
+
+```java
+public String countAndSay(int n) {
+	    if(n<=0)
+	        return "";
+	    String curRes = "1";
+	    int start = 1;//从1开始算
+	    while(start < n){
+	        StringBuilder res = new StringBuilder();
+	        int count = 1;
+	        for(int j=1;j<curRes.length();j++){
+	            if(curRes.charAt(j)==curRes.charAt(j-1))
+	                count++;
+	            else{
+	                res.append(count);
+	                res.append(curRes.charAt(j-1));
+	                count = 1;
+	            }
+	        }
+	        res.append(count);
+	        res.append(curRes.charAt(curRes.length()-1));       	        
+	        curRes = res.toString();
+	        start++;
+	    }
+	    return curRes;
+	}
+```
+
+## S.49_Group Anagrams(hashmap新用法)
+
+原题地址：https://leetcode.com/problems/anagrams/
+
+思路：
+
+>Given an array of strings, group anagrams together.
+>
+>For example, given: `["eat", "tea", "tan", "ate", "nat", "bat"]`, 
+>
+>Return:
+>
+>```
+>[
+>  ["ate", "eat","tea"],
+>  ["nat","tan"],
+>  ["bat"]
+>]
+>```
+
+​	使用到了HashMap这种数据结构。不太清楚这种数据结构在这样的一道题目中是如何发挥作用的。
+
+- 用一个字符数组来表示一个特定的字符串，即便这些字符串中字母顺序不同，但是他们最终表示成字符数组是相同的。
+- 把这个字符数组转化为String类型，然后用作HashMap中的key值。接下来的一切就很容易了。因为只要字符串拥有相同的字符，即便字符顺序不同，他们构成的字符数组和之后转化为String值都是相同的。
+- key是String类型，value是ArrayList类型，当一个字符串的key已经在map中存在时，只需要在value中进行add操作。当一个字符串的key不存在的时候，先添加key，然后再添加对应的value。
+- 当上一步操作完成时，所有字符串分别对应不同的key且全部存在values中，这个时候只需要把values添加到result中即可。
+
+代码：
+
+```java
+public List<List<String>> groupAnagrams(String[] strs) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		
+		HashMap<String, ArrayList<String>> map = new HashMap<String,ArrayList<String>>();
+		for(String str : strs){ 
+			char[] arr = new char[26];
+			for(int i = 0; i < str.length(); i++){
+				arr[str.charAt(i)-'a']++;  //不同的str，对应的结果不同，str中字符顺序不影响结果
+			}
+			//下面这两句的功能应该是一样的，都是返回字符数组的字符串表达形式。
+//			String ns = new String(arr);
+			String ns = String.valueOf(arr);
+			
+			if(map.containsKey(ns)){   //这样的写法头一次见到唉。把一个字符数组转变成string类型，然后让这个String类型去做HashMap的key。
+				map.get(ns).add(str);
+			}else{
+				ArrayList<String> al = new ArrayList<String>();
+				al.add(str);
+				map.put(ns, al);
+			}
+		}
+		
+		result.addAll(map.values());
+		return result;
+    }
+```
+
 
 
 

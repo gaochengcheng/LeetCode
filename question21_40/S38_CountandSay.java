@@ -10,31 +10,33 @@ import org.junit.Test;
  */
 public class S38_CountandSay {
 	public String countAndSay(int n) {
-	    if(n<=0)
-	        return "";
-	    String curRes = "1";
-	    int start = 1;//从1开始算
+	    if(n == 0)
+	    	return "";
+	    
+	    int start = 1;
+	    String res = "1";
+	    int count = 1;
 	    while(start < n){
-	        StringBuilder res = new StringBuilder();
-	        int count = 1;
-	        for(int j=1;j<curRes.length();j++){
-	            if(curRes.charAt(j)==curRes.charAt(j-1))
-	                count++;
-	            else{
-	                res.append(count);
-	                res.append(curRes.charAt(j-1));
-	                count = 1;
-	            }
-	        }
-	        res.append(count);
-	        res.append(curRes.charAt(curRes.length()-1));
-	       
-	        System.out.println("res is : "+res);
-	        
-	        curRes = res.toString();
-	        start++;
+	    	StringBuffer curRes = new StringBuffer();
+	    	count = 1;
+	    	for(int j = 1; j<res.length(); j++){
+	    		if(res.charAt(j) == res.charAt(j-1))
+	    			count++;
+	    		else{
+	    			curRes.append(count);
+	    			curRes.append(res.charAt(j-1));
+	    			count = 1;
+	    		}
+	    			
+	    	}
+	    	
+	    	curRes.append(count);
+	    	curRes.append(res.charAt(res.length()-1));
+	    	res = curRes.toString();
+	    	start++;
 	    }
-	    return curRes;
+	    
+	    return res;
 	}
 	@Test
 	public void test(){
