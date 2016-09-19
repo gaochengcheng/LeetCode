@@ -33,7 +33,6 @@ public class S49_GroupAnagrams {
 				map.put(ns, al);
 			}
 		}
-		
 		result.addAll(map.values());
 		return result;
     }

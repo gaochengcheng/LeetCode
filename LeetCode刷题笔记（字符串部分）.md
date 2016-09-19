@@ -494,7 +494,7 @@ public String countAndSay(int n) {
 	}
 ```
 
-## S.49_Group Anagrams(hashmap新用法)
+## S.49_Group Anagrams(巧用hashmap)
 
 原题地址：https://leetcode.com/problems/anagrams/
 
@@ -550,6 +550,55 @@ public List<List<String>> groupAnagrams(String[] strs) {
 		return result;
     }
 ```
+
+## S.71_Simplify Path(看不懂这个题目)
+
+原题地址：https://leetcode.com/problems/simplify-path/
+
+思路：
+
+>Given an absolute path for a file (Unix-style), simplify it.
+>
+>For example,
+>**path** = `"/home/"`, => `"/home"`
+>**path** = `"/a/./b/../../c/"`, => `"/c"`
+
+
+
+
+
+## S.59_Length of Last Word
+
+原题地址：https://leetcode.com/problems/length-of-last-word/
+
+思路：
+
+>Given a string *s* consists of upper/lower-case alphabets and empty space characters `' '`, return the length of last word in the string.
+>
+>If the last word does not exist, return 0.
+>
+>**Note:** A word is defined as a character sequence consists of non-space characters only.
+>
+>For example, 
+>Given *s* = `"Hello World"`,
+>return `5`.
+
+​	思路很简单了，就是用“  ” 对字符串进行分割，分割后的结果是一个String类型的数组，计算这个数组最后一个元素的长度就可以了。
+
+代码：
+
+```java
+public int lengthOfLastWord(String s) {
+		if(s == null || s.length() == 0 || s == " ")
+			return 0;
+		String[] strs = s.split(" ");
+		if(strs.length >= 1)
+			return strs[strs.length-1].length();
+		else return 0;
+    }
+```
+
+
 
 
 
