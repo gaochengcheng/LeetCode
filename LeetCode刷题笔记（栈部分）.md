@@ -163,3 +163,19 @@ public int longestValidParentheses(String s) {
     }
 ```
 
+## S.84_Largest Rectangle in Histogram
+
+原题地址：https://leetcode.com/problems/largest-rectangle-in-histogram/
+
+思路：
+
+Given *n* non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
+
+![img](http://www.leetcode.com/wp-content/uploads/2012/04/histogram.png)
+
+Above is a histogram where width of each bar is 1, given height = `[2,1,5,6,2,3]`.
+
+![img](http://www.leetcode.com/wp-content/uploads/2012/04/histogram_area.png)
+
+The largest rectangle is shown in the shaded area, which has area = `10` unit.
+
