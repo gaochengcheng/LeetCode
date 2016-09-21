@@ -598,7 +598,67 @@ public int lengthOfLastWord(String s) {
     }
 ```
 
+## S.delete digits
 
+题目：
+
+​	输入一个数字num ，然后给定一个K，在num中删除k位数字，剩下的数字按照原先的相对顺序不变，使得该数字最大。
+
+输入样例：
+
+​	54921
+
+​	2
+
+返回：921
+
+思路：
+
+>- 确保一个原则：在删除数字的过程中，尽可能让高位的数字最大。为此，我们需要找到最大数字的下标，记作index。需要移除的位数，我们记作remove。
+>- 如果index<=remove，这种情况下，index左边的数字需要全部移除。
+>  - 当index是最后一位（同时，remove的值和index左边数字的位数相同），只需要返回index本身，因为删除的位数够了，同时index右边也没有数字了。
+>  - 否则，删除index左边所有的数，保留index本身的情况下，需要在index右边删除remove-index位数字。在删除的过程中，也是将最大值放到最高位。**此处也是一个递归的过程。**
+>- 如果index>remove，这种情况下，index以及index右边所有的元素需要保留。同时在index的左边的字串中找到最大值，然后将其放到最高位。**至此，可以发现是一个递归的过程，只需要调用自身即可。**
+
+代码：
+
+```java
+public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String origNum = scanner.nextLine();
+        String remove = scanner.nextLine();
+        System.out.println(remainNum(origNum,Integer.parseInt(remove)));
+    }
+    public static String remainNum(String origNum,int remove) {
+        if(origNum == null || origNum.length() <= 0 || remove >= origNum.length()) {
+            return "";
+        }
+        char[] numbers = origNum.toCharArray();
+        Arrays.sort(numbers);
+        int index = origNum.indexOf(numbers[numbers.length-1]);
+        if(remove <=0 ) {
+            return origNum;
+        }
+        if(origNum.length() == 1 && remove == 1) {
+            return "";
+        }
+        //当需要删除的位数大于等于最大数的下标时，此时index左边的数需要全部删除
+        if(index <= remove) {
+            if(index == origNum.length()-1){   //remove == origNum.length()-1也是可以的
+            	//这种情况下，最大数的左边正好有remove位，此时需要把这些位全部移出，只保留最后一位
+            	return String.valueOf(numbers[numbers.length-1]);
+            	
+            }
+            else {
+            	//最大数左边的位数小于remove的值，index左边的全部删掉还不够，还需要在index的右边继续删除remove-index位数字
+                return String.valueOf(numbers[numbers.length-1])+remainNum(origNum.substring(index+1),remove -index);
+            }
+        } else {
+        	//index左边的数需要有选择的删除，此时index右边的数全部保留
+        	return remainNum(origNum.substring(0,index),remove)+ origNum.substring(index);
+        }
+    }
+```
 
 
 
