@@ -36,6 +36,6 @@ public class S62_UniquePaths {
 	}
 	@Test
 	public void test(){
-		System.out.println(uniquePaths_2(2,3));
+		System.out.println(uniquePaths(3,3));
 	}
 }
