@@ -484,5 +484,78 @@ public int totalNQueens(int n) {
 	}
 ```
 
+## S.93_Restore IP Addresses
+
+原题地址：https://leetcode.com/problems/restore-ip-addresses/
+
+题目：
+
+>Given a string containing only digits, restore it by returning all possible valid IP address combinations.
+>
+>For example:
+>Given `"25525511135"`,
+>
+>return `["255.255.11.135", "255.255.111.35"]`. (Order does not matter)
+
+思路：
+
+​	这道题目需要将字符串且分为4部分，然后对每个部分判断是否合法，如果合法就把这个切分之后的形式放到list中。
+
+1. 首先我们要明确传统IP 地址的规律是分4个Part，每个Part是从0-255的数字.
+
+2. 0-255的数字，转换成字符，即每个Part 可能由一个字符组成，二个字符组成，或者是三个字符组成。那这又成为组合问题了，dfs便呼之欲出。
+
+3. 所以我们写一个For循环每一层从1个字符开始取一直到3个字符，再加一个isValid的函数来验证取的字符是否是合法数字，如果是合法的数字，我们再进行下一层递归，否则跳过。
+
+   题目分析到这里发现可以使用DFS的思路。概括起来，就是取1到3位长度的字符，判断是否是合法的，如果是合法的，暂时保存到中间结果集中，并且继续下一层递归调用。否则跳过。在代码方面，其结构和之前的**N皇后**问题非常相似。
+
+**几个需要注意的点**：
+
+1. 在验证字符串是否是数字的时候，要注意0的情况，001，010，03都是非法的。所以，如果第一位取出来是0，那么我们就判断字符串是否是"0"，不是的情况都是非法的
+2. 取字符串的时候，注意位数不够的问题，不仅<4, 而且<s.length()
+3. 注意substring的范围
+4. 字符串转换成数字 Integer.parseInt(); 
+5. 别忘了IP 地址里面的 "."
+6. 到第4个Part的时候我们就可以整体验证剩下的所有字符串（因为第4个Part最后一定要取到结尾才是正确的字符串）
+
+代码：
+
+```java
+public List<String> restoreIpAddresses(String s) {
+        List<String> res = new ArrayList<String>();
+        if(s.length() < 4 || s.length() > 12)
+            return res;
+        dfs(s, "", res, 0);
+        return res;
+    }
+
+    public void dfs(String s, String tmp, List<String> res, int count){
+        if(count == 3){
+            if(isValid(s)){
+                tmp += s;
+                res.add(tmp);
+            }
+            return ;
+        }
+        for(int i = 1; i<4 && i<s.length(); i++){ //i < s.length()容易忽视，导致越界
+            String subStr = s.substring(0,i);
+            if(isValid(subStr)){
+                dfs(s.substring(i), tmp + subStr+'.', res, count+1);
+            }
+        }
+    }
+    
+    public boolean isValid(String s){
+        if(s.charAt(0) == '0')
+            return s.equals("0");
+        int num = Integer.parseInt(s);
+        return num <= 255 && num >0;
+    }
+```
+
+
+
+   
+
 
 
