@@ -288,5 +288,201 @@ public int uniquePathsWithObstacles(int[][] obstacleGrid) {
     }
 ```
 
+## S.51_N-Queens
+
+原题地址：https://leetcode.com/problems/n-queens/
+
+题目：
+
+>The *n*-queens puzzle is the problem of placing *n* queens on an *n*×*n* chessboard such that no two queens attack each other.
+>
+>![img](http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png)
+>
+>Given an integer *n*, return all distinct solutions to the *n*-queens puzzle.
+>
+>Each solution contains a distinct board configuration of the *n*-queens' placement, where `'Q'` and `'.'` both indicate a queen and an empty space respectively.
+>
+>For example,
+>There exist two distinct solutions to the 4-queens puzzle:
+>
+>```java
+>[
+> [".Q..",  // Solution 1
+>  "...Q",
+>  "Q...",
+>  "..Q."],
+>
+> ["..Q.",  // Solution 2
+>  "Q...",
+>  "...Q",
+>  ".Q.."]
+>]
+>```
+
+思路：
+
+​	之前一直没有系统研究过N皇后问题，所以借着这道题目，好好整理下N皇后问题。
+
+​	如果在`(i,j)`位置（第i行，第j列）放置了一个皇后，接下来在哪些位置不能放置皇后呢？
+
+1. 整个第`i`行都不能放置。
+
+2. 整个第`j`列都不能放置。
+
+3. 如果位置`(a,b)`满足`|a-i|==|b-j|`,说明（a，b）与（i，j）处在同一条斜线上，也不能放置。
+
+   把递归过程直接设计成逐行放置皇后的方式，可以避开条件`1`的那些不能放置的位置。接下来用一个数组保存已经放置的皇后位置，假设数组为record，`record[i]`的值表示第`i`行皇后所在的列。在递归计算到第`i`行第`j`列时，查看`record[0...k]（k < i）`的值，看是否有`j`相等的值，若有，则说明`（i,j）`不能放置皇后，再看是否有`|k-i| == |record[k]-j|`，若有，也说明`（i,j）`不能放置皇后。
+
+### 具体代码1：
+
+   输入皇后的个数，返回皇后的摆法数目有多少种？
+
+   如输入8，返回92.
+
+```java
+   	//主程序入口
+      public int num(int n){
+   		if(n < 1){
+   			return 0;
+   		}
+   		
+   		int[] record = new int[n];
+   		return process(0, record, n);
+   	}
+   	//这是一个逐行放皇后的过程
+   	public int process(int i, int[] record, int n){
+   		if(i == n){
+   			return 1;    //直到所有的皇后都放好了，返回一个1.代表这是一种放皇后的方法。
+   		}
+   		int res = 0;
+   		for(int j = 0; j < n; j++){
+   			if(isValid(record, i, j)){
+   				record[i] = j;
+   				res += process(i+1, record, n);
+   			}
+   		}
+   		return res;
+   	}
+   	//用以判断这个位置是否可以放置皇后
+   	public boolean isValid(int[] record, int i, int j){
+   		for(int k = 0; k < i; k++){
+   			if( j == record[k] || Math.abs(record[k]-j) == Math.abs(i-k)){
+   				return false;
+   			}
+   		}
+   		return true;
+   	}
+```
+
+### 具体代码2：
+
+输入皇后的数目，然后返回具体的
+
+```java
+public List<List<String>> solveNQueens(int n) {
+        List<List<String>> res = new ArrayList<List<String>>();
+		helper(n, 0, new int[n], res);
+		return res;
+		
+		
+    }
+	
+	private void helper(int n, int row, int[] columnForRow, List<List<String>> res){
+		if(row == n){   
+			//当前面所有的皇后都放好之后，columnForRow数组已经正确生成，
+			//此时只需要根据这个columnForRow数组生成如何放皇后的信息
+			ArrayList<String> item = new ArrayList<String>();
+			for(int i = 0; i < n; i++){
+				StringBuilder strRow = new StringBuilder();
+				for(int j = 0; j < n; j++){
+					if(columnForRow[i] == j) //i的实际含义代表行。
+						strRow.append('Q');
+					else
+						strRow.append('.');
+				}
+				System.out.println(strRow.toString());
+				item.add(i,strRow.toString());
+			}
+			res.add(item);
+			return ;
+		}
+		for(int i = 0; i < n; i++){
+			columnForRow[row] = i;
+			if(check(row, columnForRow)){
+				helper(n, row+1, columnForRow, res);
+			}
+		}
+	}
+	private boolean check(int row, int[] columnForRow){
+		for(int i =0; i < row; i++){
+			if(columnForRow[row] == columnForRow[i] || 
+					Math.abs(columnForRow[row] - columnForRow[i]) == row-i){
+				return false;
+			}
+		}
+		return true;
+	}
+```
+
+## S.52_N-Queens II
+
+原题地址：https://leetcode.com/problems/n-queens-ii/
+
+题目：
+
+>Follow up for N-Queens problem.
+>
+>Now, instead outputting board configurations, return the total number of distinct solutions.
+>
+>![img](http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png)
+>
+>这次只需要根据皇后的个数，返回一共有多少种不同的摆放的方法即可。
+
+思路：
+
+​	一个一个位置逐个去尝试，只有在此前所有已经放好的皇后都不冲突的情况下，才考虑放新的皇后。当所有皇后都放完，说明这是一种放置方案。
+
+代码：
+
+```java
+public int totalNQueens(int n) {
+        if(n < 1)
+        	return 0;
+        int[] record = new int[n];
+        
+        return process(0, n,record );
+    }
+	
+	public int process(int i, int n, int[] record){ //i 表示第i行
+		
+		if(i == n){
+			return 1;
+		}
+		int res = 0;
+		for(int j = 0; j < n; j++){ 
+			record[i] = j;          //让第i行的皇后放在第j列
+			if(isValid(i, j, record)){
+				res += process(i+1, n , record);//第i行的皇后放置完成后，放置第i+1行的皇后
+			}
+		}
+		return res;
+	}
+	
+	
+	public boolean isValid(int i, int j, int[] record){
+		
+		for(int k = 0; k < i; k++){
+			//判断第i行的皇后，是否可以放在record[i]列
+			//要求，第i行之前的所有皇后，不能放在第j列
+			//要求，两个皇后之间，行的差值 ！= 列的差值
+			if(j == record[k] || Math.abs(i - k) == Math.abs(j - record[k])){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+```
+
 
 
