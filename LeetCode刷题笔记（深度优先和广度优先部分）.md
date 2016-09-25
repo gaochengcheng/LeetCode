@@ -488,6 +488,8 @@ public int totalNQueens(int n) {
 
 原题地址：https://leetcode.com/problems/restore-ip-addresses/
 
+参考链接：http://blog.csdn.net/u011095253/article/details/9158449
+
 题目：
 
 >Given a string containing only digits, restore it by returning all possible valid IP address combinations.
@@ -553,9 +555,189 @@ public List<String> restoreIpAddresses(String s) {
     }
 ```
 
+## S.39_Combination Sum
 
+原题地址：https://leetcode.com/problems/combination-sum/
 
-   
+题目：
+
+>Given a set of candidate numbers (**C**) and a target number (**T**), find all unique combinations in **C** where the candidate numbers sums to **T**.
+>
+>The **same** repeated number may be chosen from **C** unlimited number of times.
+>
+>**Note:**
+>
+>- All numbers (including target) will be positive integers.
+>- The solution set must not contain duplicate combinations.
+>
+>For example, given candidate set `[2, 3, 6, 7]` and target `7`, 
+>A solution set is: 
+>
+>```java
+>[
+>  [7],
+>  [2, 2, 3]
+>]
+>```
+
+思路：
+
+​	采用DFS的思路。使用深度优先搜索的方法遍历所有可能的组合，当找到的组合满足条件（他们的和==target）时，就把这样的一组序列添加到最后的结果中。需要注意的地方是，同样的数字可以出现多次，但是结果集中的结果不能重复，比如说，不能出现这样的情况：`[[2, 2, 3], [2, 3, 2], [3, 2, 2], [7]]`.
+
+​	为了解决结果中不包含重复结果，需要原先的数组排序，然后每次跳进递归的时候不需要从`0`位置开始重新找元素。因为如果2，2，3是一个结果集。那么当遍历到3的时候，如果从0下标开始，必然会找到3，2，2的一个序列。所以每次递归不要从0下标开始。
+
+​	也不需要重当前位置+1的地方开始，因为每个元素可以重复使用，所以只需要从当前这个元素的位置开始即可。
+
+### 代码1：这个代码没有排除重复元素：
+
+```java
+public List<List<Integer>> combinationSum(int[] candidates, int target) {
+		List<List<Integer>> res = new ArrayList<List<Integer>>();
+		if(candidates == null || candidates.length == 0)
+			return res;
+		
+		dfs(target, new ArrayList<Integer>(), candidates, res);
+		return res;
+		
+    }
+	
+	public void dfs(int target, List<Integer> contains, int[] candidates, List<List<Integer>> res){
+		int sum = sum(contains);
+		if(sum == target){
+			System.out.println("sum is : "+sum);
+			System.out.println(contains);
+			if(!res.contains(contains))
+				res.add(new ArrayList<Integer>(contains));
+			return ;
+		}
+		if( sum > target){
+			return ;
+		}
+		if (sum < target) {
+			for (int i = 0; i < candidates.length; i++) {
+				System.out.println("...");
+				contains.add(candidates[i]);
+				System.out.println(sum(contains));
+				dfs(target, contains, candidates, res);
+				contains.remove(contains.size()-1);    //重点在这里，回溯的时候曾经添加的元素要一个一个再次移除
+			}
+		}
+			
+	}
+	
+	public int sum (List<Integer> contains){
+		int sum = 0;
+		for(int ele : contains)
+			sum += ele;
+		return sum;
+	}
+```
+
+  ### 代码2：排除重复元素
+
+排除res中重复元素主要用到两步：
+
+- 对原先candidates进行排序，然后在进行递归调用的时候，不要从当前位置的下一个位置调用。也不要从0下标位置开始。2，2，3和3，2，2是同一个答案。如果做到对原先candidates排序，并且进行递归调用时从仍然从当前位置开始，自然可以排除3，2，2这个答案。
+- 使用`if(i > 0 && candidates[i] == candidates[i-1])`，也可以排除重复元素。如果candidates是`[2,3,3,3,3,6,7]`时，只有生成一个2，3，3答案，后面的2，3，3都会被这条语句过滤掉的。
+
+```java
+public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+		if(candidates == null || candidates.length == 0)
+			return res;
+		Arrays.sort(candidates);
+		dfs(0, target, new ArrayList<Integer>(), candidates, res);
+		return res;
+    }
+    
+    public void dfs(int start, int target, List<Integer> contains, int[] candidates, List<List<Integer>> res){
+		
+		if(target == 0){
+			System.out.println(contains);
+			if(!res.contains(contains))
+				res.add(new ArrayList<Integer>(contains));
+			return ;
+		}
+		if( target < 0){
+			return ;
+		}
+		if (target > 0) {
+			for (int i = start; i < candidates.length; i++) {
+				if(i > 0 && candidates[i] == candidates[i-1])
+					continue;   //排除重复元素
+				int newtarget = target - candidates[i];
+				contains.add(candidates[i]);
+				dfs(i, newtarget, contains, candidates, res);
+				contains.remove(contains.size()-1);
+			
+			}
+		}	
+	}
+```
+
+## S.40_Combination Sum II
+
+原题地址：https://leetcode.com/problems/combination-sum-ii/
+
+题目：
+
+>Given a collection of candidate numbers (**C**) and a target number (**T**), find all unique combinations in **C** where the candidate numbers sums to **T**.
+>
+>Each number in **C** may only be used **once** in the combination.
+>
+>**Note:**
+>
+>- All numbers (including target) will be positive integers.
+>- The solution set must not contain duplicate combinations.
+>
+>For example, given candidate set `[10, 1, 2, 7, 6, 1, 5]` and target `8`, 
+>A solution set is: 
+>
+>```
+>[
+>  [1, 7],
+>  [1, 2, 5],
+>  [2, 6],
+>  [1, 1, 6]
+>]
+>```
+
+思路：
+
+​	这道题目同样使用DFS方法。相比于上一题不同的地方在于这道题目中，数字不能重复出现。所以使用过的数字就不能再使用了，进行递归调用的时候从当前位置的下一个位置开始。
+
+代码：
+
+```java
+public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(candidates == null || candidates.length == 0)
+        	return res;
+        
+        Arrays.sort(candidates);
+        dfs(0, target, new ArrayList<Integer>(), candidates, res);
+        
+        return res;
+    }
+    public void dfs(int start, int target, ArrayList<Integer> item, int[] candidates, List<List<Integer>> res){
+		if(target == 0){
+			if(!res.contains(item))
+				res.add(new ArrayList<Integer>(item));
+			return;
+		}
+		if(target < 0){
+			return ;
+		}
+		if(target > 0){
+			for(int i = start; i < candidates.length; i++){
+				int newtarget = target - candidates[i];
+				item.add(candidates[i]);
+				dfs(i+1, newtarget, item, candidates, res);
+				item.remove(item.size()-1);
+			}
+		}
+	}
+```
 
 
 
