@@ -14,7 +14,7 @@ public class S79_WordSearch {
 	    	  return false;
 	      //这个地方要写成双重循环，因为可能从这个二维数组的任何一个地方开始。所以，每个位置都要遍历到
 	      
-	      
+	      return true;
 	 }
 	 
 	 public boolean dfs_2(char[][] board, int x, int y,  String item, String word){
@@ -36,7 +36,7 @@ public class S79_WordSearch {
 				 dfs_2(board, x, y+1, item+board[x][y], word);
 				 
 		 }
-		 
+		 return true;
 		 
 	 }
 	 @Test

@@ -12,6 +12,8 @@
 >
 >看递归程序，不能盯着一处看，陷入细节局部不容易理解，从整体逻辑来思考。
 
+# 深度优先部分
+
 ## S.131_Palindrome Partitioning
 
 原题地址：https://leetcode.com/problems/palindrome-partitioning/
@@ -907,6 +909,91 @@ public boolean exist(char[][] board, String word) {
 	        visited[rowindex][colindex] = false;  //回溯的过程中重新把该位置置为false，表示可以重新访问。
 	        return res;  
 	   }
+```
+
+# 广度优先部分
+
+## S.127_Word Ladder
+
+原题地址：https://leetcode.com/problems/word-ladder/
+
+题目：
+
+>Given two words (*beginWord* and *endWord*), and a dictionary's word list, find the length of shortest transformation sequence from*beginWord* to *endWord*, such that:
+>
+>1. Only one letter can be changed at a time
+>2. Each intermediate word must exist in the word list
+>
+>For example,
+>
+>Given:
+>*beginWord* = `"hit"`
+>*endWord* = `"cog"`
+>*wordList* = `["hot","dot","dog","lot","log"]`
+>
+>As one shortest transformation is `"hit" -> "hot" -> "dot" -> "dog" -> "cog"`,
+>return its length `5`.
+>
+>**Note:**
+>
+>- Return 0 if there is no such transformation sequence.
+>- All words have the same length.
+>- All words contain only lowercase alphabetic characters.
+
+思路：
+
+​	这道题是套用BFS同时也利用BFS能寻找最短路径的特性来解决问题。
+
+​	把每个单词作为一个node进行BFS。当取得当前字符串时，对他的每一位字符进行从a~z的替换，如果替换之后的字符串在字典里面，就入队，并将下层count++(即nextnum++)，并且为了避免环路，需把在字典里检测到的单词从字典里删除。这样对于当前字符串的每一位字符安装a~z替换后，在queue中的单词就作为下一层需要遍历的单词了。
+
+​	正因为BFS能够把一层所有可能性都遍历了，所以就保证了一旦找到一个单词equals（end），那么return的路径肯定是最短的。
+
+​	**理解上的一个难点**：curnum的含义是有多少个候选项。什么是候选项呢，就是从前一个状态往后扩展的时候，一共可以扩展出多少个状态。当curnum = 0 的时候，说明所有的候选项都尝试过找新的状态了，这个时候可以往新的一层走。
+
+代码：
+
+```java
+public int ladderLength(String start, String end, Set<String> dict) {
+		if(start == null || end == null 
+				|| start.length() == 0 || end.length() == 0
+				|| start.length()!=end.length())
+			return 0;
+		
+		LinkedList<String> wordQueue = new LinkedList<String>();
+		int level = 1;  //the start string already count for 1
+		int curnum = 1; // the candidate num on current level
+		int nextnum = 0; //counter for next level
+		
+		wordQueue.add(start);
+		while(!wordQueue.isEmpty()){
+			String word = wordQueue.poll();
+			curnum--;
+			
+			for(int i = 0; i < word.length(); i++){
+				char[] wordunit = word.toCharArray();
+				for(char j = 'a'; j <= 'z'; j++){
+					wordunit[i] = j;
+					String temp = new String(wordunit);
+					
+					if(temp.equals(end))
+						return level+1;   //  if found, return the result. 
+					if(dict.contains(temp)){
+						
+						wordQueue.add(temp);
+						nextnum++;
+						dict.remove(temp);
+					}
+					
+				}
+			}
+			if(curnum == 0){
+				curnum = nextnum;
+				nextnum = 0;
+				level++;
+			}
+		}
+		return 0;
+    }
 ```
 
 
