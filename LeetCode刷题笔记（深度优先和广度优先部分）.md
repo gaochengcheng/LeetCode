@@ -739,5 +739,90 @@ public List<List<Integer>> combinationSum2(int[] candidates, int target) {
 	}
 ```
 
+## S.22_Generate Parentheses
 
+原题地址：https://leetcode.com/problems/generate-parentheses/
+
+题目：
+
+>Given *n* pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+>
+>For example, given *n* = 3, a solution set is:
+>
+>```java
+>[
+>  "((()))",
+>  "(()())",
+>  "(())()",
+>  "()(())",
+>  "()()()"
+>]
+>```
+
+思路：
+
+​	同样使用DFS的思路。
+
+- 首先使用DFS，进行递归调用，生成所有可能的结果。
+- 对所有生成的结果做判断，判断是否是一个合法的括号匹配。匹配则加入最后的结果集，不匹配则不加入。
+
+代码：
+
+```java
+public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<String>();
+		if(n == 0)
+			return res;
+		String[] str = {"(",")"};
+		dfs(n*2, str, "", res);
+		return res;
+    }
+    
+    public void dfs(int count, String[] str, String item, List<String> res){
+		if(count == 0){
+			if(isValid(item)){
+				
+				res.add(item);
+			}
+			return ;
+		}
+		if(count < 0)
+			return ;
+		if(count > 0){
+			for(int i = 0; i < str.length; i++){
+				int newCount = count - 1;
+				item = item+str[i];
+				dfs(newCount, str, item, res);
+				item = item.substring(0, item.length()-1);
+			}
+		}
+	}
+	
+	public boolean isValid(String str){
+		Stack<Character> stack = new Stack<Character>();
+		if(str == null)
+			return true;
+
+		for(int i = 0; i < str.length(); i++){
+			Character c = str.charAt(i);
+			if(c.equals('(')){
+				stack.push(c);
+				
+			}
+			else{
+				if(!stack.isEmpty()){
+					Character temp = stack.peek();
+					if(temp.equals('('))
+						stack.pop();
+				}
+				else
+					stack.push(c);
+			}
+		}
+		if(stack.isEmpty())
+			return true;
+		else
+			return false;
+	}
+```
 
