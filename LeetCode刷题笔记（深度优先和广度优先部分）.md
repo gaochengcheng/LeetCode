@@ -793,7 +793,7 @@ public List<String> generateParenthesis(int n) {
 				int newCount = count - 1;
 				item = item+str[i];
 				dfs(newCount, str, item, res);
-				item = item.substring(0, item.length()-1);
+				item = item.substring(0, item.length()-1); ////回溯的时候移除刚刚添加的字符
 			}
 		}
 	}
@@ -825,4 +825,89 @@ public List<String> generateParenthesis(int n) {
 			return false;
 	}
 ```
+
+## S.37_Sudoku Solver（未完成）
+
+原题地址：https://leetcode.com/problems/sudoku-solver/
+
+题目：
+
+
+
+## S.79_Word Search
+
+原题地址：https://leetcode.com/problems/word-search/
+
+题目：
+
+>Given a 2D board and a word, find if the word exists in the grid.
+>
+>The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+>
+>For example,
+>Given **board** =
+>
+>```
+>[
+>  ['A','B','C','E'],
+>  ['S','F','C','S'],
+>  ['A','D','E','E']
+>]
+>
+>```
+>
+>**word** = `"ABCCED"`, -> returns `true`,
+>
+>**word** = `"SEE"`, -> returns `true`,
+>
+>**word** = `"ABCB"`, -> returns `false`.
+>
+
+思路：
+
+
+
+
+
+代码：
+
+```java
+public boolean exist(char[][] board, String word) {
+	        int m = board.length;  
+	        int n = board[0].length;  
+	      //每当选定一个字母之后，用过的位置就不能再用了，所以需要设立一个数组来标记这个位置是否访问过了
+	        boolean[][] visited = new boolean[m][n];  
+	      //这个地方要写成双重循环，因为可能从这个二维数组的任何一个地方开始。所以，每个位置都要遍历到
+	        for (int i = 0; i < m; i++) {  
+	            for (int j = 0; j < n; j++) {  
+	            	
+	                if (dfs(board, word, 0, i, j, visited))  
+	                    return true;  
+	            }  
+	        }  
+	        return false;  
+	    }
+	    
+	    public boolean dfs(char[][] board, String word, int index, int rowindex, int colindex, boolean[][] visited) {  
+	    	
+	        if (index == word.length())  
+	            return true;  
+	        if (rowindex < 0 || colindex < 0 || rowindex >=board.length || colindex >= board[0].length)  
+	            return false;  
+	        if (visited[rowindex][colindex])  
+	            return false;  
+	        if (board[rowindex][colindex] != word.charAt(index))  //因为这个地方相等了，所以下面dfs的地方才有index + 1.
+	            return false;  
+	        visited[rowindex][colindex] = true;  
+	        boolean res = dfs(board, word, index + 1, rowindex - 1, colindex,  
+	                visited)  
+	                || dfs(board, word, index + 1, rowindex + 1, colindex, visited)  
+	                || dfs(board, word, index + 1, rowindex, colindex + 1, visited)  
+	                || dfs(board, word, index + 1, rowindex, colindex - 1, visited);  
+	        visited[rowindex][colindex] = false;  //回溯的过程中重新把该位置置为false，表示可以重新访问。
+	        return res;  
+	   }
+```
+
+
 

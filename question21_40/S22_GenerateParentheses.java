@@ -38,7 +38,7 @@ public class S22_GenerateParentheses {
 				int newCount = count - 1;
 				item = item+str[i];
 				dfs(newCount, str, item, res);
-				item = item.substring(0, item.length()-1);
+				item = item.substring(0, item.length()-1);//回溯的时候移除刚刚添加的字符
 			}
 		}
 	}
