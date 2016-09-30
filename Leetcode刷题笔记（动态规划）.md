@@ -2,6 +2,8 @@
 
 [TOC]
 
+# 二分法
+
 ## S.50_Pow(x, n)
 
 原题地址：https://leetcode.com/problems/powx-n/
@@ -26,11 +28,64 @@
 
 代码：
 
+```java
+public double myPow(double x, int n) {
+		if(n < 0) 
+			return 1.0 / power(x, -n);
+		else
+			return power(x, n);
+    }
+	
+	public double power(double x, int n){
+		if(n == 0)
+			return 1;
+		double v = power(x, n/2);
+		if( n % 2 == 0)
+			return v * v;
+		else 
+			return v * v * x;
+	}
 ```
 
+## S.69_Sqrt(x)
+
+原题地址：https://leetcode.com/problems/sqrtx/
+
+题目：
+
+>Implement `int sqrt(int x)`.
+>
+>Compute and return the square root of *x*.
+
+思路：
+
+- 这是一道开平方根的题目,运用二分查找的思想去定位到一个更小的数a，然后通过判断a*a和x的大小关系，进而确定sqrt(x)是多少。
+
+* 其实这道题目的解法，你同样可以通过逐一减小x的值得到a，然后再通过a*a和x的大小关系，确定x的开方根究竟是多少。
+* 只不过，逐一减小相比于折半而言，太慢了。
+
+ 代码：
+
+```java
+public int mySqrt(int x) {
+        int low = 0;
+        int high = x;
+        while(low <= high){
+        	long mid = (long)(low + high) / 2;
+        	System.out.println(mid);
+        	if(mid * mid < x)
+        		low = (int)mid+1;
+        	else if(mid * mid > x)
+        		high = (int)mid - 1;
+        	else
+        		return (int)mid;
+        }
+		
+		return high;
+    }
 ```
 
-
+# 动态规划
 
 ## S.198_House Robber
 

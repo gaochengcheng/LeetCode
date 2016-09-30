@@ -801,6 +801,30 @@ public boolean searchMatrix(int[][] matrix, int target) {
     }
 ```
 
+## Selection Sort
+
+思想：
+
+- 从`i`下标的位置开始（i下标从0开始增长），从整个数组中选出一个值最小的数。
+- 把这个最小的数和下标`i`位置的元素交换。这样最小的数就被交换到前面。
+- 然后从`i+1`的位置开始，再从后面的数组（即从`i+1`到数组末尾）中找出最小的数，把这个数交换到下标是`i+1`的位置。
+- 重复上面过程，直到所有元素都比较完，此时数组是有序的。
+
+代码：
+
+```java
+public static void sort(Comparable[] a){
+		int N = a.length;
+		for(int i = 0; i < N; i++){
+			int min = i;
+			for(int j = i + 1; j < N; j++)
+				if(less(a[j],a[min]))    //if a[j] < a[min] return true.
+					min = j;
+			exch(a, i, min);  //a is a array.
+		}
+	}
+```
+
 
 
 
