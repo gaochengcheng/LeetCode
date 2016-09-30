@@ -13,7 +13,8 @@ public class Insertion {
 	public static void main(String[] args) {
 //		String[] a = In.readStrings();
 		
-		String[] a = {"A","C","E","B","D"};
+//		String[] a = {"A","C","E","B","D"};
+		Integer[] a = {9,8,7,6,5,4,3,2,1};
 //		String[] a = {"A","B"};
 		sort(a);
 		assert isSorted(a);
