@@ -825,7 +825,27 @@ public static void sort(Comparable[] a){
 	}
 ```
 
+## Insertion Sort
 
+思想：
+
+- 整个排序过程分成两个部分，前面一部分是有序的，后面一部分是无序的。最开始的时候，下标是0的位置是有序的，0之后的部分是需要进行排序的。换言之，0之后无序部分需要插入到前面的有序部分中。
+- 每次到达一个位置后，先和其前面的一个位置比较，如果比前面的小，就和前面一个交换，然后继续和前面一个交换，直到不比前面一个元素小为止。
+
+代码：
+
+```java
+public static void sort(Comparable[] a){
+		//Sort a[] into increasing order.
+		int N = a.length;
+		for(int i = 1; i < N; i++){
+			//Insert a[i] among a[i-1],a[i-2],a[i-3].....
+			for(int j = i; j > 0 && less(a[j], a[j-1]); j--){
+				exch(a, j, j-1);
+			}
+		}
+	}
+```
 
 
 
