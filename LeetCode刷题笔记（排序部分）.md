@@ -346,9 +346,7 @@ public ListNode mergeList(ListNode l1, ListNode l2) {
 
 ​	 当sortedlist为空以及pre.next所指向的元素比cur指向的元素值要大时，需要把cur元素插入到pre.next所指向元素之前。否则，pre指针后移。最后返回fakehead的next即可。
 
- ![链表实现插入排序](C:\Users\chengcheng\Desktop\链表实现插入排序.jpg)
-
-​	
+  ![链表实现插入排序](pics\链表实现插入排序.jpg)
 
 代码：
 
@@ -847,5 +845,50 @@ public static void sort(Comparable[] a){
 	}
 ```
 
+分析：
 
+​	最好情况：数组的初始状态是有序的，然后一共需要比较的次数是`n-1`，
+
+​	最差情况，数组的初始状态是逆序的，此时，在比较次数上和选择排序是相同的，但是显然在交换次数上插入排序用的更多。比较次数是`O(N^2)`，交换次数是`O(N^2)`。
+
+## Shell Sort
+
+思想：
+
+- 希尔排序在本质上是插入排序的一种，确切讲可以称之为缩小增量（间隔）的插入排序。
+- 增量一般来讲记作h，h满足一定的条件，比如在`h  < N /3`的情况下，`h = 3*h+1`。然后使用这个h值作为间隔的大小做插入排序。所相应位置的元素做完插入排序之后，缩小`h`的值，然后继续做插入排序，知道`h`的值缩小为1.
+
+代码：
+
+```java
+public static void sort(Comparable[] a){
+		//Sort a[] into increasing order.
+		int N = a.length;
+		int h = 1;
+		while(h < N/3) 
+			h = 3*h+1;  //首先找到间隔是多大
+		System.out.println("h is : "+h);
+		while(h >=1){
+			// h-sort the array.
+			for(int i = h; i < N; i++){
+				//Insert a[i] among a[i-h], a[i-2h], a[i-3h]...
+				for(int j = i; j >= h && less(a[j],a[j-h]); j= j-h)
+					exch(a, j, j-h);
+			}
+			h = h / 3;
+		}
+	}
+```
+
+### 小结：
+
+#### 选择排序 VS 插入排序
+
+​	当数据的大小关系较为随机一般的时候，插入排序比选择排序快大约1.7倍。原因很简单，因为选择是排序是绝对的O(n^2)的复杂度，但是插入排序并不是严格的O(n^2)。所以插入排序更快。
+
+​	当数据的大小关系完全逆序的时候，选择排序更快。因为此时比较的次数都是O（n^2），但是插入排序移动的次数多余选择排序，所以插入排序更慢。
+
+### 希尔排序 VS 选择和插入排序
+
+​	希尔排序的时间复杂度是O(n^(3/2))，小于n^2级别。所以在所有的elementary sort算法中，希尔排序是最快的。
 
