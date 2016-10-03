@@ -892,3 +892,47 @@ public static void sort(Comparable[] a){
 
 ​	希尔排序的时间复杂度是O(n^(3/2))，小于n^2级别。所以在所有的elementary sort算法中，希尔排序是最快的。
 
+## Quick Sort（不稳定的）
+
+思想：
+
+- 对整个数组进行partitioning操作。具体做法是选一个元素作为partition item，小于这个值的元素全放到这个该值的左边，大于这个值的元素全都放到这个值的右边。返回partition的下标。
+- 对该下标的左部分进行partitioning操作。
+- 对该下标的右部分进行partitioning操作。
+
+代码：
+
+```java
+private static void sort(Comparable[] a, int lo, int hi)
+{
+	if (hi <= lo) return;
+	int j = partition(a, lo, hi);
+	sort(a, lo, j-1);
+	sort(a, j+1, hi);
+}
+
+private static int partition(Comparable[] a, int lo, int hi)
+{
+	int i = lo, j = hi+1;
+	while (true)
+{
+	while (less(a[++i], a[lo]))  // find item on left to swap
+		if (i == hi) break;                   
+	while (less(a[lo], a[--j])) //  find item on right to swap
+		if (j == lo) break;
+	if (i >= j) break;   //   check if pointers cross
+	exch(a, i, j);   //swap
+}
+	exch(a, lo, j);  //swap with partitioning item
+	return j;   //return index of item now known to be in place
+}
+```
+
+ 返回的j的值，将原先的数组分成两个部分，左边部分小于j处的值，右边部分大于j处的值。![QuickSort](pics\QuickSort.PNG)
+
+partition 循环中`while(true)`部分的执行过程：
+
+![QuickSort_whileloop](pics\QuickSort_whileloop.PNG)
+
+## Priority Queues
+
