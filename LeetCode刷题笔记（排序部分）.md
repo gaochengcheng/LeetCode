@@ -934,5 +934,79 @@ partition 循环中`while(true)`部分的执行过程：
 
 ![QuickSort_whileloop](pics\QuickSort_whileloop.PNG)
 
-## Priority Queues
+## 优先队列和堆
+
+参考链接：http://www.yeolar.com/note/2012/05/26/ds-heap/
+
+### 优先队列
+
+优先队列应该包含插入操作和删除最小元素操作，前者等价于队列中的入队操作，后者则对应出队操作，但它找到并删除优先队列中的最小元素。
+
+可以使用链表实现优先队列，但这将花费` O(N) `时间进行删除，另一种方法是使用二叉查找树，插入和删除都平均花费 `O(logN) `时间，但将二叉查找树用于优先队列过于复杂了。
+
+一般使用二叉堆来实现优先队列，它不需要指针，插入和删除的最坏运行时间为` O(logN) `，插入的平均运行时间为`O(1) `，因此它可以以线性时间建立有`N` 项的优先队列。
+
+### 二叉堆
+
+二叉堆也称为堆，它是一颗完全二叉树，即除底层外完全被填满的二叉树，底层的元素从左到右填入。堆具有结构性和堆序性。
+
+![/media/note/2012/05/26/ds-heap/fig1.png](http://www.yeolar.com/media/note/2012/05/26/ds-heap/fig1.png)
+
+高为 h 的完全二叉树有$$ 2^h$$ 到$$ 2^{h+1}-1 $$个节点，因此完全二叉树的高为$$ ⌊logN⌋$$ ，它是$$ O(logN)$$ 。
+
+**完全二叉树的规律性使它可以用数组表示**。数组中元素从位置1开始，对于数组中任意位置 i 上的元素，其左儿子在位置 2i 上，右儿子在位置 2i+1 上，父亲在位置 ⌊i/2⌋ 上。
+
+堆具有堆性，其堆性的含义是一个堆总是有序的，对于大堆而言，堆顶元素是最大的，且父节点总是大于孩子节点。对于小堆而言，则相反。
+
+**我自己的理解：**优先队列是一种抽象数据类型，具体实现的时候可以使用链表、二叉排序树、二叉堆等结构来实现。我们最终使用二叉堆来实现。二叉堆也称为堆，它是一颗完全二叉树，即除底层外完全被填满的二叉树，底层的元素从左到右填入。堆具有结构性和堆序性。
+
+至此，由于是一颗完全二叉树，所以所以进一步可以使用数组的方式来表示。
+
+完整的堆排序代码：下标从0开始，不同于书本上的下标从1开始。
+
+```java
+public static void sort(Comparable[] a){
+		int N = a.length-1;
+		for(int k = N/2; k >=0; k--){
+			sink(a, k, N);
+		}
+		while(N > 0 ){
+			System.out.println("..."+a[0]);   //a[0]处代表的元素是最大元素
+			exch(a, 0, N--);
+			sink(a, 0,N);
+		}
+	}
+	private static boolean less(Comparable[] a, int i, int j){
+		return a[i].compareTo(a[j]) < 0;
+	}
+	private static void exch(Comparable[] a, int i, int j){
+//		System.out.println("j is "+j);
+		Comparable temp = a[i];
+		a[i] = a[j];
+		a[j] = temp;
+	}
+	
+	//a[0]...a[a.length-1]
+	private static void sink(Comparable[] a, int k, int N){
+		while(2*k <= N){
+			int j = 2*k;
+			if(j < N && less(a, j, j+1))
+				j++;
+
+			if(!less(a, k, j))
+				break;
+			exch(a, k, j);
+			k = j;
+		}
+	}
+	
+	public static void main(String[] args) {
+		Comparable[] a = {1,5,3,2,7,6,8};
+		sort(a);
+		for(Comparable ele : a)
+			System.out.print(ele + " ");   //1，2，3，5，6，7，8
+	}
+```
+
+
 

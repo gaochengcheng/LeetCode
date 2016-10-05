@@ -1,4 +1,8 @@
 package princetonSort;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * 
  * @author chengcheng
@@ -49,6 +53,9 @@ public class Quick {
 	}
 	
 	
-	
+	public void test(){
+		Object[] a = new Object[5];
+		Arrays.sort(a);
+	}
 	
 }
