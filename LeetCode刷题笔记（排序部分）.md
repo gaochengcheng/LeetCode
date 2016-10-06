@@ -962,7 +962,26 @@ partition 循环中`while(true)`部分的执行过程：
 
 至此，由于是一颗完全二叉树，所以所以进一步可以使用数组的方式来表示。
 
-完整的堆排序代码：下标从0开始，不同于书本上的下标从1开始。
+由下到上调整堆的过程：
+
+```java
+private static void sink(Comparable[] a, int k, int N){
+		while(2*k <= N){
+			int j = 2*k;
+			if(j < N && less(a, j, j+1))
+				j++;
+
+			if(!less(a, k, j))
+				break;
+			exch(a, k, j);
+			k = j;
+		}
+	}
+```
+
+
+
+### 完整的堆排序代码：下标从0开始，不同于书本上的下标从1开始。
 
 ```java
 public static void sort(Comparable[] a){
