@@ -1,6 +1,5 @@
 package princetonFind;
 
-import princetonFind.BST.Node;
 
 /**
  * P281课本
@@ -48,6 +47,7 @@ public class RedBlackBST<Key extends Comparable<Key>,Value> {
 		h.color = RED;
 		x.N = h.N;
 		h.N = 1 + size(h.left) + size(h.right);
+		return x;
 	}
 	
 	Node rotateRight(Node h){
