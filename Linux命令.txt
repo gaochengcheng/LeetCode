@@ -1,0 +1,33 @@
+1.安装SSH服务：
+	apt-get install ssh
+	只有安装完SSH服务后，才允许第三方程序以SSH的方式登录到Linux系统中。
+2.ssh服务不允许使用root账户方式在第三方程序中登录：
+	cd /etc/ssh           //进入这个目录
+	vim ssh_config        //修改这个文件
+	修改：
+	PermitRootLogin withoutpassword 为  PermitRootLogin yes.
+	重启服务：
+	service ssh restart
+3.which java             //查看执行的java命令具体是那个java
+4.ls -l /usr/bin/java    //查看这个java命令的具体信息
+	通过  ls -l 可以找到具体的JAVA_HOME
+5.id 用户名
+	可以查看这个用户的uid,gid,groups等信息。
+6.ls -a                  //可以查看隐藏文件和目录
+7.cat /etc/hosts         //这个文件中存放是ip地址和主机名的映射对。
+8.ls -ltr | grep -i hadoop   // hadoop 是根目录下的一个文件夹，是使用root账户创建的。
+	ls -l  // 查看当前目录所有文件，以列表方式呈现
+	ls -t  // 按照时间排序，修改时间最新的在最前面
+	ls -r  // r的含义是reverse，按照相反的顺序
+	ls -ltr  // 含义就是按照时间排序，并且最久的排在最前面
+	| grep -i hadoop   //使用了管道命令，值只针对hadoop这个文件查看，并且添加 -i 参数，忽略hadoop的大小写 
+9.使用chown 改变 Hadoop为 hduser：hadoop组的权限。
+	chown hduser:hadoop hadoop
+10. 解压 、抽取 是分两步的。
+	gunzip hadoop-2.6.0.tar.gz      // 解压缩,得到hadoop-2.6.0.tar文件
+	tar -xvf hadoop-2.6.0.tar       // 将该文件中的文件抽取出来
+
+11.查找某个文件是否存在
+	ls 文件名*
+12.查看进程
+	ps -ef | grep -i yarn(进程名字)
