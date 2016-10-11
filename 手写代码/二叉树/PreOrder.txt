@@ -1,0 +1,25 @@
+public class Node{
+	public int val;
+	public Node left;
+	public Node right;
+	public Node(int val){
+		this.val = val;
+	}
+}
+
+
+public void PreOrder(Node root){
+	if(root == null)
+		return ;
+	Stack<Node> stack = new Stack<Node>();
+	stack.push(root);
+	while(!stack.IsEmpty()){
+		Node node = stack.pop();
+		System.out.println(node.val);
+
+		if(node.right != null)
+			stack.push(node.right);
+		if(node.left != null)
+			stack.push(node.left);
+	}	
+}

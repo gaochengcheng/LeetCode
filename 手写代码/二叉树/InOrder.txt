@@ -1,0 +1,27 @@
+public class Node{
+	public int val;
+	public Node left;
+	public Node right;
+	public Node(int val){
+		this.val = val;
+	}
+}
+
+public void InOrder(Node root){
+	
+	Node cur = root;
+	Stack<Node> stack = new Stack<Node>();
+	
+	while(cur != null || !stack.IsEmpty()){
+		if(p != null){
+			stack.push(cur);
+			cur = cur.left;
+		}
+		else{
+			TreeNode node = stack.pop();
+			System.out.println(node);
+			cur = node.right;
+		}
+		
+	}
+}

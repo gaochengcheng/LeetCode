@@ -1,0 +1,33 @@
+public class Node{
+	public int val;
+	public Node left;
+	public Node right;
+	public Node(int val){
+		this.val = val;
+	}
+}
+
+
+public void PostOrder(Node root){
+	if(root == null)
+		return ;
+	Stack<Node> s1 = new Stack<Node>();
+	Stack<Node> s2 = new Stack<Node>();
+
+	s1.push(root);
+	while(!s1.IsEmpty()){
+		Node head = s1.pop();
+		s2.push(head);
+
+		if(s1.left != null)
+			s2.push(s1.left);
+		if(s1.right != null)
+			s2.push(s1.right);
+
+	}
+	while(!s2.IsEmpty()){
+		Node node = s2.pop();
+		System.out.println(node.val);
+	}
+
+}

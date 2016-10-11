@@ -30,6 +30,7 @@ public class Maxlen {
 			if(!map.containsKey(sum)){
 				map.put(sum, i);
 			}
+			System.out.println(map);
 		}
 		
 		return len;
@@ -56,11 +57,12 @@ public class Maxlen {
 			}
 		}
 		return len;
+		
 	}
 	@Test
 	public void test(){
 		int[] arr = {1,2,3,1,1,1,1,1,1,6,7,8};
-		int result = getLongestLength(arr,6);
+		int result = MaxLength(arr,6);
 		System.out.println(result);
  	}
 }
