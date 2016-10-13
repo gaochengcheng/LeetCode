@@ -32,7 +32,7 @@ public class BinaryTreeMaxLength {
 		maxLen = preOrder(head.left, sum, curSum, level+1, maxLen, sumMap);
 		maxLen = preOrder(head.right, sum, curSum,level+1, maxLen, sumMap);
 		System.out.print(sumMap+ "    ");
-		if(level == sumMap.get(curSum)){
+		if(level == sumMap.get(curSum)){ 
 			sumMap.remove(curSum);
 			System.out.print(sumMap);
 		}
