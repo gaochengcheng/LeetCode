@@ -235,9 +235,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                                 a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                                     a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                                 b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                                     b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -1462,9 +1462,237 @@ int maxValue;
     }
 ```
 
+## S.book_Max Search Binary Tree
 
+题目：
 
+​	返回一颗二叉树中最大子二叉搜索树的根节点。
 
+代码：
+
+```java
+public Node biggestSubBST(Node head){
+		int[] record = new int[3];
+		return posOrder(head, record);
+	}
+	
+	//后续遍历的方式
+	public Node posOrder(Node head, int[] record){
+		if(head == null){
+			record[0] = 0;
+			record[1] = Integer.MAX_VALUE;
+			record[2] = Integer.MIN_VALUE;
+			return null;
+		}
+		
+		int value = head.value;
+		Node left = head.left;
+		Node right = head.right;
+		
+		Node lBST = posOrder(left, record); //左子树头结点
+		int lSize = record[0];  //左子树的节点数
+		int lMin = record[1];   //左子树最小值
+		int lMax = record[2];   //左子树最大值
+		
+		Node rBST = posOrder(right, record);
+		int rSize = record[0];
+		int rMin = record[1];
+		int rMax = record[2];
+		
+		record[1] = Math.min(lMin, value);
+		record[2] = Math.max(rMax, value);
+		
+		if(left == lBST && right == rBST && lMax < value && value < rMin){
+			record[0] = lSize + rSize +1;
+			return head;
+		}
+		
+		record[0] = Math.max(lSize, rSize);
+		return lSize > rSize ? lBST : rBST;
+		
+	}
+```
+
+## S.book_BST Topo Size
+
+题目：
+
+​	在一个二叉树中，返回符合搜索二叉树条件的最大拓扑结构。
+
+代码：
+
+```java
+public int bstTopoSize1(Node head){
+		if(head == null)
+			return 0;
+		//采用递归的方式，针对每一个结点，在条件1的情况下，找到每个结点的最大拓扑结构然后返回
+		int max = maxTopo(head, head);
+		System.out.println(max);
+		
+		max = Math.max(bstTopoSize1(head.left), max);
+		max = Math.max(bstTopoSize1(head.right), max);
+		return max;
+	}
+	
+	//条件1：以h为头结点，并且在拓扑结构中也必须以h为头结点。
+	//在这样的条件下，找到最大的拓扑结构数。
+	public int maxTopo(Node h, Node n){
+		if(h != null && n != null && isBSTNode(h, n, n.value)){
+			return maxTopo(h, n.left) + maxTopo(h, n.right) + 1;
+		}
+		return 0;
+	}
+	
+	
+	//按照在二叉搜索树中使用递归的方法，查找结点n.
+	//如果找到 return true,如果没有找到 return false;
+	public boolean isBSTNode(Node h, Node n, int value){
+		if(h == null)
+			return false;
+		if(h == n)  //n是待找的结点，h是查找过程中不断变化的结点，只有最后h==n,才表明是找到了
+			return true;
+		
+		return isBSTNode(h.value > value ? h.left : h.right, n, value);
+	}
+```
+
+## S.book_is BST
+
+题目描述：
+
+​	给定一个结点，判断一棵树是否是二叉搜索树。
+
+代码：
+
+```java
+public boolean isBst(Node root){
+		if(root == null)
+			return true;
+		
+		Stack<Node> stack = new Stack<Node>();
+		
+		Node cur = root;
+		Node pre = null;
+		while(!stack.isEmpty() || cur != null){
+			if(cur != null){
+				stack.push(cur);
+				cur = cur.left;
+			}
+			else{
+				cur = stack.pop();
+				if(pre != null && pre.value > cur.value)
+					return false;
+				System.out.println(cur.value);
+				pre = cur;
+				cur = cur.right;
+			}
+			
+		}
+		return true;
+	}
+	 
+	@Test
+	public void test(){
+		Node node12 = new Node(12);
+		
+		Node node10 = node12.left = new Node(10);
+		Node node16 = node12.right = new Node(16);
+		
+		Node node4 = node10.left = new Node(4);
+	
+		Node node13 = node16.left = new Node(13);
+		Node node20 = node16.right = new Node(20);
+		
+		node4.left = new Node(2);
+		node4.right = new Node(5);
+		
+		System.out.println(isBst(node12));
+	}
+```
+
+## S.book_is CBT
+
+题目：
+
+​	给一颗二叉树，判断这棵二叉树是不是完全二叉树。
+
+思路：
+
+- 1.使用层次遍历
+- 2.如果当前节点有右孩子，但是没有左孩子。说明这棵二叉树不是完全二叉树，直接返回false。
+- 3.如果当前不是左右孩子都有，那么当前结点之后的所有结点必须是孩子结点，否则返回false。
+- 4.遍历过程中如果不返回false，遍历结束后返回true。
+
+代码：
+
+```java
+public boolean isCBT(Node head){
+		if(head == null){
+			return true;
+		}
+		
+		LinkedList<Node>	queue = new LinkedList<Node>();
+		boolean leaf = false;
+		Node l = null;
+		Node r = null;
+		queue.offer(head);
+		
+		while(!queue.isEmpty()){
+			Node cur = queue.poll();
+			l = cur.left;
+			r = cur.right;
+			if(leaf && (l != null || r != null) || (l == null && r != null)){
+				return false;
+			}
+			if(l != null){
+				queue.offer(l);
+			}
+			if(r != null){
+				queue.offer(r);
+			}
+			else{
+				leaf = true;
+			}
+			
+		}
+		
+		return true;
+	}
+```
+
+## S.book_Generate BST From Sorted Array
+
+题目：
+
+​	给定一个已经排好序的数组，通过这个数组构建一颗二叉查找树。
+
+思路：	
+
+- 1.使用递归写法，取出序列的中间值，作为这棵树的根节点。
+- 2.递归的构建根节点的左子树和右子树，直到这颗树完全生成好。
+
+代码：
+
+```java
+public Node generateBST(int[] sortedArr){
+		if(sortedArr == null){
+			return null;
+		}
+		return generate(sortedArr, 0, sortedArr.length-1);
+	}
+	
+	
+	public Node generate(int[] sortedArr, int start, int end){
+		if(start > end)
+			return null;
+		
+		int mid = (start + end) / 2;
+		Node root = new Node(sortedArr[mid]);
+		root.left = generate(sortedArr, 0, mid-1);
+		root.right = generate(sortedArr, mid+1, end);
+		return root;
+	}
+```
 
 
 

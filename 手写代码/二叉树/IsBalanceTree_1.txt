@@ -1,0 +1,31 @@
+public class Node{
+	public int val;
+	public Node left;
+	public Node right;
+	public Node(int val){
+		this.val = val;
+	}
+}
+//约定当某个结点的左右子树高度差超过1时，返回-1.
+public int getHeight(Node root){
+	if(root == null)
+		return 0;
+	int left = getHeight(root.left);
+	int right = getHeight(root.right);
+	if(left == -1 || right == -1)
+		return -1;
+	if(Math.abs(left - right) > 1)
+		return -1;
+
+	return Math.max(left, right);
+}
+
+//主函数
+public boolean isBanlanceTree(Node root){
+	if(root == null)
+		return true;
+	if(getHeight(root) == -1)
+		return fales;
+
+	return true;	
+}

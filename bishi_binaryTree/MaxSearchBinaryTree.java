@@ -8,6 +8,7 @@ public class MaxSearchBinaryTree {
 		return posOrder(head, record);
 	}
 	
+	//后续遍历的方式
 	public Node posOrder(Node head, int[] record){
 		if(head == null){
 			record[0] = 0;
@@ -33,12 +34,24 @@ public class MaxSearchBinaryTree {
 		record[1] = Math.min(lMin, value);
 		record[2] = Math.max(rMax, value);
 		
+		
+		
 		if(left == lBST && right == rBST && lMax < value && value < rMin){
 			record[0] = lSize + rSize +1;
+			for(int ele: record){
+				System.err.print(ele + "  ");
+			}
+			System.out.print( lMax + " "+ rMin);
+			System.out.println();
 			return head;
 		}
 		
 		record[0] = Math.max(lSize, rSize);
+		for(int ele: record){
+			System.err.print(ele + "  ");
+		}
+		System.out.print( lMax + " "+ rMin);
+		System.out.println();
 		return lSize > rSize ? lBST : rBST;
 		
 	}
