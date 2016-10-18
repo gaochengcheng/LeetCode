@@ -46,7 +46,7 @@ public class IsBst {
 		Node node16 = node12.right = new Node(16);
 		
 		Node node4 = node10.left = new Node(4);
-//		Node node14 = node10.right = new Node(14);
+//		
 		
 		Node node13 = node16.left = new Node(13);
 		Node node20 = node16.right = new Node(20);
@@ -54,8 +54,7 @@ public class IsBst {
 		node4.left = new Node(2);
 		node4.right = new Node(5);
 		
-//		node14.left = new Node(11);
-//		node14.right = new Node(15);
+
 		
 		System.out.println(isBst(node12));
 	}
