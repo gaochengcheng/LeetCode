@@ -1,6 +1,10 @@
 package bishi_binaryTree;
 /**
- * 
+ * 寻找o1,o2结点的最近公共祖先结点。
+ * 1.
+ * 2.
+ * 3.
+ * 4.
  * @author chengcheng
  * @time 2016年10月17日 下午7:27:16
  *
