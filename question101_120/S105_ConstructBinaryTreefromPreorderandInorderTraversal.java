@@ -14,7 +14,7 @@ public class S105_ConstructBinaryTreefromPreorderandInorderTraversal {
 			return null;
 		}
 		int rootVal = preorder[preStart];
-		int rootIndex = 0;
+		int rootIndex = 0;   //该值在中序中的位置
 		//在中序数组中找到头节点
 		for(int i = inStart; i <= inEnd; i++){
 			if(inorder[i] == rootVal){
@@ -27,7 +27,6 @@ public class S105_ConstructBinaryTreefromPreorderandInorderTraversal {
 		root.left = buildTree(preorder, preStart+1, preStart+len, inorder, inStart, rootIndex-1);
 		root.right = buildTree(preorder, preStart+len+1, preEnd, inorder, rootIndex+1, inEnd);
 		return root;
-		
 		
 	}
 	
