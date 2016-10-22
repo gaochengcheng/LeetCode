@@ -1,0 +1,30 @@
+public void inOrder(Node root){
+	if(root == null){
+		return ;
+	}
+	inOrder(root.left);
+	//如果pre == null，直接赋值pre。如果pre不为空，比较之后，再赋值。
+	if(pre == null){
+		pre = root;
+	}
+	else{
+		if(pre.val > root.val){
+		 	if(first == null){
+				pre = pre;
+			}
+			second = root;
+		}
+		pre = root;
+	}
+	inOrder(root.right);
+}
+
+public getTwoErrNodes(Node root){
+	Node pre = null;
+	Node first = null;
+	Node second = null;
+
+	inOrder(root);
+	//接下来的代码，交换first和second的值即可。
+}
+
