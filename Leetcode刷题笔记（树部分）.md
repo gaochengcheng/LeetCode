@@ -36,9 +36,8 @@ public static void PreOrder_2(TreeNode root){
 
 2. 当栈非空的时候，从栈中弹出一个元素，访问该元素。
 
-3. 把该元素的右孩子入栈，把该节点的左孩子入栈。重复第2步。
+3. 把该元素的右孩子入栈，把该节点的左孩子入栈。重复第2步。​
 
-   ​
 
 
 ```java
@@ -235,9 +234,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                                       a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                                           a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                                       b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                                           b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -406,7 +405,7 @@ public List<List<Integer>> levelOrderBottom(TreeNode root) {
 
 思路：
 
-​	这个题目同样是层次遍历的变形题目，相邻两层之间的访问次序相反。同样适用Collections.reverse()函数。在所有偶数层的遍历结果上面使用这个函数。
+​	这个题目同样是层次遍历的变形题目，相邻两层之间的访问次序相反。同样使用Collections.reverse()函数。在所有偶数层的遍历结果上面使用这个函数。
 
 代码：
 
@@ -1734,6 +1733,48 @@ public int maxDistance(Node head){
 		int curNodeMax = maxFromLeft + 1 + maxFromRight;   //head结点(当前结点)上的最大距离值
 		record[0] = Math.max(maxFromLeft, maxFromRight) + 1;
 		return Math.max(Math.max(lMax, rMax),curNodeMax);
+	}
+```
+
+## S.book_Node Num
+
+题目：
+
+​	给定一颗完全二叉树，统计这颗完全二叉树中一共有多少个结点。
+
+思路：
+
+​	如果采用逐一遍历的方式，很容易求出结点个数。但此时时间复杂度是O(n).在下面的代码中，时间复杂度是O(h^2).其中h代表这颗树的高度。
+
+代码：
+
+```java
+public int nodeNum(Node head){
+		if(head == null)   //1.如果head == null，说明是空树，直接返回0.
+			return 0;
+
+		return bs(head, 1, mostLeftLevel(head,1));
+	}
+	//2.如果不是空树，就求出树的高度，求法是找到树的最左结点看能到达哪一层。
+	public int mostLeftLevel(Node node, int level){
+		while(node != null){
+			node = node.left;
+			level += 1;
+		}
+		return level - 1;
+	}
+	//3.通过一个递归的过程。
+	//接下来的这个程序是递归形式，所以首先要写上递归停止的条件
+	public int bs(Node node, int l, int h){ 
+		if(l == h)
+			return l;
+		
+		if(mostLeftLevel(node.left, l+1) == h){
+			return (1 << (h - 1) + bs(node.right, l + 1, h));  //左子树是满的，
+		}else{
+			return (1 << (h - l - 1) + bs(node.left, l + 1, h)); //右子树是满的。
+		}
+			
 	}
 ```
 
