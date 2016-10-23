@@ -1,0 +1,35 @@
+//计算一颗二叉树的高度
+public int getHeight(Node root){
+	if(root == null)
+		return 0;
+	int left = getHeight(root.left);
+	int right = getHeight(root.right);
+	return Math.max(left,right)+1;
+}
+
+
+//判断一个二叉树是否是平衡二叉树
+public boolean isBBT(Node root){
+	if(root == null)
+		return true;
+
+	if(getHeight_2(root))
+		return false;
+
+	return ture;
+}
+
+//如果是平衡的返回树的高度，如果不是平衡的，返回-1.
+public int getHeight_2(Node root){
+	if(root == null)
+		return 0;
+
+	int left = getHeight_2(root.left);
+	int right = getHeight_2(root.right);
+	if(left == -1 || right == -1)
+		return -1;
+	if(Math.abs(left - right) > 1)
+		return -1;
+
+	return Math.max(left,right)+1;
+}
