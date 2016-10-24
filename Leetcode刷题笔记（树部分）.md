@@ -234,9 +234,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                                             a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                                                 a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                                             b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                                                 b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -981,7 +981,7 @@ public boolean isValidBST(TreeNode root) {
 
 解法二：
 
->“根据题目中的定义来实现，其实就是对于每个结点保存左右界，也就是保证结点满足它的左子树的每个结点比当前结点值小，右子树的每个结点比当前结 点值大。对于根节点不用定位界，所以是无穷小到无穷大，接下来当我们往左边走时，上界就变成当前结点的值，下界不变，而往右边走时，下界则变成当前结点 值，上界不变。如果在递归中遇到结点值超越了自己的上下界，则返回false，否则返回左右子树的结果。” 
+>“根据题目中的定义来实现，其实就是对于每个结点保存左右界，也就是保证每个结点满足它的左子树的每个结点比当前结点值小，右子树的每个结点比当前结 点值大。对于根节点不用定位界，所以是无穷小到无穷大，接下来当我们往左边走时，上界就变成当前结点的值，下界不变，而往右边走时，下界则变成当前结点 值，上界不变。如果在递归中遇到结点值超越了自己的上下界，则返回false，否则返回左右子树的结果。” 
 >
 
 代码：
@@ -1171,7 +1171,7 @@ static ListNode h;  //为了解决java中没有引用传递，只有值传递的
 		parent.right = sortedListToBST(mid+1, end);
 		
 		return parent;
-	}
+    }
 ```
 
 ## S.111_Minimum Depth of Binary Tree
@@ -1349,7 +1349,7 @@ public List<List<Integer>> pathSum(TreeNode root, int sum) {
 			if(root.right != null)
 				pathSumHelper(root.right,sum,sumlist,pathlist);
 		}
-		sumlist.remove(sumlist.size()-1);
+		sumlist.remove(sumlist.size()-1);   //因为是DFS搜索，回溯的时候要把曾经添加到sumList中的结点逐一移除，以待下次遍历到新的结点的时候，向sumList中加入新的结点。
 		
 	}
 ```

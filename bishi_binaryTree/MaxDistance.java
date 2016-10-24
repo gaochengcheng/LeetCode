@@ -1,4 +1,7 @@
 package bishi_binaryTree;
+
+import org.junit.Test;
+
 /**
  * 
  * @author chengcheng
@@ -25,5 +28,10 @@ public class MaxDistance {
 		int curNodeMax = maxFromLeft + 1 + maxFromRight;   //head结点(当前结点)上的最大距离值
 		record[0] = Math.max(maxFromLeft, maxFromRight) + 1;
 		return Math.max(Math.max(lMax, rMax),curNodeMax);
+	}
+	
+	@Test
+	public void test(){
+		
 	}
 }
