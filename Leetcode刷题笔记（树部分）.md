@@ -234,9 +234,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                                                 a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+                                                   a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                                                 b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+                                                   b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -1430,7 +1430,7 @@ public int sumNumbers(TreeNode root) {
 
 原题地址：https://leetcode.com/problems/binary-tree-maximum-path-sum/
 
-思路：
+### 思路1：
 
 ​	题目的含义是从树中的任意一个节点出发，到达另外一个点，从而使这个路径上所有节点的和最大。
 
@@ -1438,7 +1438,7 @@ public int sumNumbers(TreeNode root) {
 
 ​	除了使用数组之外，可以设置一个全局变量。
 
-代码：
+### 代码2：
 
 ```java
 int maxValue;
@@ -1460,6 +1460,44 @@ int maxValue;
         return Math.max(left, right) + node.val;//每次返回的时候，必须选择较大的那个值，然后加上当前节点的值。
     }
 ```
+
+### 思路2：
+
+​	一个以h为头的树上，最大路径和只可能来自一下三种情况：
+
+- h的左子树上有最大路径和。
+- h的右子树上有最大路径和。
+- h左子树上的路径和+h结点的值+h右子树上的路径和
+
+1.整个过程是后序遍历，在二叉树的每棵子树上执行步骤2.
+
+2.处理左子树，得到两个信息：（1）左子树上的最大路径和，记为`lMax`。（2）左子树上沿着左边走，或者沿着右边走（二者选其一），最大路径和，记为`maxFromLeft`。同理处理右子树。所以$$maxFromLeft+h处的值+maxFromRight$$就是跨h结点的最大路径和。$$maxFromLeft+h处的值$$就是从h结点出发沿着左边走的路径和，$$maxFromRight+h处的值$$就是从h出发沿着右边走的路径和。选择两者中较大的那个作为h处沿着左边走或者沿着右边走，所拥有的最大路径。
+
+### 代码2：
+
+```java
+public int maxPathSum(Node head){
+		int[] record = new int[1];
+		return posOrder_2(head, record);
+	}
+	
+	public int posOrder_2(Node head, int[] record){
+		if(head == null){
+			record[0] = 0;
+			return 0;
+		}
+		int lMax = posOrder_2(head.left, record);
+		int maxFromLeft = record[0];
+		int rMax = posOrder_2(head.right, record);
+		int maxFromRight = record[0];
+		int curNodeMax = maxFromLeft + maxFromRight + head.value;
+		record[0] = Math.max(maxFromLeft, maxFromRight) + head.value;
+		return Math.max(Math.max(lMax, rMax), curNodeMax);
+		
+	}
+```
+
+
 
 ## S.book_Max Search Binary Tree
 

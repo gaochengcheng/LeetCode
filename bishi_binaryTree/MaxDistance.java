@@ -2,6 +2,8 @@ package bishi_binaryTree;
 
 import org.junit.Test;
 
+
+
 /**
  * 
  * @author chengcheng
@@ -30,8 +32,40 @@ public class MaxDistance {
 		return Math.max(Math.max(lMax, rMax),curNodeMax);
 	}
 	
+	public int maxPathSum(Node head){
+		int[] record = new int[1];
+		return posOrder_2(head, record);
+	}
+	
+	public int posOrder_2(Node head, int[] record){
+		if(head == null){
+			record[0] = 0;
+			return 0;
+		}
+		int lMax = posOrder_2(head.left, record);
+		int maxFromLeft = record[0];
+		int rMax = posOrder_2(head.right, record);
+		int maxFromRight = record[0];
+		int curNodeMax = maxFromLeft + maxFromRight + head.value;
+		record[0] = Math.max(maxFromLeft, maxFromRight) + head.value;
+		return Math.max(Math.max(lMax, rMax), curNodeMax);
+		
+	}
+	
+	
 	@Test
 	public void test(){
+		Node node1 = new Node(5);
+		Node node2 = node1.left = new Node(4);
+		Node node3 = node1.right = new Node(8);
+		Node node4 = node2.left = new Node(11);
+		node4.left = new Node(7);
+		node4.right = new Node(2);
+		node3.left = new Node(13);
+		Node node5 = node3.right = new Node(4);
+		node5.left = new Node(5);
+		node5.right = new Node(1);
 		
+		System.out.println(maxPathSum(node1));
 	}
 }

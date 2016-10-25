@@ -9,12 +9,12 @@ import org.junit.Test;
  *
  */
 public class S129_SumRoottoLeafNumbers {
-	public int sumNumbers(TreeNode root) {
+	public int sumNumbers(Node root) {
 		return dfs(root,0);
 		
 	}
 	
-	public int dfs(TreeNode root, int sum){
+	public int dfs(Node root, int sum){
 		if(root == null)
 			return 0;
 		
