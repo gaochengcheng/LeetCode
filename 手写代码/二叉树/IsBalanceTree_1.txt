@@ -6,6 +6,7 @@ public class Node{
 		this.val = val;
 	}
 }
+
 //约定当某个结点的左右子树高度差超过1时，返回-1.
 public int getHeight(Node root){
 	if(root == null)
@@ -17,7 +18,7 @@ public int getHeight(Node root){
 	if(Math.abs(left - right) > 1)
 		return -1;
 
-	return Math.max(left, right);
+	return Math.max(left, right)+1;
 }
 
 //主函数

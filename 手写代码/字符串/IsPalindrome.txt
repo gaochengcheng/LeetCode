@@ -1,0 +1,31 @@
+//判断一个字符串是否是回文，其中只考虑字母和数字，不考虑空格，标点符号。
+
+public boolean isPalindrome(String str){
+	if(str.length() == 0)
+		return true;
+
+	int low1 = 'A',high1 = 'Z';
+	int low2 = '0',high2 = '9';
+	int low = 0;
+	int high = str.length()-1;  //low and high are both used as index.
+
+	while(low < high){
+		//low所在位置既不是字母也不是数字，low++
+
+
+
+		//high所在的位置既不是字母也不是数字，high++
+
+
+
+
+		//如果low所在的位置和high所在的位置满足条件，比较他们，如果相等，continue继续进行，
+		//如果不对等，不需要比较，直接返回false即可。
+	}
+
+
+
+	//循环执行完毕，没有返回false，最后返回true。
+
+
+}

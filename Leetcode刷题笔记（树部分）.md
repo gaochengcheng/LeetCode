@@ -1597,7 +1597,7 @@ public int bstTopoSize1(Node head){
 
 题目描述：
 
-​	给定一个结点，判断一棵树是否是二叉搜索树。
+​	给定一个结点，，。
 
 代码：
 

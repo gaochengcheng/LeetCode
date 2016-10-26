@@ -13,7 +13,7 @@ public void InOrder(Node root){
 	Stack<Node> stack = new Stack<Node>();
 	
 	while(cur != null || !stack.IsEmpty()){
-		if(p != null){
+		if(cur != null){
 			stack.push(cur);
 			cur = cur.left;
 		}

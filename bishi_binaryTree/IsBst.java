@@ -12,6 +12,9 @@ import org.junit.Test;
  *
  */
 public class IsBst {
+	public static void main(String[] args) {
+		
+	}
 	public boolean isBst(Node root){
 		if(root == null)
 			return true;
