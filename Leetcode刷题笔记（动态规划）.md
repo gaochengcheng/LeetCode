@@ -276,8 +276,6 @@ public int coins1(int[] arr, int aim){
 
    ​
 
-   ​
-
 ### 分析四：动态规划时间优化版：
 
 ​	该优化针对步骤三。上种情况的步骤三中在计算`(i,j)`位置的时候，需要对`(i-1,j)`、`(i-1,j-arr[i])`、`(i-1,j-2*arr[i])`等情况做枚举。其含义分别是不使用`arr[i]`，使用一张`arr[i]`，使用2张`arr[i]`。而这个累加和其实还等于`(i-1,j)`和`(i,j-arr[i])`的和。其中，`(i-1,j)`表示不用`arr[i]`的情况下，组成`j`的方法数。`(i,j-arr[i])`表示已经使用了一张`arr[i]`货币，然后在`arr[0...i]`的货币中，组成`j-arr[i]`的方法数。
@@ -317,4 +315,83 @@ public int coins4(int[] arr, int aim){
 
 
 ### 分析五：动态规划空间优化版：
+
+
+
+## S.book_Max length Increment Sub String
+
+题目描述：
+
+​	给定一个数组，找到这个数组中最长的递增序列，并且以数组的形式返回这个序列。
+
+解题思路：
+
+​	该思路的时间复杂度是$$O(n^2)$$的。两步走：第一步：计算好`dp`数组。第二步：根据产生的`dp`数组找到递增子序列的最大长度，dp中最大的值就是最大的长度。最大值对应的下标，就是递增子序列中最大的值。
+
+代码：
+
+```java
+public class MaxLengthSubString {
+	
+	//get dp array.
+	public int[] getdp1(int[] arr){
+		int[] dp = new int[arr.length];
+		for(int i = 0; i < arr.length; i++){
+			dp[i] = 1;
+			for(int j = 0; j < i; j++){
+				if(arr[i]>arr[j])
+					dp[i] = Math.max(dp[i], dp[j]+1);
+			}
+		}
+		
+		return dp;
+	}
+	
+	public int[] generateLIS(int[] arr, int[] dp){
+		int len = 0;
+		int index = 0;
+		for(int i = 0; i < dp.length; i++){
+			if(dp[i] > len){
+				len = dp[i];  //find length value
+				index = i;    //max value's index
+			}
+		}
+		
+		int[] lis = new int[len];  // save result into lis.
+		lis[--len] = arr[index];   // put max value into last position.And this position is len--.
+		for(int i = index; i >= 0; i--){
+			if(arr[i] < arr[index] && dp[i] == dp[index]-1){
+				lis[--len] = arr[i];  // save value into lis array.
+				index = i;   // update index value
+			}
+		}
+		
+		return lis;
+	}
+	
+	
+	public int[] lis1(int[] arr){
+		if(arr == null || arr.length == 0)
+			return null;
+		int[] dp = getdp1(arr);
+		return generateLIS(arr, dp);
+	}
+	
+	@Test
+	public void test(){
+		int[] arr = {2,1,5,3,6,4,8,9,7};
+		int[] dp = getdp1(arr);
+		for(int ele : dp)
+			System.out.print(ele+ " ");  // dp result.
+		System.out.println();
+		int[] res = generateLIS(arr, dp);
+		for(int ele : res)
+			System.out.print(ele+ " ");  // max length increment sub string 
+	}
+	
+}
+
+```
+
+
 

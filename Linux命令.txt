@@ -19,7 +19,7 @@
 	ls -l  // 查看当前目录所有文件，以列表方式呈现
 	ls -t  // 按照时间排序，修改时间最新的在最前面
 	ls -r  // r的含义是reverse，按照相反的顺序
-	ls -ltr  // 含义就是按照时间排序，并且最久的排在最前面
+	ls -ltr  // 含义就是按照时间排序，并且最久的排在最前面,最新的排在最后面
 	| grep -i hadoop   //使用了管道命令，值只针对hadoop这个文件查看，并且添加 -i 参数，忽略hadoop的大小写 
 9.使用chown 改变 Hadoop为 hduser：hadoop组的权限。
 	chown hduser:hadoop hadoop

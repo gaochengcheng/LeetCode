@@ -11,7 +11,7 @@ public boolean isPalindrome(String str){
 
 	while(low < high){
 		//low所在位置既不是字母也不是数字，low++
-
+	
 
 
 		//high所在的位置既不是字母也不是数字，high++
