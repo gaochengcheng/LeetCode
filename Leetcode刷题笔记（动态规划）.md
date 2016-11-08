@@ -362,7 +362,7 @@ public class MaxLengthSubString {
 		for(int i = index; i >= 0; i--){
 			if(arr[i] < arr[index] && dp[i] == dp[index]-1){
 				lis[--len] = arr[i];  // save value into lis array.
-				index = i;   // update index value
+				index = i;   // update index value.
 			}
 		}
 		
