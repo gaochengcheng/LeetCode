@@ -22,7 +22,7 @@ public class Jump {
 				jump++;
 				cur = next;
 			}
-			next = Math.max(next, i + arr[i]);
+			next = Math.max(next, i + arr[i]);   //  i+arr[i]表示从i可以跳到的位置，要在所有位置中选出最大的值，作为下一次可以到达的位置
 		}
 		return jump;
 	}
