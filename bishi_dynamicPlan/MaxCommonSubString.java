@@ -56,7 +56,7 @@ public class MaxCommonSubString {
 			}else if(m > 0 && dp[m][n] == dp[m-1][n]){
 				m--;
 			}else{
-				res[index--] = chs1[m];
+				res[index--] = chs1[m];  
 				m--;
 				n--;
 			}
