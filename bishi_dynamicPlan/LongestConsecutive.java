@@ -45,7 +45,7 @@ public class LongestConsecutive {
 		 * 		right = more +  length(more) - 1. more实际上相当于left，满足left + length - 1 = right关系。
 		 * 		下面情况中，当在序列右端插入一个值的时候：
 		 * 		left = less - length(less) + 1. less相当于right，要求right，满足left + length - 1 = right关系。
-		 * 		right = more + length(more) -1. 此时length = 1，more等于新插入的more。
+		 * 		right = more + length(more) -1. 此时length = 1，more等于新插入的more。inla
 		 */
 		int left = less - map.get(less) + 1;
 		int right = more + map.get(more) - 1;
