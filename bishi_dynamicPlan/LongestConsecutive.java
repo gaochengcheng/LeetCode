@@ -36,7 +36,17 @@ public class LongestConsecutive {
 	
 	
 	public int merge(HashMap<Integer, Integer> map, int less, int more){
-		// left 和 right 是怎么计算出的。
+		// left 和 right 的计算很不错
+		/**
+		 * 首先要理清楚一段序列中，左端值left、区间长度length、右端值之间的关系。
+		 * left + length - 1 = right
+		 * 所以，下面情况中，当在序列左端插入一个值的时候：
+		 * 		left = less - length(less) + 1.此时length =1，less等于插入的less
+		 * 		right = more +  length(more) - 1. more实际上相当于left，满足left + length - 1 = right关系。
+		 * 		下面情况中，当在序列右端插入一个值的时候：
+		 * 		left = less - length(less) + 1. less相当于right，要求right，满足left + length - 1 = right关系。
+		 * 		right = more + length(more) -1. 此时length = 1，more等于新插入的more。
+		 */
 		int left = less - map.get(less) + 1;
 		int right = more + map.get(more) - 1;
 		int len = right - left + 1;  //计算从left到right的长度
