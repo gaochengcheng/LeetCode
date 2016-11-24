@@ -120,7 +120,7 @@ public ListNode reverseBetween(ListNode head, int m, int n) {
 
 startPoint、node1、node2之间的变换过程如如图：
 
-![链表逆序过程](pics\链表逆序过程.PNG)
+![链表逆序过程](pics\/链表逆序过程.PNG)
 
 这种方法是使用头插法逆序一个链表：
 
@@ -650,7 +650,7 @@ public boolean hasCycle(ListNode head) {
 
 ​	使用双指针，slower和faster，反复论证清楚这两者之间的关系，找到相遇点，然后找到相遇点和环入口的关系，找到环入口的位置。证明如下：
 
-​	  ![环入口](pics\环入口.PNG)
+​	  ![环入口](pics\/环入口.PNG)
 
 > 如上图所示，12为带环链表的入口点，简单分析可知243是fast和slow的相遇点（鹊桥相会啊==！），a为环入口点到头结点的路程，x为相遇点到环入口点的路程。我们假设slow指针走过的路程为s，那么fast指针走过的路程则为2s（如果理解有困难，自己可以举例），假设环长为c。且有
 

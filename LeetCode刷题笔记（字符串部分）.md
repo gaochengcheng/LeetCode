@@ -220,7 +220,7 @@ public boolean isMatch(String s, String p) {
 
  下面是迭代程序，要熟悉这个思维：记录上一次开始比较的位置，如图：
 
- ![字符串比较](pics\字符串比较.PNG)
+ ![字符串比较](pics\/字符串比较.PNG)
 
 代码：
 
