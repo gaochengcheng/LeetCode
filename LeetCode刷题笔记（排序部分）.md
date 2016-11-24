@@ -346,7 +346,7 @@ public ListNode mergeList(ListNode l1, ListNode l2) {
 
 ​	 当sortedlist为空以及pre.next所指向的元素比cur指向的元素值要大时，需要把cur元素插入到pre.next所指向元素之前。否则，pre指针后移。最后返回fakehead的next即可。
 
-  ![链表实现插入排序](pics\链表实现插入排序.jpg)
+  ![链表实现插入排序](pics\/链表实现插入排序.jpg)
 
 代码：
 
@@ -928,11 +928,11 @@ private static int partition(Comparable[] a, int lo, int hi)
 }
 ```
 
- 返回的j的值，将原先的数组分成两个部分，左边部分小于j处的值，右边部分大于j处的值。![QuickSort](pics\QuickSort.PNG)
+ 返回的j的值，将原先的数组分成两个部分，左边部分小于j处的值，右边部分大于j处的值。![QuickSort](pics\/QuickSort.PNG)
 
 partition 循环中`while(true)`部分的执行过程：
 
-![QuickSort_whileloop](pics\QuickSort_whileloop.PNG)
+![QuickSort_whileloop](pics\/QuickSort_whileloop.PNG)
 
 ## 优先队列和堆
 
