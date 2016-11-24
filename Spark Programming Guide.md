@@ -27,6 +27,8 @@ Spark 不仅可以将任何 Hadoop 分布式文件系统（HDFS）上的文件�
 第二章
 ===
 
+​	Spark 本身是用 Scala 写的，运行在 Java 虚拟机（JVM）上。要在你的电脑或集群上运行Spark，你要做的准备工作只是安装 Java 6 或者更新的版本。如果你希望使用 Python 接口，你还需要一个 Python 解释器（2.6 以上版本）。Spark 尚不支持 Python 3 2 。
+
 ## 2.1下载Spark
 
 spark目录介绍
@@ -128,3 +130,22 @@ RDD<String> errors = lines.filter(new Contains("error"));
 
 ## 常见的转化操作和行动操作
 
+​	RDD分为一般数据类型和特定数据类型。
+
+### 基本RDD
+
+​	基本RDD最常用的转化操作是map（）和filter（）。
+
+对一个数据为{1, 2, 3, 3}的RDD进行基本的RDD转化操作：
+
+ ![基本RDD操作](pics_Spark\/基本RDD操作.PNG)
+
+对数据分别为{1, 2, 3}和{3, 4, 5}的RDD进行针对两个RDD的转化操作:
+
+ ![2个RDD进行操作](pics_Spark\/2个RDD进行操作.PNG)
+
+### 行动操作
+
+对一个数据为{1, 2, 3, 3}的RDD进行基本的RDD行动操作：
+
+ ![RDD行动操作](pics_Spark\/RDD行动操作.PNG)
