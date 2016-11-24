@@ -190,7 +190,7 @@ public ListNode mergeKLists(ListNode[] lists) {
 >
 > 2) Repeatedly merge partitioned units to produce new sublists until there is only 1 sublist remaining. This will be the sorted list at the end.
 
- ![MergeSort](pics\MergeSort.PNG)
+ ![MergeSort](pics\\MergeSort.PNG)
 
 代码：
 
