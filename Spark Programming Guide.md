@@ -37,22 +37,22 @@ core、streaming、python目录：包含Spark项目主要组件的源代码。
 
 ## 2.2Spark中python和Scala的shell
 
-和其他 shell 工具不一样的是，在其他 shell 工具中你只能使用单机的硬盘和内存来操作数据，而 Spark shell 可用来与分布式存储在许多机器的内存或者硬盘上的数据进行交互，并且处理过程的分发由 Spark 自动控制完成。
+​	和其他 shell 工具不一样的是，在其他 shell 工具中你只能使用单机的硬盘和内存来操作数据，而 Spark shell 可用来与分布式存储在许多机器的内存或者硬盘上的数据进行交互，并且处理过程的分发由 Spark 自动控制完成。
 
-Spark 提供 Python 以及Scala 的增强版 shell，支持与集群的连接。
+​	Spark 提供 Python 以及Scala 的增强版 shell，支持与集群的连接。
 
-退出任意一个shell的方法是按：`ctrl`+`D`.
+​	退出任意一个shell的方法是按：`ctrl`+`D`.
 
 ## 2.3Spark核心概念简介
 
-从上层来看，每个 Spark 应用都由一个驱动器程序（driver program）来发起集群上的各种并行操作。驱动器程序包含应用的 main 函数，并且定义了集群上的分布式数据集，还对这些分布式数据集应用了相关操作。在前面的例子里，实际的驱动器程序就是 Spark shell 本身，你只需要输入想要运行的操作就可以了。
+​	从上层来看，每个 Spark 应用都由一个驱动器程序（driver program）来发起集群上的各种并行操作。驱动器程序包含应用的 main 函数，并且定义了集群上的分布式数据集，还对这些分布式数据集应用了相关操作。在前面的例子里，实际的驱动器程序就是 Spark shell 本身，你只需要输入想要运行的操作就可以了。
 
-其实 Spark API 最神奇的地方就在于像 filter 这样基于函数的操作也会在集群上并行执行。也就是说，Spark 会自动将
+​	其实 Spark API 最神奇的地方就在于像 filter 这样基于函数的操作也会在集群上并行执行。也就是说，Spark 会自动将
 函数（比如 line.contains("Python") ）发到各个执行器节点上。这样，你就可以在单一的驱动器程序中编程，并且让代码自动运行在多个节点上。
 
 ## 2.4独立应用
 
-除了交互式运行之外，Spark 也可以在 Java、Scala 或 Python 的独立程序中被连接使用。这与在 shell 中使用的主要区别在于你需要自行初始化 SparkContext。接下来，使用的 API 就一样了。
+​	除了交互式运行之外，Spark 也可以在 Java、Scala 或 Python 的独立程序中被连接使用。这与在 shell 中使用的主要区别在于你需要自行初始化 SparkContext。接下来，使用的 API 就一样了。
 
 - 将Spark和自己的独立应用进行连接
 - 初始化SparkContext
@@ -60,7 +60,7 @@ Spark 提供 Python 以及Scala 的增强版 shell，支持与集群的连接。
 
 ### 2.4.1初始化SparkContext
 
-一旦完成了应用与 Spark 的连接，接下来就需要在你的程序中导入 Spark 包并且创建SparkContext。你可以通过先创建一个 SparkConf 对象来配置你的应用，然后基于这个SparkConf 创建一个 SparkContext 对象。
+​	一旦完成了应用与 Spark 的连接，接下来就需要在你的程序中导入 Spark 包并且创建SparkContext。你可以通过先创建一个 SparkConf 对象来配置你的应用，然后基于这个SparkConf 创建一个 SparkContext 对象。
 
 
 第三章  RDD编程
@@ -68,7 +68,7 @@ Spark 提供 Python 以及Scala 的增强版 shell，支持与集群的连接。
 
 
 
-RDD 其实就是分布式的元素集合。在 Spark 中，对数据的所有操作不外乎创建 RDD、转化已有 RDD 以及调用 RDD 操作进行求值。而在这一切背后，Spark 会自动将RDD 中的数据分发到集群上，并将操作并行化执行。
+​	RDD 其实就是分布式的元素集合。在 Spark 中，对数据的所有操作不外乎创建 RDD、转化已有 RDD 以及调用 RDD 操作进行求值。而在这一切背后，Spark 会自动将RDD 中的数据分发到集群上，并将操作并行化执行。
 
 什么叫分布式的元素集合呢？一个RDD被分为多个区，这些个区放在集群中不同的节点上。就是一个RDD是一个元素集合，但它本身是分布式存储的。
 
@@ -78,7 +78,9 @@ RDD 其实就是分布式的元素集合。在 Spark 中，对数据的所有操
 
 ## 转化操作
 
-transformation操作，比如说filter（）操作
+transformation操作，比如说filter（）操作。
+
+最常用的两个转化操作：map（）和filter（）。转化操作map() 接收一个函数，把这个函数用于 RDD 中的每个元素，将函数的返回结果作为结果RDD 中对应元素的值。
 
 ## 行动操作
 
@@ -136,16 +138,16 @@ RDD<String> errors = lines.filter(new Contains("error"));
 
 ​	基本RDD最常用的转化操作是map（）和filter（）。
 
-对一个数据为{1, 2, 3, 3}的RDD进行基本的RDD转化操作：
+​	对一个数据为{1, 2, 3, 3}的RDD进行基本的RDD转化操作：
 
  ![基本RDD操作](pics_Spark\/基本RDD操作.PNG)
 
-对数据分别为{1, 2, 3}和{3, 4, 5}的RDD进行针对两个RDD的转化操作:
+​	对数据分别为{1, 2, 3}和{3, 4, 5}的RDD进行针对两个RDD的转化操作:
 
  ![2个RDD进行操作](pics_Spark\/2个RDD进行操作.PNG)
 
 ### 行动操作
 
-对一个数据为{1, 2, 3, 3}的RDD进行基本的RDD行动操作：
+​	对一个数据为{1, 2, 3, 3}的RDD进行基本的RDD行动操作：
 
  ![RDD行动操作](pics_Spark\/RDD行动操作.PNG)
