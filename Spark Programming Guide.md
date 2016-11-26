@@ -50,6 +50,18 @@ core、streaming、python目录：包含Spark项目主要组件的源代码。
 ​	其实 Spark API 最神奇的地方就在于像 filter 这样基于函数的操作也会在集群上并行执行。也就是说，Spark 会自动将
 函数（比如 line.contains("Python") ）发到各个执行器节点上。这样，你就可以在单一的驱动器程序中编程，并且让代码自动运行在多个节点上。
 
+​	向Spark中传递函数是可以的，但是在这种情况下，我们必须把函数定义为实现了 Function 接口的类。例如：
+
+```java
+JavaRDD<String> pythonLines = lines.filter(
+	new Function<String, Boolean>() {
+	Boolean call(String line) { return line.contains("Python"); }
+	}
+);
+```
+
+
+
 ## 2.4独立应用
 
 ​	除了交互式运行之外，Spark 也可以在 Java、Scala 或 Python 的独立程序中被连接使用。这与在 shell 中使用的主要区别在于你需要自行初始化 SparkContext。接下来，使用的 API 就一样了。
@@ -75,6 +87,12 @@ core、streaming、python目录：包含Spark项目主要组件的源代码。
 用户通过两种方式创建RDD：1.外部读取数据集。2在驱动器程序里分发驱动器程序中的对象集合（比如list和set）。
 
 创建出RDD之后，有两种操作。1.transformation操作。2.Action操作。transformation操作是将一个RDD转换为另外一个RDD，Action操作会针对RDD计算出一个结果，并把结果返回到驱动器程序中，或把结果存储到外部存储系统（如 HDFS）中。
+
+## 向Spark传递函数
+
+​	在Spark中传递函数，是通过传递一个函数的对象来实现的。这个对象是被实现的接口的对象。
+
+​	 ![标准java函数接口](pics_Spark\/标准java函数接口.PNG)
 
 ## 转化操作
 

@@ -35,3 +35,9 @@ Spark API 系统汇总：
 | `DoubleFunction<T>`            | `Function<T, Double>`                 | 用于 mapToDouble ，以生成DoubleRDD        |
 | `PairFlatMapFunction<T, K, V>` | `Function<T, Iterable<Tuple2<K, V>>>` | 用于 flatMapToPair ，以生成 PairRDD<K, V> |
 | `PairFunction<T, K, V>`        | `Function<T, Tuple2<K, V>>`           | 用 于 mapToPair ， 以 生 成PairRDD<K, V>  |
+
+特殊类型的RDD会有特殊的函数以供被调用。
+
+针对Java版本而言，在RDD上执行的转化函数不同，向转换函数中传递的函数也不同。比如说，如果对RDD执行filter（）转化，那么向filter中传递的函数就是`Function<T, R> `函数的对象。参见下表：
+
+ ![标准java函数接口](pics_Spark\/标准java函数接口.PNG)
