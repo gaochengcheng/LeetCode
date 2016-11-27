@@ -2,6 +2,56 @@
 Spark API 系统汇总：
 ==
 
+
+
+## 创建RDD
+
+​	Spark 提供了两种创建 RDD 的方式：读取外部数据集，以及在驱动器程序中对一个集合进行并行化。
+
+1. 创建 RDD 最简单的方式就是把程序中一个已有的集合传给 SparkContext 的 parallelize()方法：
+
+    python 版本
+
+```python
+lines = sc.parallelize(["pandas", "i like pandas"])
+```
+
+​	Scala版本
+
+```scala
+val lines = sc.parallelize(List("pandas", "i like pandas"))
+```
+
+​	java版本
+
+```java
+JavaRDD<String> lines = sc.parallelize(Arrays.asList("pandas", "i like pandas"));
+```
+
+2. 常用的方式是从外部存储中读取数据来创建 RDD.
+
+   python 版本
+
+```python
+lines = sc.textFile("/path/to/README.md")
+```
+
+​	Scala 版本
+
+```scala
+val lines = sc.textFile("/path/to/README.md")
+```
+
+   	Java 版本
+
+```java
+JavaRDD<String> lines = sc.textFile("/path/to/README.md");
+```
+
+
+
+## RDD转化和行动操作
+
 对一个数据为{1,2,3,4,}的RDD进行**基本的RDD转化**操作
 
 | 函数名                                      | 目的                                       | 示例                            | 结果                      |
@@ -27,7 +77,7 @@ Spark API 系统汇总：
 | $$aggregate(zeroValue)(seqOp, combOp)$$ | 和 reduce() 相似，但是通常返回不同类型的函数，zeroValue是需要提供的初始值，seqOP函数负责在每个节点上进行本地累加，combOp函数负责将多个累加器进行两两合并。 | rdd.aggregate((0, 0))((x, y) =>(x._1 + y, x._2 + 1),(x, y) =>(x._1 + y._1, x._2 + y._2)) | `(9,4)`               |
 | $$foreach(func)$$                       | 对RDD中的每个元素进行一个行动操作，但是不把结果返回到驱动器程序中。比如可以使用JSON格式发送到网络中，这时候就可以使用`forecah()`行动操作，对RDD中的每个元素进行操作，而不需要把RDD发回到本地。 | $$rdd.foreach(func)$$                    | 无                     |
 
-在不同RDD类型间转换，Scala版本是隐式转换的，下面表格中是java版本。
+在**不同RDD类型间转换**，Scala版本是隐式转换的，下面表格中是**java版本**。
 
 | 函数名                            | 等价函数                                  | 用途                                  |
 | ------------------------------ | ------------------------------------- | ----------------------------------- |
@@ -35,6 +85,8 @@ Spark API 系统汇总：
 | `DoubleFunction<T>`            | `Function<T, Double>`                 | 用于 mapToDouble ，以生成DoubleRDD        |
 | `PairFlatMapFunction<T, K, V>` | `Function<T, Iterable<Tuple2<K, V>>>` | 用于 flatMapToPair ，以生成 PairRDD<K, V> |
 | `PairFunction<T, K, V>`        | `Function<T, Tuple2<K, V>>`           | 用 于 mapToPair ， 以 生 成PairRDD<K, V>  |
+
+## 向Spark传递参数
 
 特殊类型的RDD会有特殊的函数以供被调用。
 

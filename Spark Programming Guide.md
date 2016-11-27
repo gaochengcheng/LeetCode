@@ -94,6 +94,8 @@ JavaRDD<String> pythonLines = lines.filter(
 
 ​	 ![标准java函数接口](pics_Spark\/标准java函数接口.PNG)
 
+​	Function<T,R>中，T代表输入参数的类型，R代表返回值的类型。
+
 ## 转化操作
 
 transformation操作，比如说filter（）操作。
@@ -169,3 +171,30 @@ RDD<String> errors = lines.filter(new Contains("error"));
 ​	对一个数据为{1, 2, 3, 3}的RDD进行基本的RDD行动操作：
 
  ![RDD行动操作](pics_Spark\/RDD行动操作.PNG)
+
+## 在不同RDD类型之间进行转换
+
+由一般RDD转换为特殊类型RDD
+
+| 函数名                            | 等价函数                                  | 用途                                  |
+| ------------------------------ | ------------------------------------- | ----------------------------------- |
+| `DoubleFlatMapFunction<T>`     | `Function<T, Iterable<Double>>`       | 用于 flatMapToDouble ，以生成 DoubleRDD   |
+| `DoubleFunction<T>`            | `Function<T, Double>`                 | 用于 mapToDouble ，以生成DoubleRDD        |
+| `PairFlatMapFunction<T, K, V>` | `Function<T, Iterable<Tuple2<K, V>>>` | 用于 flatMapToPair ，以生成 PairRDD<K, V> |
+| `PairFunction<T, K, V>`        | `Function<T, Tuple2<K, V>>`           | 用 于 mapToPair ， 以 生 成PairRDD<K, V>  |
+
+
+
+
+第四章  键值对操作
+===
+
+​	键值对 RDD （pair RDD）是 Spark 中许多操作所需要的常见数据类型。
+
+## 创建pair RDD
+
+​	两种方式：
+
+​	第一种：存储格式为键值对的格式，那么在读取数据的时候会直接返回由其键值对数据组成的pair RDD。
+
+​	第二种：调用map（）函数，把一个普通的RDD 转换为pair RDD，给map（）函数传递的函数需要返回键值对。
