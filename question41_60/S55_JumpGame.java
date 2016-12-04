@@ -22,13 +22,15 @@ public class S55_JumpGame {
     }
 	//从后往前检查,判断能不能到达下标是0的位置。
 	public boolean canJump_2(int[] nums){
-		int reach = nums.length-1; //最后能跳到哪里
+        if(nums.length == 0)
+            return true;
+        int reach = nums.length-1; //最后能跳到哪里
 		for(int i = nums.length-2; i >=0; i-- ){
-			if(i + nums[i] > reach)
+			if(i + nums[i] >= reach)
 				reach = i;
 		}
 		return reach == 0;
-	}
+    }
 	
 	@Test
 	public void tset(){
