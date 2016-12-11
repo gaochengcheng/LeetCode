@@ -199,7 +199,35 @@ RDD<String> errors = lines.filter(new Contains("error"));
 
 ​	第二种：调用map（）函数，把一个普通的RDD 转换为pair RDD，给map（）函数传递的函数需要返回键值对。
 
-
 第五章  数据读取与保存
 ===
+
+## 文件格式
+
+​	Spark支持很多文件格式的读取和保存。并且其方式都非常简单。
+
+- 文本文件的读取
+- JSON形式的读取（半结构化数据）
+- 逗号分割值形式的文件（CSV格式）
+- SequenceFile（由没有相对关系的键值对文件组成的常用Hadoop格式）
+- 对象文件
+- Hadoop输入输出格式
+
+## 文件系统
+
+​	Spark支持读写很多种文件系统，可以使用任何我们想要的文件格式。
+
+- 本地/“常规”文件系统
+- HDFS
+- Spark SQL中的结构化数据
+  - 通过Spark SQL读取Hive中的数据，Hive是Hadoop上的一种常见的结构化数据源。
+  - 通过Spark SQL读取JSON中的数据。
+- 数据库
+  - Spark可以使用通过JDBC方式连接的数据库。
+  - Cassandra
+  - HBase
+  - Elasticsearch
+  - ​
+
+​	
 
