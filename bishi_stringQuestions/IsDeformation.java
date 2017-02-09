@@ -25,7 +25,8 @@ public class IsDeformation {
 			map[c1[i]]++;
 		}
 		for(int i = 0; i<c2.length; i++){
-			System.out.println(map[c2[i]]);
+			//注意--符号的使用。含义是用完该变量的值，之后再进行--操作的。
+			//这行代码很巧妙
 			if(map[c2[i]]-- == 0)
 				return false;
 		}
