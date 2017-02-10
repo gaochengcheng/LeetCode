@@ -2,6 +2,13 @@ package bishi_stringQuestions;
 
 import org.junit.Test;
 
+/**
+ * 时间复杂度O(n),空间复杂度O(1).
+ * 做好每个字符的判断工作，当完成一次遍历的时候，生成累加和。
+ * @author chengcheng
+ * @time 2017年2月9日 下午2:49:37
+ *
+ */
 public class numSum {
 	public static void main(String[] args) {
 		
