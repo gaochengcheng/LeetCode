@@ -27,7 +27,7 @@ public class removeKZeroes {
 			}
 			else{
 				if(count == k){
-					//删除k个0
+					//删除k个0，count控制长度，start控制起始位置
 					while(count-- != 0)
 						charArr[start++] = 0;   //0对应的ASCII码字符是空字符
 				}
@@ -35,15 +35,15 @@ public class removeKZeroes {
 				start = -1;
 			}
 			
-			
 		}
 		if(count == k){
 			//删除k个0
 			while(count-- != 0)
 				charArr[start++] = 0;
 		}
-		return String.valueOf(charArr);
+		return String.valueOf(charArr);  //字符数组转化为字符串
 	}
+	
 	@Test
 	public void test(){
 		System.out.println(removeKZeroes_solution("A00B",2));
