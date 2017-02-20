@@ -6,6 +6,8 @@ import org.junit.Test;
 
 /**
  * 
+ * 10进制数转换为7进制数，用程序模拟手工做法，做短除法mod7，将得到的余数从底向上排列起来
+ * 
  * @author chengcheng
  * @time 2017年2月12日 下午7:30:08
  *
@@ -24,8 +26,8 @@ public class S504_Base7 {
 			
 			val = num % 7;
 			num = num/7;
-			
-			result = Integer.toString(val)+result;
+			result = val+result;
+//			result = Integer.toString(val)+result;
 			
 		}
 		
