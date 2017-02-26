@@ -1,6 +1,7 @@
 package contest20;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,10 +49,38 @@ public class S525_ContiguousArray {
 		
 		
     }
+	//参考:
+	//https:github.com/zhsl/OJSolutions/blob/master/LeetCode/Contest/weeklyContest20/C_192ms.cpp
+	public int findMaxLength2(int[] nums) {
+		
+		int N = 50010;
+		int INF = Integer.MAX_VALUE;
+		int[] w = new int[2*N];
+		
+		int pre = 0;
+		int ans = 0;
+		Arrays.fill(w, INF);
+		w[0+N] = 0;
+		
+		for(int i=0; i<nums.length; i++){
+			pre += nums[i] == 1?1:-1;        //前缀和数组在遍历过程中动态生成
+			if(w[pre+N] == INF){  			//pre有可能是负数，+N之后偏移为正数。
+				w[pre+N]=i+1;  				//i+1是位置
+			}else if(i+1 - w[pre+N] > ans){
+				ans = i+1 -w[pre+N];
+			}
+		}
+		
+		return ans;
+		
+		
+		
+	}
 	
 	@Test
 	public void test(){
 		int[] a = {1,0,1,0,1,1,1,1,0,0,0,0,1};
 		System.out.println(findMaxLength(a));
+		System.out.println(findMaxLength2(a));
 	}
 }
