@@ -20,7 +20,7 @@ public class S530_MinimumAbsoluteDifferenceinBST {
 				TreeNode node = stack.pop();
 				cur = node.val;
 				p = node.right;
-				System.out.println("next "+next+", cur "+cur);
+				
 			}
 			dis = Math.min(Math.abs(cur-next),dis);
 		}
