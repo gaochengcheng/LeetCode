@@ -11,7 +11,7 @@ public class S531_LonelyPixelI {
 		for(int i=0; i<picture.length; i++){
 			for(int j=0; j<picture[0].length; j++){
 				if(picture[i][j]=='B'){
-					++row[i];  //出现是B的位置，让B所在的行和列统统+1.
+					++row[i];  //出现是B的位置，让B所在的行和列+1.
 					++col[j];
 				}
 			}
