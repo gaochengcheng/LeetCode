@@ -13,7 +13,7 @@ import org.junit.Test;
  */
 public class S517_SuperWashingMachines {
 	public int findMinMoves(int[] machines) {
-		int[] count = new int[machines.length];
+		int[] count = new int[machines.length];  //这个数组记录每个位置需要移动的次数
         int sum = 0;
         for (int machine : machines) {
             sum += machine;
@@ -30,7 +30,7 @@ public class S517_SuperWashingMachines {
                 machines[i + 1] += machines[i] - target;
                 machines[i] = target;
             } else {
-                count[i + 1] = target - machines[i];
+                count[i + 1] += target - machines[i];
                 machines[i + 1] -= target - machines[i];
                 machines[i] = target;
             }

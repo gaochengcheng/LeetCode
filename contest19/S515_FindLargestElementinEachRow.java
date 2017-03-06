@@ -36,7 +36,7 @@ public class S515_FindLargestElementinEachRow {
 					next.addLast(node.left);
 				if(node.right != null)
 					next.addLast(node.right);
-				cur.remove();
+				cur.remove();  //移除第一个元素
 			}
 			res.add(max);
 			max = Integer.MIN_VALUE;

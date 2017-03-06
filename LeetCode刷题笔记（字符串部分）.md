@@ -660,6 +660,43 @@ public static void main(String[] args) {
     }
 ```
 
+## S.520_Detect Capital
+
+题目：
+
+>Given a word, you need to judge whether the usage of capitals in it is right or not.
+>
+>We define the usage of capitals in a word to be right when one of the following cases holds:
+>
+>1. All letters in this word are capitals, like "USA".
+>2. All letters in this word are not capitals, like "leetcode".
+>3. Only the first letter in this word is capital if it has more than one letter, like "Google".
+>
+>Otherwise, we define that this word doesn't use capitals in a right way.
+
+代码：
+
+```java
+public boolean detectCapitalUse(String word) {
+  
+		int capitalCount = 0;
+		for(char c : word.toCharArray()){
+			if(Character.isUpperCase(c)){
+				capitalCount++;
+			}
+		}
+		
+		if(capitalCount == word.length())
+			return true;
+		if(capitalCount == 0)
+			return true;
+		if(capitalCount == 1 && Character.isUpperCase(word.charAt(0)) && word.length() >1 )
+			return true;
+		
+		return  false;
+	}
+```
+
 
 
 
