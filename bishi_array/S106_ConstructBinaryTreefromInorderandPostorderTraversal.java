@@ -1,6 +1,8 @@
-package question101_120;
+package bishi_array;
 
 import org.junit.Test;
+
+import question101_120.S102_LevelOrder;
 
 /**
  * 
@@ -41,6 +43,6 @@ public TreeNode buildTree(int[] inorder, int[] postorder) {
 		int[] inOrder = {4,2,5,1,6,3,7};
 		int[] postOrder = {4,5,2,6,7,3,1};
 		TreeNode root = buildTree(inOrder,postOrder);
-		System.out.println(S102_LevelOrder.LevelOrder_1(root));
+//		System.out.println(S102_LevelOrder.LevelOrder_1(root));
 	}
 }

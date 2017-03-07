@@ -1,4 +1,4 @@
-package question21_40;
+package bishi_array;
 /**
  * Input : [1,1,2]
  * Return : [1,2]

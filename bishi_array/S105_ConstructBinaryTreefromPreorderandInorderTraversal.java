@@ -1,6 +1,8 @@
-package question101_120;
+package bishi_array;
 
 import org.junit.Test;
+
+
 
 public class S105_ConstructBinaryTreefromPreorderandInorderTraversal {
 	public TreeNode buildTree(int[] preorder, int[] inorder) {
@@ -36,6 +38,6 @@ public class S105_ConstructBinaryTreefromPreorderandInorderTraversal {
 		int[] preOrder = {1,2,4,5,3,6,7};
 		int[] inOrder = {4,2,5,1,6,3,7};
 		TreeNode root = buildTree(preOrder,inOrder);
-		System.out.println(S102_LevelOrder.LevelOrder_1(root));
+//		System.out.println(S102_LevelOrder.LevelOrder_1(root));
 	}
 }

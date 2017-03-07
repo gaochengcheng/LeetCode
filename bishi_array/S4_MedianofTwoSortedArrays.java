@@ -1,4 +1,4 @@
-package question1_20;
+package bishi_array;
 
 /**
  * Question: Median of Two Sorted Arrays
