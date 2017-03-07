@@ -1,6 +1,7 @@
-package question121_140;
+package bishi_binaryTree;
 
 import org.junit.Test;
+
 
 
 /**
@@ -12,14 +13,14 @@ import org.junit.Test;
 public class S124_BinaryTreeMaximumPathSum {
 	
 	 int maxValue;
-	public int maxPathSum(Node root) {
+	public int maxPathSum(TreeNode root) {
 		maxValue = Integer.MIN_VALUE;
 //        System.out.println(maxPathDown(root));
 		maxPathDown(root);
         return maxValue;
 	}
 
-	private int maxPathDown(Node node) {
+	private int maxPathDown(TreeNode node) {
         if (node == null) return 0;
         int left = Math.max(0, maxPathDown(node.left));
         int right = Math.max(0, maxPathDown(node.right));
@@ -30,16 +31,16 @@ public class S124_BinaryTreeMaximumPathSum {
 	@Test
 	public void test() {
 		
-		Node node1 = new Node(5);
-		Node node2 = node1.left = new Node(4);
-		Node node3 = node1.right = new Node(8);
-		Node node4 = node2.left = new Node(11);
-		node4.left = new Node(7);
-		node4.right = new Node(2);
-		node3.left = new Node(13);
-		Node node5 = node3.right = new Node(4);
-		node5.left = new Node(5);
-		node5.right = new Node(1);
+		TreeNode node1 = new TreeNode(5);
+		TreeNode node2 = node1.left = new TreeNode(4);
+		TreeNode node3 = node1.right = new TreeNode(8);
+		TreeNode node4 = node2.left = new TreeNode(11);
+		node4.left = new TreeNode(7);
+		node4.right = new TreeNode(2);
+		node3.left = new TreeNode(13);
+		TreeNode node5 = node3.right = new TreeNode(4);
+		node5.left = new TreeNode(5);
+		node5.right = new TreeNode(1);
 		
 		System.out.println(maxPathSum(node1));
 		

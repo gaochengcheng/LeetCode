@@ -1,6 +1,8 @@
-package question121_140;
+package bishi_binaryTree;
 
 import org.junit.Test;
+
+import question121_140.Node;
 
 /**
  * 
@@ -9,12 +11,12 @@ import org.junit.Test;
  *
  */
 public class S129_SumRoottoLeafNumbers {
-	public int sumNumbers(Node root) {
+	public int sumNumbers(TreeNode root) {
 		return dfs(root,0);
 		
 	}
 	
-	public int dfs(Node root, int sum){
+	public int dfs(TreeNode root, int sum){
 		if(root == null)
 			return 0;
 		
