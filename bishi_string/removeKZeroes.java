@@ -1,4 +1,4 @@
-package bishi_stringQuestions;
+package bishi_string;
 
 import org.junit.Test;
 
