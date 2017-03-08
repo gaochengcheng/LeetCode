@@ -1,6 +1,6 @@
-package question1_20;
+package bishi_array;
 
-public class S17_RemoveElement {
+public class S27_RemoveElement {
 	public static void main(String[] args) {
 		int[] nums = {3,2,2,3};
 		System.out.println(removeElement(nums, 3));
