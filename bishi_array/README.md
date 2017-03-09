@@ -725,6 +725,30 @@ public int singleNumber(int[] nums) {
 	}
 ```
 
+## S. 子数组最大累加和
+
+问题：
+
+- 令arr = [1,-2,3,5,-2,6,-1]，求子数组最大累加和是[3,5,-2,6]，返回12.
+- 思路：cur记录当前累加和。当cur\<0时，说明累加到当前数出现了和\<0的情况，那么累加的这一部分一定不能作为产生最大累加和的子数组的左边部分，此时令cur=0表示重新从下一个数累加。当cur\>0时，每一次累加都可能是最大的累加和，所以，用另外一个变量max全程跟踪记录cur出现的最大值。
+
+```java
+public int solution(int[] arr){
+		if(arr==null || arr.length == 0)
+			return 0;
+		
+		int cur = 0;
+		int max = Integer.MIN_VALUE;
+		for(int i=0; i<arr.length; i++){
+			cur += arr[i];    //记录当前累加和
+			max = Math.max(cur, max);
+			cur = cur < 0? 0 : cur;  
+		}
+		
+		return max;
+	}
+```
+
 
 
 
