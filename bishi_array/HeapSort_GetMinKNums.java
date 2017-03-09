@@ -2,7 +2,7 @@ package bishi_array;
 
 import org.junit.Test;
 
-public class GetMinKNums {
+public class HeapSort_GetMinKNums {
 	public int[] getMinKNumbsByHeap(int[] arr, int k){
 		if(k<1 || k>arr.length){
 			return arr;

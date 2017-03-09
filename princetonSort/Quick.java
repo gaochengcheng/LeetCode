@@ -10,7 +10,16 @@ import java.util.Arrays;
  *
  */
 public class Quick {
+	
+	public static void main(String[] args){
+		Integer[] arr = {1,6,2,4,5,9,3,7,8};
+		sort(arr);
+		for(int i:arr)
+			System.out.print(i+" ");
+	}
 	public static void sort(Comparable[] a){
+		
+		sort(a, 0, a.length);
 		
 	}
 	
