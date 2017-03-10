@@ -735,7 +735,7 @@ public List<List<Integer>> combinationSum2(int[] candidates, int target) {
 				int newtarget = target - candidates[i];
 				item.add(candidates[i]);
 				dfs(i+1, newtarget, item, candidates, res);
-				item.remove(item.size()-1);
+				item.remove(item.size()-1); //移除item中最后一个元素
 			}
 		}
 	}
@@ -996,5 +996,62 @@ public int ladderLength(String start, String end, Set<String> dict) {
     }
 ```
 
+## S.90_Subsets II
 
+> Given a collection of integers that might contain duplicates, **nums**, return all possible subsets.
+>
+> **Note:** The solution set must not contain duplicate subsets.
+>
+> For example,
+> If **nums** = `[1,2,2]`, a solution is:
+>
+> ```java
+> [
+>   [2],
+>   [1],
+>   [1,2,2],
+>   [2,2],
+>   [1,2],
+>   []
+> ]
+> ```
+>
+> 思路：
+>
+> 深度优先搜索。dfs函数负责把所有指定length的情况遍历一遍。主函数中的for循环控制length。
+
+```java
+public List<List<Integer>> subsetsWithDup(int[] nums) {
+        
+		
+		List<List<Integer>> res = new ArrayList<List<Integer>> ();
+		ArrayList<Integer> item = new ArrayList<>();
+		if(nums == null || nums.length<=0)
+			return res;
+		
+		Arrays.sort(nums);
+		for(int i=0; i<=nums.length; i++){
+			dfs(nums, 0, i, item, res);
+		}
+		return res;
+		
+    
+    }
+    
+    public void dfs(int[] nums, int start, int length, List<Integer> item, List<List<Integer>> res){
+		if(item.size() == length){
+			if(!res.contains(item)){
+				res.add(new ArrayList<Integer>(item));
+				return ;
+			}
+		}
+		
+		for(int i=start; i<nums.length; i++){
+			item.add(nums[i]);
+			dfs(nums, i+1, length, item, res);
+			item.remove(item.size()-1);
+		}
+	}
+	
+```
 
