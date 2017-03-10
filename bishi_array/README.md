@@ -725,7 +725,9 @@ public int singleNumber(int[] nums) {
 	}
 ```
 
-## S. 子数组最大累加和
+## S.53_Maximum Subarray
+
+子数组最大累加和
 
 问题：
 
@@ -749,7 +751,84 @@ public int solution(int[] arr){
 	}
 ```
 
+## S.11_Container With Most Water
 
+> 题目描述：
+>
+> Given *n* non-negative integers *a1*, *a2*, ..., *an*, where each represents a point at coordinate (*i*, *ai*). *n* vertical lines are drawn such that the two endpoints of line *i* is at (*i*, *ai*) and (*i*, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+>
+> 思路：
+>
+> 从两边往中间扫描计算面积，面积由较短的那条边决定。维护一个当前最大面积值max。每一步只替换短板的原因是，短板决定面积，而高板不影响，所以要想有所改变就改变那个有决定性的东西。。 
+
+```java
+public int maxArea(int[] height) {
+        if(height == null || height.length == 0)
+        	return 0;
+        
+        int left = 0;
+        int right = height.length-1;
+        int max = 0;
+        while(left < right){
+        	int area = (right-left) * (Math.min(height[left], height[right]));
+        	max = Math.max(max, area);
+        	if(height[left]<height[right])
+        		left++;
+        	else
+        		right--;
+        }
+        
+        return max;
+    }
+```
+
+## S.56_Merge Intervals
+
+>题目：
+>
+>Given a collection of intervals, merge all overlapping intervals.
+>
+>For example,
+>Given `[1,3],[2,6],[8,10],[15,18]`,
+>return `[1,6],[8,10],[15,18]`.
+>
+>解题思路：
+>
+>- 改写Comparator接口中的compare方法。调用`Collections.sort()`方法对list进行排序时，使用改写过后的Comparator比较器。
+>- 排序之后，就是比较相邻两个Interval中end和start之间的关系。如果pre.end >=cur.start，说明可以合并。否则不能合并。
+
+```java
+
+    public List<Interval> merge(List<Interval> intervals) {
+        if(intervals == null || intervals.size()<2 )
+            return intervals;
+        Collections.sort(intervals, new IntervalComparator());
+        ArrayList<Interval> result = new ArrayList();
+        
+        Interval pre = intervals.get(0);
+        for(int i=1; i<intervals.size(); i++){
+            Interval cur = intervals.get(i);
+            if(pre.end >= cur.start){
+                Interval merged = new Interval(pre.start, Math.max(pre.end, cur.end));
+                pre = merged;
+            }
+            else{
+                result.add(pre);
+                pre = cur;
+            }
+        }
+        result.add(pre);
+        return result;
+    }
+```
+
+```java
+class IntervalComparator implements Comparator<Interval> {
+        public int compare(Interval i1, Interval i2) {
+            return i1.start - i2.start;
+        }
+}
+```
 
 
 

@@ -24,7 +24,7 @@ public class HeapSort_GetMinKNums {
 	public void heapInsert(int[] arr, int value, int index){
 		arr[index] = value;
 		while(index != 0){
-			int parent = (index-1)/2;  
+			int parent = (index-1)/2;    //取到该元素的parent.
 			if(arr[parent] <arr[index]){  //每插入一个数，都要动态调整这个堆 ，调整的过程为从当前插入的位置往上走
 				swap(arr, parent, index);
 				index = parent;
