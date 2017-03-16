@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-public class Snippet {
+public class Ali_Snippet {
 	public boolean find(int[] nums){
 	        if(nums == null || nums.length < 1) return false;
 	        if(nums.length == 3) return true;
@@ -19,10 +19,10 @@ public class Snippet {
 	        
 
 	        for(int i = 0; i < sums.length - 2; ++i){
-	            int next = i;
+	            int nextPos = i;
 	            int count = 3;
-	            while (count-- > 0 && next + 1 < sums.length && (next = map.getOrDefault(sums[i] + sums[next + 1], -1)) > 0)
-	                if(count == 0 && next == nums.length - 1) return true;
+	            while (count-- > 0 && nextPos + 1 < sums.length && (nextPos = map.getOrDefault(sums[i] + sums[nextPos + 1], -1)) > 0)
+	                if(count == 0 && nextPos == nums.length - 1) return true;
 	
 	        }
 	        
