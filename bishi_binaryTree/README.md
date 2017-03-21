@@ -230,13 +230,13 @@ public static void PostOrder_2(TreeNode root){
 
 ### **方法二（重点掌握）**：手动创建一个stack，时间复杂度O（n），空间复杂度O（n）。
 
-1.   从根节点出发，每次判断当前节点的做孩子是否存在，存在则把他们全部压栈。
+1.   从根节点出发，每次判断当前节点的左孩子是否存在，存在则把他们全部压栈。
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-                                                     a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+       a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-                                                     b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+       b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -322,8 +322,6 @@ public static List<List<Integer>> LevelOrder_1(TreeNode root){
 		//为什么使用LinkedList，因为它有在末尾添加元素，从头部取出元素的函数。
 		LinkedList<TreeNode> current = new LinkedList<TreeNode>(),next = new LinkedList<TreeNode>();
 		ArrayList<Integer> level = new ArrayList<Integer>();
-		
-		
 		
 		current.push(root);
 		while(!current.isEmpty()){
@@ -1008,7 +1006,7 @@ public boolean isValidBST(TreeNode root){
 
 
 
-## S.108_Convert Sorted Array to Binary Search Tree
+## S.108_Convert Sorted Array to Binary Search Tree（重要）
 
 原题地址：https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
 
@@ -1230,8 +1228,12 @@ public int maxDepth(TreeNode root) {
 
 	public int Depth(TreeNode root) {
 		if(root == null)
-			return 0;
-		return Integer.max(Depth(root.left)+1, Depth(root.right)+1);
+            return 0;
+            
+        int left = Depth(root.left);
+        int right = Depth(root.right);
+        
+        return Math.max(left,right)+1;
 	}
 ```
 
@@ -1597,7 +1599,7 @@ public int bstTopoSize1(Node head){
 
 题目描述：
 
-​	给定一个结点，，。
+​	给定一个树，判断这棵树是否是搜索二叉树。
 
 代码：
 
