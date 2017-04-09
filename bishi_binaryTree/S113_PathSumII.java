@@ -77,7 +77,7 @@ public class S113_PathSumII {
 			if(root.right != null)
 				pathSumHelper(root.right,sum,sumlist,pathlist);
 		}
-		sumlist.remove(sumlist.size()-1);
+		sumlist.remove(sumlist.size()-1);   //对应上边的sumlist.add(root.val),上面添加了，对应下面就要移除
 		
 	}
 

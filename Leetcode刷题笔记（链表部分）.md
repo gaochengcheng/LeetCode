@@ -67,6 +67,43 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
     }
 ```
 
+
+
+## S.206_Reverse Linked List
+
+原题地址：https://leetcode.com/problems/reverse-linked-list/#/description
+
+思路：剑指offer112页
+
+代码：
+
+```java
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+        if(head == null)
+            return null;
+            
+        ListNode pReverseHead = null;
+        ListNode pNode = head;
+        ListNode pPrev = null;
+        while(pNode != null){
+            ListNode pNext = pNode.next;
+            if(pNext == null){
+                pReverseHead = pNode;
+            }
+            
+            pNode.next = pPrev;
+            pPrev = pNode;
+            pNode = pNext;
+        }
+        
+        return pReverseHead;
+    }    
+}
+```
+
+
+
 ## S.92_Reverse Linked List II（思路巧妙）
 
 原题地址：https://leetcode.com/problems/reverse-linked-list-ii/

@@ -46,7 +46,6 @@ public class Fibonacci {
 			arr[i]=arr[i-1]+arr[i-2];
 		}
 		return arr[n-1];
-		
 	}
 	
 	public int f3(int n){
