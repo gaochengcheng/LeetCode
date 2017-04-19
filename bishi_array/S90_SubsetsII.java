@@ -40,7 +40,7 @@ public class S90_SubsetsII {
 	 */
 	public void dfs(int[] nums, int start, int length, List<Integer> item, List<List<Integer>> res){
 		System.out.println(item.toString());
-		if(item.size() == length){
+		if(item.size() == length){   //递归结束条件
 			if(!res.contains(item)){
 				res.add(new ArrayList<Integer>(item));
 				return ;
@@ -50,7 +50,7 @@ public class S90_SubsetsII {
 		for(int i=start; i<nums.length; i++){
 			item.add(nums[i]);
 			dfs(nums, i+1, length, item, res);
-			item.remove(item.size()-1);
+			item.remove(item.size()-1);     //回溯时候移除元素
 		}
 	}
 	

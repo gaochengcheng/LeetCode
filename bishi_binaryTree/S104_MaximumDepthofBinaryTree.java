@@ -18,10 +18,14 @@ public class S104_MaximumDepthofBinaryTree {
 		if(root == null)
 			return 0;
 		return Integer.max(Depth(root.left)+1, Depth(root.right)+1);
+		
 	}
 
 	@Test
 	public void test() {
-
+		int a = 1;
+		int b = 2;
+		System.out.println(Math.max(a, b));
+		System.out.println(Integer.max(a, b));
 	}
 }

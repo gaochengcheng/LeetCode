@@ -20,6 +20,7 @@ public class IsSubTree {
 	}
 	
 	public boolean DoesTree1HaveTree2(TreeNode root1, TreeNode root2){
+		//当遍历完root2所有结点后，root2为null，此时返回true
 		if(root2 == null)
 			return true;
 		

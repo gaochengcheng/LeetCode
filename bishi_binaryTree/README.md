@@ -234,9 +234,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-       a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+         a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-       b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+         b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
@@ -1816,6 +1816,34 @@ public int nodeNum(Node head){
 		}
 			
 	}
+```
+
+## S.求二叉树的镜像
+
+思路：
+
+​	先序遍历二叉树，在先序遍历二叉树的过程中，当当前结点不为null，且左右孩子至少有一个存在时，交换左右孩子。
+
+代码：
+
+```java
+public void mirrorOfBinaryTree(TreeNode root){
+  if(root == null)
+    return ;
+  if(root.left == null && root.right == null)
+    return ;
+  
+  //exchange left,right child
+  TreeNode tmp = root.left;
+  root.left = root.right;
+  root.right = tmp;
+  
+  if(root.left != null)
+ 	mirrorOfBinaryTree(root.left);
+  if(root.right != null)
+  	mirrorOfBinaryTree(root.right);
+  
+}
 ```
 
 
