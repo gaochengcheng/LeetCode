@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 public class S480_SlidingWindowMedian {
 	public double[] medianSlidingWindow(int[] nums, int k) {
-		
+		return null;
 	}
 	public float median(int[] nums){
 		Arrays.sort(nums);
@@ -23,5 +23,6 @@ public class S480_SlidingWindowMedian {
 		else{
 			
 		}
+		return 0;
 	}
 }

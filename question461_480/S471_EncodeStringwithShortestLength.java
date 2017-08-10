@@ -9,6 +9,6 @@ public class S471_EncodeStringwithShortestLength {
 	
 	//我觉得这道题目要使用深度优先
 	public String encode(String s) {
-		
+		return "";
 	}
 }

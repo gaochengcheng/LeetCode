@@ -35,7 +35,7 @@ public class NumberOf1 {
 	
 	@Test
 	public void test(){
-		System.out.println(solution2(0xFFFFF));  //16个1.  0xFFFF is 65535
+		System.out.println(solution2(0xFFFF));  //16个1.  0xFFFF is 65535
 		System.out.println(solution2(0x80000000));
 	}
 }
