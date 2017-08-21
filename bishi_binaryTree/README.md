@@ -53,9 +53,9 @@ public static ArrayList<TreeNode> PreOrder_1(TreeNode root){
 			System.out.println(value);
 			result.add(node);
 			
-			if(node.right != null)             //if right tree exist, then put the right into the stack
+			if(node.right != null)         //if right tree exist, then put the right into the stack
 				stack.push(node.right);
-			if(node.left != null)              //if left tree exist, then put the left into the stack.
+			if(node.left != null)          //if left tree exist, then put the left into the stack.
 				stack.push(node.left);
 		}
 		return result;
@@ -234,9 +234,9 @@ public static void PostOrder_2(TreeNode root){
 
 2.   判断stack是否为空，若不为空，则从中取出一个元素。
 
-         a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
+           a)如果该元素的右子树为空，或者右子树已经被访问过，那个刚问这个节点。
 
-         b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
+           b)如果该元素的右子树不为空，则该节点第二次入栈，当前节点更新为该节点的右孩子。
 
 3.   ​
 
